@@ -47,17 +47,48 @@ function MainContainer() {
           },
           tabBarActiveTintColor: "#BA7E80",
           tabBarInactiveTintColor: "grey",
-          headerShown: false,
           tabBarStyle: {
             height: 50,
             paddingBottom: 5,
           },
         })}
       >
-        <Tab.Screen name={homeName} component={HomeScreen} />
-        <Tab.Screen name={chatFitur} component={Chat} />
-        <Tab.Screen name={historyFitur} component={History} />
-        <Tab.Screen name={profileFitur} component={Profile} />
+        <Tab.Screen
+          name={homeName}
+          component={HomeScreen}
+          options={{
+            headerStyle: {
+              backgroundColor: "#F2E5E5",
+            },
+          }}
+        />
+        <Tab.Screen
+          name={chatFitur}
+          component={Chat}
+          options={{
+            headerStyle: {
+              backgroundColor: "#F2E5E5",
+            },
+          }}
+        />
+        <Tab.Screen
+          name={historyFitur}
+          component={History}
+          options={{
+            headerStyle: {
+              backgroundColor: "#F2E5E5",
+            },
+          }}
+        />
+        <Tab.Screen
+          name={profileFitur}
+          component={Profile}
+          options={{
+            headerStyle: {
+              backgroundColor: "#F2E5E5",
+            },
+          }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );
