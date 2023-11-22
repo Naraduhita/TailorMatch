@@ -5,11 +5,11 @@ import Background from "../components/Background";
 
 export default function History({ navigation }) {
   const [store, setStore] = useState([
-    { name: "Sweetest Stitch", key: "1" },
-    { name: "Doodled Threads", key: "2" },
-    { name: "Ruffled Rose", key: "3" },
-    { name: "Sugar Plum Closet", key: "4" },
-    { name: "Cuddly Couture", key: "5" },
+    { name: "Sweetest Stitch", key: "1", date: "12 November 2023" },
+    { name: "Doodled Threads", key: "2", date: "23 November 2023" },
+    { name: "Ruffled Rose", key: "3", date: "12 June 2023" },
+    { name: "Sugar Plum Closet", key: "4", date: "9 June 2023" },
+    { name: "Cuddly Couture", key: "5", date: "1 June 2023" },
   ]);
 
   return (
@@ -40,8 +40,8 @@ export default function History({ navigation }) {
                 {/* <Text>{item.name}</Text> */}
                 <View className="flex flex-row justify-between mx-3">
                   <View className="flex-col items-center justify-center gap-1.5">
-                    <Text className="font-semibold">Sweetest Stitch</Text>
-                    <Text>12 November</Text>
+                    <Text className="font-semibold">{item.name}</Text>
+                    <Text>{item.date}</Text>
                   </View>
                 </View>
                 <Text className="bg-yellow text-white font-medium rounded-md px-2 py-0.5">
