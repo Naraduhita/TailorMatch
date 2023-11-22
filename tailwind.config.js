@@ -7,6 +7,8 @@ module.exports = {
     colors: {
       pastelPink: "#2e1065",
       red: "#b91c1c",
+      white: "#ffffff",
+      yellow: "#ffd700",
     },
   },
   plugins: [],

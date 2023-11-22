@@ -32,15 +32,26 @@ export default function History({ navigation }) {
           </Text>
         </>
       ) : (
-        <FlatList
-          keyExtractor={(item) => item.key}
-          data={store}
-          renderItem={({ item }) => (
-            <View className="items-center justify-center flex-row mt-10">
-              <Text>{item.name}</Text>
-            </View>
-          )}
-        />
+        <View className="mx-5">
+          <FlatList
+            keyExtractor={(item) => item.key}
+            data={store}
+            renderItem={({ item }) => (
+              <View className="items-center justify-around flex-row mt-6 bg-white w-full py-2 rounded-lg">
+                {/* <Text>{item.name}</Text> */}
+                <View className="flex flex-row justify-between mx-3">
+                  <View className="flex-col items-center justify-center gap-1.5">
+                    <Text className="font-semibold">Sweetest Stitch</Text>
+                    <Text>12 November</Text>
+                  </View>
+                </View>
+                <Text className="bg-yellow text-white font-medium rounded-md px-2 py-0.5">
+                  Ongoing
+                </Text>
+              </View>
+            )}
+          />
+        </View>
       )}
       <StatusBar style="auto" />
     </Background>
