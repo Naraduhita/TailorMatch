@@ -1,0 +1,7 @@
+{
+  "singleQuote": false,
+  "trailingComma": "all",
+  "singleAttributePerLine": true,
+  "bracketSameLine": true,
+  "endOfLine": "auto"
+}
