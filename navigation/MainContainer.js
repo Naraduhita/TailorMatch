@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+
 // Screens
 import HomeScreen from './screens/HomeScreen';
 import Chat from './screens/Chat';
@@ -41,10 +42,11 @@ function MainContainer() {
             return <Ionicons name={iconName} size={size} color={color} />;
           },
         })}
+        
         tabBarOptions={{
-          activeTintColor: 'tomato',
+          activeTintColor: '#fca5a5',
           inactiveTintColor: 'grey',
-          labelStyle: { paddingBottom: 10, fontSize: 10 },
+          labelStyle: { paddingBottom: 5, fontSize: 10 },
           style: { padding: 10, height: 70 }
         }}>
 
