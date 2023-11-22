@@ -4,10 +4,10 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 // Screens
-import HomeScreen from "./screens/HomeScreen";
-import Chat from "./screens/Chat";
-import History from "./screens/History";
-import Profile from "./screens/Profile";
+import HomeScreen from "../screens/HomeScreen";
+import Chat from "../screens/Chat";
+import History from "../screens/History";
+import Profile from "../screens/Profile";
 
 // Screen names
 const homeName = "Home";
@@ -51,8 +51,7 @@ function MainContainer() {
             height: 50,
             paddingBottom: 5,
           },
-        })}
-      >
+        })}>
         <Tab.Screen
           name={homeName}
           component={HomeScreen}
