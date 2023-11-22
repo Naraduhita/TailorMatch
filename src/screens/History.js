@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, Image, FlatList } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import Background from "../../components/Background";
+import Background from "../components/Background";
 
 export default function History({ navigation }) {
   const [store, setStore] = useState([
@@ -17,13 +17,12 @@ export default function History({ navigation }) {
       {store.length === 0 ? (
         <>
           <Image
-            source={require("../../../assets/tabler_hanger-off.png")}
+            source={require("../../assets/tabler_hanger-off.png")}
             className="w-24 h-24"
           />
           <Text
             className="text-black font-bold text-lg"
-            onPress={() => navigation.navigate("History")}
-          >
+            onPress={() => navigation.navigate("History")}>
             No tailor history yet
           </Text>
           <Text className="text-black mt-3">Embrace the blank canvas</Text>
