@@ -12,6 +12,8 @@ module.exports = {
       green: "#4CAF50",
       red_button: "#FF5050",
       maroon: "#BA7E80",
+      oldRose: "#ba7e80",
+      gray: "#D9D9D9",
     },
   },
   plugins: [],
