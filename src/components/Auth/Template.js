@@ -4,7 +4,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import TextInputWithLabel from "../Text/TextInputWithLabel";
 import ColoredButton from "../Button/ColoredButton";
-import { SvgUri } from "react-native-svg";
 import LogoSVG from "../../../assets/logo.svg";
 import EllipseSVG from "../../../assets/ellipse.svg";
 
@@ -26,7 +25,7 @@ export default function Template({ isRegister }) {
       </View>
       <View className="flex-col items-start justify-start flex-1 my-3 mx-7 gap-y-2">
         <View className="flex flex-row items-center justify-end w-full">
-          <Text className="mx-3 mt-5 text-xl font-bold text-right text-oldRose">
+          <Text className="mx-3 mt-5 text-xl font-bold text-right text-old-rose">
             TailorMatch
           </Text>
           <View className="mt-5">
@@ -65,7 +64,7 @@ export default function Template({ isRegister }) {
             />
           </View>
           <ColoredButton
-            styleButton={"bg-oldRose my-4"}
+            styleButton={"bg-old-rose my-4"}
             title={isRegister ? "Register" : "Login"}
             styleText={"text-white"}
             onPress={handlePress}
@@ -80,7 +79,7 @@ export default function Template({ isRegister }) {
               onPress={() => {
                 navigation.navigate("login");
               }}>
-              <Text className="font-semibold underline text-oldRose">
+              <Text className="font-semibold underline text-old-rose">
                 Login
               </Text>
             </TouchableOpacity>
@@ -89,7 +88,7 @@ export default function Template({ isRegister }) {
               onPress={() => {
                 navigation.navigate("register");
               }}>
-              <Text className="font-semibold underline text-oldRose">
+              <Text className="font-semibold underline text-old-rose">
                 Register
               </Text>
             </TouchableOpacity>

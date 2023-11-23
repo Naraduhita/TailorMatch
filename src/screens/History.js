@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Image, FlatList } from "react-native";
+import { View, Text, Image, FlatList, TouchableOpacity } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import Background from "../components/Background";
 
@@ -21,11 +21,11 @@ export default function History({ navigation }) {
             className="w-24 h-24"
           />
           <Text
-            className="text-black font-bold text-lg"
+            className="text-lg font-bold text-black"
             onPress={() => navigation.navigate("History")}>
             No tailor history yet
           </Text>
-          <Text className="text-black mt-3">Embrace the blank canvas</Text>
+          <Text className="mt-3 text-black">Embrace the blank canvas</Text>
           <Text className="text-black">
             and start your tailoring journey today!
           </Text>
@@ -36,7 +36,10 @@ export default function History({ navigation }) {
             keyExtractor={(item) => item.key}
             data={store}
             renderItem={({ item }) => (
-              <View className="items-center justify-around flex-row mt-6 bg-white w-full py-2 rounded-lg">
+              <TouchableOpacity
+                className="flex-row items-center justify-around w-full py-2 mt-6 bg-white rounded-lg"
+                key={item.key}
+                onPress={() => navigation.navigate("deliver")}>
                 {/* <Text>{item.name}</Text> */}
                 <View className="flex flex-row justify-between mx-3">
                   <View className="flex-col items-center justify-center gap-1.5">
@@ -47,7 +50,7 @@ export default function History({ navigation }) {
                 <Text className="bg-yellow text-white font-medium rounded-md px-2 py-0.5">
                   Ongoing
                 </Text>
-              </View>
+              </TouchableOpacity>
             )}
           />
         </View>
