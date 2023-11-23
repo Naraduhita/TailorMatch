@@ -1,8 +1,6 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text } from "react-native";
 import React from "react";
-import Feather from "@expo/vector-icons/Feather";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { SafeAreaView } from "react-native-safe-area-context";
 import BicycleSVG from "../../../assets/bicycle.svg";
 import ColoredButton from "../../components/Button/ColoredButton";
 import MapView, { Marker } from "react-native-maps";

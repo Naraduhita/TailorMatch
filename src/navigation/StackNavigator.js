@@ -5,6 +5,7 @@ import Login from "../screens/auth/Login";
 import GetStarted from "../screens/auth/GetStarted";
 import Deliver from "../screens/order/Deliver";
 import TrackOrder from "../screens/order/TrackOrder";
+import Sewing from "../screens/order/Sewing";
 
 const RootStack = createNativeStackNavigator();
 
@@ -35,6 +36,10 @@ function StackNavigator() {
         <RootStack.Screen
           name="deliver"
           component={Deliver}
+        />
+        <RootStack.Screen
+          name="sewing"
+          component={Sewing}
         />
         <RootStack.Screen
           name="track-order"
