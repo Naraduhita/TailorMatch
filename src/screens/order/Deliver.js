@@ -7,6 +7,10 @@ import BicycleSVG from "../../../assets/bicycle.svg";
 import ColoredButton from "../../components/Button/ColoredButton";
 import MapView, { Marker } from "react-native-maps";
 import { useNavigation } from "@react-navigation/native";
+import IconWithTitle from "../../components/Box/IconWithTitle";
+import TrackBar from "../../components/Bar/TrackBar";
+import ColoredBox from "../../components/Box/ColoredBox";
+import OrderDetailBox from "../../components/Box/OrderDetailBox";
 
 export default function Deliver() {
   const navigation = useNavigation();
@@ -33,69 +37,41 @@ export default function Deliver() {
             </Text>
           </View>
         </View>
-        <View className="relative flex flex-row justify-around w-full">
-          <View className="absolute w-5/6 mx-auto border-b-2 border-dotted left-8 top-5 border-old-rose"></View>
-          <View className="flex flex-col items-center justify-center">
-            <View className="bg-concrete">
-              <Ionicons
-                name="checkmark-circle-outline"
-                size={40}
-                color="#ba7e80"
-              />
-            </View>
-            <Text className="font-light">Measuring</Text>
-          </View>
-          <View className="flex flex-col items-center justify-center">
-            <View className="bg-concrete">
-              <Ionicons
-                name="checkmark-circle-outline"
-                size={40}
-                color="#ba7e80"
-              />
-            </View>
-            <Text className="font-light">Sewing</Text>
-          </View>
-          <View className="flex flex-col items-center justify-center">
-            <View className="bg-concrete">
-              <Ionicons
-                name="checkmark-circle-outline"
-                size={40}
-                color="#ba7e80"
-              />
-            </View>
-            <Text className="font-light">Fitting</Text>
-          </View>
-          <View className="flex flex-col items-center justify-center">
-            <View className="bg-concrete">
-              <BicycleSVG />
-            </View>
-            <Text className="font-light">Deliver</Text>
-          </View>
-        </View>
+        <TrackBar>
+          <IconWithTitle title={"Measuring"}>
+            <Ionicons
+              name="checkmark-circle-outline"
+              size={40}
+              color="#ba7e80"
+            />
+          </IconWithTitle>
+          <IconWithTitle title={"Sewing"}>
+            <Ionicons
+              name="checkmark-circle-outline"
+              size={40}
+              color="#ba7e80"
+            />
+          </IconWithTitle>
+          <IconWithTitle title={"Fitting"}>
+            <Ionicons
+              name="checkmark-circle-outline"
+              size={40}
+              color="#ba7e80"
+            />
+          </IconWithTitle>
+          <IconWithTitle title={"Fitting"}>
+            <BicycleSVG />
+          </IconWithTitle>
+        </TrackBar>
         <View className="flex flex-row justify-between w-full">
-          <Text>#9632163716</Text>
-          <Text>Ongoing</Text>
+          <Text className="font-medium">#9632163716</Text>
+          <ColoredBox status={"Ongoing"} />
         </View>
-        <View className="flex flex-col gap-y-2">
-          <View className="flex flex-row gap-x-2">
-            <Text className="w-1/3 font-light text-emperor">Tailored in</Text>
-            <Text>12 November 2023 / 08:00</Text>
-          </View>
-          <View className="flex flex-row gap-x-2">
-            <Text className="w-1/3 font-light text-emperor">
-              Delivery Address
-            </Text>
-            <Text className="w-2/3">
-              Sutorejo Barat No. 36, Dukuh Sutorejo, Mulyosari, Surabaya
-            </Text>
-          </View>
-          <View className="flex flex-row gap-x-2">
-            <Text className="w-1/3 font-light text-emperor">
-              Estimated Time
-            </Text>
-            <Text className="">Arrives in 1 hour</Text>
-          </View>
-        </View>
+        <OrderDetailBox
+          datetime={"12 November 2023 / 08:00"}
+          address={"Sutorejo Barat No. 36, Dukuh Sutorejo, Mulyosari, Surabaya"}
+          delivery={"Arrives in 1 hour"}
+        />
 
         <MapView
           initialRegion={{

@@ -75,7 +75,6 @@ export default function History() {
             renderItem={({ item }) => (
               <ItemHistory
                 item={item}
-                colorStatus={colorStatus}
                 onPress={() => navigation.navigate("deliver")}
               />
             )}

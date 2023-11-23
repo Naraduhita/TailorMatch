@@ -1,6 +1,7 @@
 // ItemHistory.js
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
+import ColoredBox from "../Box/ColoredBox";
 
 const ItemHistory = ({ item, colorStatus, onPress }) => {
   return (
@@ -15,12 +16,7 @@ const ItemHistory = ({ item, colorStatus, onPress }) => {
       </View>
       <View className="flex w-1/2">
         <View className="self-center w-1/2">
-          <Text
-            className={`text-white text-center font-medium rounded-md px-2 py-0.5 text-xs ${colorStatus(
-              item.status,
-            )}`}>
-            {item.status}
-          </Text>
+          <ColoredBox status={item.status} />
         </View>
       </View>
     </TouchableOpacity>
