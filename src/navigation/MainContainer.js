@@ -66,7 +66,7 @@ function MainContainer() {
           component={Chat}
           options={{
             headerStyle: {
-              backgroundColor: "#F2E5E5",
+              backgroundColor: "#F3F3F3",
             },
           }}
         />
@@ -84,7 +84,7 @@ function MainContainer() {
           component={Profile}
           options={{
             headerStyle: {
-              backgroundColor: "#F2E5E5",
+              backgroundColor: "#F3F3F3",
             },
           }}
         />
