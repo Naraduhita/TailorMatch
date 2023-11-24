@@ -47,16 +47,16 @@ export default function Chat({ navigation }) {
     <TouchableOpacity
       key={index}
       onPress={() =>
-        navigation.navigate("PageChat", {
+        navigation.navigate("detail-chat", {
           userName: item.userName,
         })
       }
-      className=" flex items-center mx-20 mb-2 relative">
-      <View className="items-center flex-row ">
+      className="relative flex items-center mx-20 mb-2 ">
+      <View className="flex-row items-center ">
         <Image
           source={item.userImg}
           resizeMode="contain"
-          className="h-16 w-16 border-2 border-white rounded-full"
+          className="w-16 h-16 border-2 border-white rounded-full"
         />
         <View className="flex mx-2">
           <Text className="text-lg font-semibold">{item.userName}</Text>
@@ -71,7 +71,7 @@ export default function Chat({ navigation }) {
       <SafeAreaView className="container flex-1">
         <View
           id="search"
-          className="flex-wrap justify-around h-10 my-4  mt-2 px-20 rounded-full mx-12 bg-white">
+          className="flex-wrap justify-around h-10 px-20 mx-12 my-4 mt-2 bg-white rounded-full">
           <Ionicons
             name="ios-search-outline"
             size={23}
@@ -86,17 +86,15 @@ export default function Chat({ navigation }) {
           />
         </View>
 
-        <View className="mx-12 flex-row mb-2">
-          <Text className="text-sm mx-3">All Messages</Text>
+        <View className="flex-row mx-12 mb-2">
+          <Text className="mx-3 text-sm">All Messages</Text>
         </View>
 
-        <View className="">
-          <FlatList
-            data={filteredUsers}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id.toString()}
-          />
-        </View>
+        <FlatList
+          data={filteredUsers}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id.toString()}
+        />
       </SafeAreaView>
     </Background>
   );

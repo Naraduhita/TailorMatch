@@ -1,65 +1,64 @@
 import * as React from "react";
 import { View, Text, Image } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import Background from "../components/Background-chat";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Ionicons } from "@expo/vector-icons";
+import Background from "../components/Background";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 export default function Profile({ navigation }) {
   return (
     <Background>
       <SafeAreaView className="container flex-1">
-        <View className="items-center flex-col">
+        <View className="flex-col items-center">
           <Image
-            className="w-36 h-36 rounded-full border-4  border-pink"
+            className="border-4 rounded-full w-36 h-36 border-pink"
             source={require("../components/img/meng.jpg")}
           />
-          <Text className="font-bold text-2xl mt-3">Adiba Zalfa Camila</Text>
-          <Text className="font-normal text-sm">ID: 5027211048</Text>
+          <Text className="mt-3 text-2xl font-bold">Adiba Zalfa Camila</Text>
+          <Text className="text-sm font-normal">ID: 5027211048</Text>
         </View>
 
-        <View className="items-center flex-col mt-4">
-          <View className=" justify-start bg-white  rounded-2xl w-72 py-2">
-            <View className="items-center flex-row mx-6">
+        <View className="flex-col items-center mt-4">
+          <View className="justify-start py-2 bg-white  rounded-2xl w-72">
+            <View className="flex-row items-center mx-6">
               <Ionicons
                 name="person-circle-outline"
                 size={50}
                 color="#BA7E80"
               />
-              <Text className="font-semibold text-xl mx-2">Account</Text>
+              <Text className="mx-2 text-xl font-semibold">Account</Text>
             </View>
           </View>
 
-          <View className=" justify-start bg-white  rounded-2xl w-72 py-2 mt-4">
-            <View className="items-center flex-row mx-6">
+          <View className="justify-start py-2 mt-4 bg-white  rounded-2xl w-72">
+            <View className="flex-row items-center mx-6">
               <Ionicons
                 name="globe-outline"
                 size={50}
                 color="#BA7E80"
               />
-              <Text className="font-semibold text-xl mx-2">Language</Text>
+              <Text className="mx-2 text-xl font-semibold">Language</Text>
             </View>
           </View>
 
-          <View className=" justify-start bg-white  rounded-2xl w-72 py-2 mt-4">
-            <View className="items-center flex-row mx-6">
+          <View className="justify-start py-2 mt-4 bg-white  rounded-2xl w-72">
+            <View className="flex-row items-center mx-6">
               <Ionicons
                 name="construct-outline"
                 size={50}
                 color="#BA7E80"
               />
-              <Text className="font-semibold text-xl mx-2">Preference</Text>
+              <Text className="mx-2 text-xl font-semibold">Preference</Text>
             </View>
           </View>
 
-          <View className=" justify-start bg-white  rounded-2xl w-72 py-2 mt-4">
-            <View className="items-center flex-row mx-6">
+          <View className="justify-start py-2 mt-4 bg-white  rounded-2xl w-72">
+            <View className="flex-row items-center mx-6">
               <Ionicons
                 name="information-circle-outline"
                 size={50}
                 color="#BA7E80"
               />
-              <Text className="font-semibold text-xl mx-2">Help & Center</Text>
+              <Text className="mx-2 text-xl font-semibold">Help & Center</Text>
             </View>
           </View>
         </View>

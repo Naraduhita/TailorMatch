@@ -1,15 +1,39 @@
 import React, { useState } from "react";
-import { View, Text, Image, FlatList } from "react-native";
+import { View, Text, Image, FlatList, TouchableOpacity } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import Background from "../components/Background";
+import ItemHistory from "../components/Card/ItemHistory";
+import { useNavigation } from "@react-navigation/native";
 
-export default function History({ navigation }) {
+export default function History() {
+  const navigation = useNavigation();
+
   const [store, setStore] = useState([
-    { name: "Sweetest Stitch", key: "1" },
-    { name: "Doodled Threads", key: "2" },
-    { name: "Ruffled Rose", key: "3" },
-    { name: "Sugar Plum Closet", key: "4" },
-    { name: "Cuddly Couture", key: "5" },
+    {
+      name: "Sweetest Stitch",
+      key: "1",
+      date: "12 November 2023",
+      status: "Ongoing",
+    },
+    {
+      name: "Doodled Threads",
+      key: "2",
+      date: "23 November 2023",
+      status: "Done",
+    },
+    { name: "Ruffled Rose", key: "3", date: "12 June 2023", status: "Ongoing" },
+    {
+      name: "Sugar Plum Closet",
+      key: "4",
+      date: "9 June 2023",
+      status: "Done",
+    },
+    {
+      name: "Cuddly Couture",
+      key: "5",
+      date: "1 June 2023",
+      status: "Cancelled",
+    },
   ]);
 
   return (
@@ -21,11 +45,11 @@ export default function History({ navigation }) {
             className="w-24 h-24"
           />
           <Text
-            className="text-black font-bold text-lg"
+            className="text-lg font-bold text-black"
             onPress={() => navigation.navigate("History")}>
             No tailor history yet
           </Text>
-          <Text className="text-black mt-3">Embrace the blank canvas</Text>
+          <Text className="mt-3 text-black">Embrace the blank canvas</Text>
           <Text className="text-black">
             and start your tailoring journey today!
           </Text>
@@ -36,18 +60,10 @@ export default function History({ navigation }) {
             keyExtractor={(item) => item.key}
             data={store}
             renderItem={({ item }) => (
-              <View className="items-center justify-around flex-row mt-6 bg-white w-full py-2 rounded-lg">
-                {/* <Text>{item.name}</Text> */}
-                <View className="flex flex-row justify-between mx-3">
-                  <View className="flex-col items-center justify-center gap-1.5">
-                    <Text className="font-semibold">Sweetest Stitch</Text>
-                    <Text>12 November</Text>
-                  </View>
-                </View>
-                <Text className="bg-yellow text-white font-medium rounded-md px-2 py-0.5">
-                  Ongoing
-                </Text>
-              </View>
+              <ItemHistory
+                item={item}
+                onPress={() => navigation.navigate("deliver")}
+              />
             )}
           />
         </View>
