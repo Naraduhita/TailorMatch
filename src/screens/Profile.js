@@ -3,6 +3,7 @@ import { View, Text, Image } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import Background from "../components/Background";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Profile({ navigation }) {
   return (
