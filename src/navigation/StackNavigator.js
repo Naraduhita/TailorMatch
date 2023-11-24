@@ -3,8 +3,6 @@ import TabNavigator from "./TabNavigator";
 import Register from "../screens/auth/Register";
 import Login from "../screens/auth/Login";
 import GetStarted from "../screens/auth/GetStarted";
-import DetailsOrder from "../screens/history/DetailsOrder";
-import History from "../screens/history/History";
 import Deliver from "../screens/order/Deliver";
 import TrackOrder from "../screens/order/TrackOrder";
 import Sewing from "../screens/order/Sewing";
@@ -33,13 +31,6 @@ function StackNavigator() {
           name="login"
           component={Login}
         />
-        <RootStack.Screen
-          name="detailsorder"
-          component={DetailsOrder}
-        />
-        <RootStack.Screen
-          name="historyback"
-          component={History}></RootStack.Screen>
       </RootStack.Group>
       <RootStack.Group screenOptions={{ headerShown: false }}>
         <RootStack.Screen
