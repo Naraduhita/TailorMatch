@@ -1,18 +1,18 @@
 import * as React from "react";
 import { View, Text } from "react-native";
 import { StatusBar } from "expo-status-bar";
-// import Background from "../components/Background";
+import LatarPage from "../components/LatarPage";
 
 export default function HomeScreen({ navigation }) {
   return (
-    <View className="bg-[#F2E5E5]">
+    <LatarPage>
       <Text
-        className="text-maroon items-start"
+        className="text-maroon items-start ml-4"
         // onPress={() => alert('This is the "Home" screen.')}
       >
         Current Location
       </Text>
       <StatusBar style="auto" />
-    </View>
+    </LatarPage>
   );
 }

@@ -3,6 +3,8 @@ import TabNavigator from "./TabNavigator";
 import Register from "../screens/auth/Register";
 import Login from "../screens/auth/Login";
 import GetStarted from "../screens/auth/GetStarted";
+import DetailsOrder from "../screens/history/DetailsOrder";
+import History from "../screens/history/History";
 
 const RootStack = createNativeStackNavigator();
 
@@ -28,6 +30,13 @@ function StackNavigator() {
           name="login"
           component={Login}
         />
+        <RootStack.Screen
+          name="detailsorder"
+          component={DetailsOrder}
+        />
+        <RootStack.Screen
+          name="historyback"
+          component={History}></RootStack.Screen>
       </RootStack.Group>
     </RootStack.Navigator>
   );
