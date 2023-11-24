@@ -10,7 +10,7 @@ export default function TrackOrder() {
   return (
     <SafeAreaView className="flex-1">
       <View className="relative flex flex-col">
-        <View className="absolute z-10 w-full pb-4 rounded-xl pt-7 bg-concrete">
+        <View className="absolute z-10 w-full pb-4 rounded-b-xl pt-7 bg-concrete">
           <Text className="text-xl font-semibold text-center">Track Order</Text>
         </View>
         <MapView
