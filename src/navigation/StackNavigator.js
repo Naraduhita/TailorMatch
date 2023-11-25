@@ -38,7 +38,7 @@ function StackNavigator() {
       <RootStack.Group screenOptions={{ headerShown: false }}>
         <RootStack.Screen
           name="measuring"
-          component={Meauring}
+          component={Measuring}
         />
         <RootStack.Screen
           name="deliver"
