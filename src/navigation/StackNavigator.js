@@ -9,6 +9,7 @@ import Sewing from "../screens/order/Sewing";
 import Thread from "../screens/home/Thread";
 import Chat from "../screens/Chat";
 import Measuring from "../screens/order/Meansuring";
+import DetailChat from "../screens/chat/DetailChat";
 
 const RootStack = createNativeStackNavigator();
 
@@ -59,12 +60,16 @@ function StackNavigator() {
           component={Thread}
         />
       </RootStack.Group>
-      {/* <RootStack.Group screenOptions={{ headerShown: true }}>
+      <RootStack.Group screenOptions={{ headerShown: true }}>
         <RootStack.Screen
           name="chat-tailor"
           component={Chat}
         />
-      </RootStack.Group> */}
+        <RootStack.Screen
+          name="detail-chat"
+          component={DetailChat}
+        />
+      </RootStack.Group>
     </RootStack.Navigator>
   );
 }

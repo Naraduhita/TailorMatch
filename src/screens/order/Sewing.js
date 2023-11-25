@@ -47,17 +47,16 @@ export default function DetailsOrder() {
           <BicycleSymbol />
         </IconWithTitleSewing>
       </TrackBarSewing>
-      <View className="mb-24 mr-2">
-        <View className="flex flex-row justify-between w-full mb-4">
-          <Text className="font-medium">#9632163716</Text>
-          <ColoredBox status={"Ongoing"} />
-        </View>
-        <OrderDetailBox
-          datetime={"12 November 2023 / 08:00"}
-          address={"Sutorejo Barat No. 36, Dukuh Sutorejo, Mulyosari, Surabaya"}
-          delivery={"Arrives in 1 hour"}
-        />
+      <View className="flex flex-row justify-between w-full mb-4 px-3">
+        <Text className="font-medium">#9632163716</Text>
+        <ColoredBox status={"Ongoing"} />
       </View>
+      <OrderDetailBox
+        datetime={"12 November 2023 / 08:00"}
+        address={"Sutorejo Barat No. 36, Dukuh Sutorejo, Mulyosari, Surabaya"}
+        delivery={"Arrives in 1 hour"}
+      />
+      <View className="mb-20" />
     </OrderTemplate>
   );
 }
