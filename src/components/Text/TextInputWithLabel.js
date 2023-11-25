@@ -2,7 +2,13 @@ import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import Feather from "@expo/vector-icons/Feather";
 
-export default function TextInputWithLabel({ label, placeholder, isPassword }) {
+export default function TextInputWithLabel({
+  label,
+  placeholder,
+  isPassword,
+  value,
+  onChange,
+}) {
   const [isVisible, setIsVisible] = useState(false);
 
   return (
@@ -12,6 +18,8 @@ export default function TextInputWithLabel({ label, placeholder, isPassword }) {
         <TextInput
           className="w-full px-3 py-1 rounded-md bg-gray"
           placeholder={placeholder}
+          value={value}
+          onChangeText={onChange}
         />
         {isPassword && (
           <TouchableOpacity

@@ -7,7 +7,7 @@ import ColoredButton from "../Button/ColoredButton";
 import LogoSVG from "../../../assets/logo.svg";
 import EllipseSVG from "../../../assets/ellipse.svg";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import register from "../../api/auth/register.js";
 import login from "../../api/auth/login.js";
 
@@ -16,40 +16,34 @@ export default function Template({ isRegister }) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
 
   const handlePress = async () => {
     try {
-      if (isRegister) {
-        const response = await register({
-          username,
-          email,
-          password,
-          role: "USER", // Sesuaikan role sesuai kebutuhan
-        });
-        if (response.status == 201) {
-          navigation.navigate("login");
-        } else {
-          // console.log("Register Error")
-          setError(response.message);
-        }
-        // Navigasi sesuai dengan kondisi isRegister
-      } else {
-        const response = await login({
-          email,
-          password,
-        });
+      const response = await register({
+        username,
+        email,
+        password,
+        role: "USER", // Sesuaikan role sesuai kebutuhan
+      });
 
-        if (response.status == 201) {
-          navigation.navigate("main");
-        } else {
-          setError(response.message);
-        }
+      // Navigasi sesuai dengan kondisi isRegister
+      if (isRegister) {
+        navigation.navigate("login");
+      } else {
+        navigation.navigate("main");
       }
     } catch (error) {
       console.error("Error:", error.message); // Tampilkan pesan kesalahan jika ada
     }
   };
+
+  // const handlePress = () => {
+  //   if (isRegister) {
+  //     navigation.navigate("login");
+  //   } else {
+  //     navigation.navigate("main");
+  //   }
+  // };
 
   return (
     <SafeAreaView className="flex-1 w-full">
@@ -108,9 +102,6 @@ export default function Template({ isRegister }) {
             styleText={"text-white"}
             onPress={handlePress}
           />
-          {error != "" && (
-            <Text className="text-sm font-bold text-left">{error}</Text>
-          )}
         </View>
         <View className="absolute flex flex-row items-center justify-center w-full bottom-20 gap-x-1">
           <Text className="font-bold">
