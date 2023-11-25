@@ -36,19 +36,6 @@ export default function History() {
     },
   ]);
 
-  const colorStatus = (status) => {
-    switch (status) {
-      case "Ongoing":
-        return "bg-yellow";
-      case "Done":
-        return "bg-green";
-      case "Cancelled":
-        return "bg-red";
-      default:
-        return "";
-    }
-  };
-
   return (
     <Background>
       {store.length === 0 ? (

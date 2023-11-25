@@ -17,7 +17,7 @@ export default function ColoredBox({ status }) {
 
   return (
     <Text
-      className={`text-white text-center font-medium rounded-md px-2 py-0.5 text-xs ${colorStatus(
+      className={`text-white text-center font-medium px-1 py-0.5 text-xs rounded-xl ${colorStatus(
         status,
       )}`}>
       {status}

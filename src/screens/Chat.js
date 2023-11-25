@@ -1,17 +1,18 @@
 import * as React from "react";
 import { View, Text } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import Background from "../components/Background";
+import LatarPage from "../components/LatarPage";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 export default function Chat({ navigation }) {
   return (
-    <Background>
+    <LatarPage>
       <Text
-        className="text-green-500 font-bold"
-        onPress={() => navigation.navigate("Chat")}>
-        Chat
+        className="font-semibold"
+        // onPress={() => navigation.navigate("Chat")}
+      >
+        hai
       </Text>
-      <StatusBar style="auto" />
-    </Background>
+    </LatarPage>
   );
 }

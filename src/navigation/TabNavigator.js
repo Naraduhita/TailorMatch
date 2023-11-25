@@ -55,11 +55,10 @@ function TabNavigator() {
         name={homeName}
         component={HomeScreen}
         options={{
-          headerStyle: {
-            backgroundColor: "#F2E5E5",
-          },
+          headerShown: false, // Menyembunyikan header
         }}
       />
+
       <Tab.Screen
         name={chatFitur}
         component={Chat}
