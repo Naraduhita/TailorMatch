@@ -6,7 +6,12 @@ import GetStarted from "../screens/auth/GetStarted";
 import Deliver from "../screens/order/Deliver";
 import TrackOrder from "../screens/order/TrackOrder";
 import Sewing from "../screens/order/Sewing";
+import Chat from "../screens/Chat";
 import DetailChat from "../screens/chat/DetailChat";
+import Bills from "../screens/chat/Bills";
+import Transaction from "../screens/transaction/Transaction";
+import TransFailed from "../screens/transaction/TransFailed";
+import TransSuccess from "../screens/transaction/TransSuccess";
 
 const RootStack = createNativeStackNavigator();
 
@@ -51,6 +56,34 @@ function StackNavigator() {
         <RootStack.Screen
           name="detail-chat"
           component={DetailChat}
+        />
+      </RootStack.Group>
+      <RootStack.Group screenOptions={{ headerShown: false }}>
+        <RootStack.Screen
+          name="bills"
+          component={Bills}
+        />
+      </RootStack.Group>
+      <RootStack.Group screenOptions={{ headerShown: false }}>
+        <RootStack.Screen
+          name="chat"
+          component={Chat}
+        />
+      </RootStack.Group>
+      <RootStack.Group screenOptions={{ headerShown: false }}>
+        <RootStack.Screen
+          name="failed"
+          component={TransFailed}
+        />
+        <RootStack.Screen
+          name="success"
+          component={TransSuccess}
+        />
+      </RootStack.Group>
+      <RootStack.Group screenOptions={{ headerShown: false }}>
+        <RootStack.Screen
+          name="transaction"
+          component={Transaction}
         />
       </RootStack.Group>
     </RootStack.Navigator>
