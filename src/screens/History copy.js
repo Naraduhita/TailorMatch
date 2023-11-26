@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Image, FlatList, TouchableOpacity } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import Background from "../components/Background";
@@ -8,34 +8,35 @@ import history from "../api/auth/history.js";
 
 export default function History() {
   const navigation = useNavigation();
+  const [store, setStore] = useState([]);
 
-  const [store, setStore] = useState([
-    {
-      name: "Sweetest Stitch",
-      key: "1",
-      date: "12 November 2023",
-      status: "Ongoing",
-    },
-    {
-      name: "Doodled Threads",
-      key: "2",
-      date: "23 November 2023",
-      status: "Done",
-    },
-    { name: "Ruffled Rose", key: "3", date: "12 June 2023", status: "Ongoing" },
-    {
-      name: "Sugar Plum Closet",
-      key: "4",
-      date: "9 June 2023",
-      status: "Done",
-    },
-    {
-      name: "Cuddly Couture",
-      key: "5",
-      date: "1 June 2023",
-      status: "Cancelled",
-    },
-  ]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await history(); // Panggil fungsi history yang menggunakan Axios
+
+        if (result.data.status === "success") {
+          const formattedData = result.data.data.map((item, index) => ({
+            // Mengakses result.data.data
+            name: item.delivery_address,
+            key: String(index + 1),
+            date: item.order_date.split("T")[0],
+            status:
+              item.status.charAt(0).toUpperCase() +
+              item.status.slice(1).toLowerCase(),
+          }));
+
+          setStore(formattedData);
+        } else {
+          console.error("Failed to fetch data:", result.message);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <Background>

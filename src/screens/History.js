@@ -24,6 +24,7 @@ export default function History() {
             status:
               item.status.charAt(0).toUpperCase() +
               item.status.slice(1).toLowerCase(),
+            order_id: item.id,
           }));
 
           setStore(formattedData);
@@ -64,7 +65,10 @@ export default function History() {
             renderItem={({ item }) => (
               <ItemHistory
                 item={item}
-                onPress={() => navigation.navigate("sewing")}
+                onPress={() => {
+                  console.log("Order ID:", item.order_id); // Memeriksa nilai order_id
+                  navigation.navigate("sewing", { order_id: item.order_id });
+                }}
               />
             )}
           />
