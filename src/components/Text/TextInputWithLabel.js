@@ -20,6 +20,7 @@ export default function TextInputWithLabel({
           placeholder={placeholder}
           value={value}
           onChangeText={onChange}
+          secureTextEntry={isPassword && !isVisible}
         />
         {isPassword && (
           <TouchableOpacity

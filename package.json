@@ -20,6 +20,8 @@
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.9.17",
     "axios": "^1.6.2",
+    "base-64": "^1.0.0",
+    "core-js": "^3.33.3",
     "expo": "~49.0.15",
     "expo-camera": "~13.4.4",
     "expo-document-picker": "~11.5.4",

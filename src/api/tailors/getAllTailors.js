@@ -1,20 +1,19 @@
 import axios from "axios";
 import { BASE_URL } from "../base-url";
 
-const login = async ({ email, password }) => {
+const getAllTailors = async ({ token }) => {
   try {
-    const data = {
-      email,
-      password,
-    };
+    const url = `${BASE_URL}/tailor/all`;
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-    const url = `${BASE_URL}/auth/login`;
-    const response = await axios.post(url, data);
-
-    if (response.status === 201) {
+    if (response.status === 200) {
       return {
         status: response.status,
-        data: response.data.data,
+        data: response.data,
       };
     } else {
       throw new Error(JSON.stringify(response.data));
@@ -50,5 +49,4 @@ const login = async ({ email, password }) => {
     }
   }
 };
-
-export default login;
+export default getAllTailors;

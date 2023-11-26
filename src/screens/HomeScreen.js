@@ -7,18 +7,20 @@ import LatarPage from "../components/LatarPage";
 import NotificationSymbol from "../../assets/notification.svg";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import SearchBar from "../components/Bar/SearchBar";
+import { useAuthContext } from "../contexts/AuthContext";
 
 export default function HomeScreen() {
   const navigation = useNavigation();
+  const auth = useAuthContext();
 
   return (
     <LatarPage>
       <SafeAreaView className="px-8 mb-7">
-        <View className="flex-row justify-between w-full mt-4 items-center">
-          <View className="flex flex-col-2 justify-start mt-1">
-            <Text className="text-maroon text-xs">Current Location</Text>
+        <View className="flex-row items-center justify-between w-full mt-4">
+          <View className="flex justify-start mt-1 flex-col-2">
+            <Text className="text-xs text-maroon">Current Location</Text>
 
-            <View className="flex flex-row items-center gap-x-1 mt-1">
+            <View className="flex flex-row items-center mt-1 gap-x-1">
               <Ionicons
                 name="location"
                 size={15}
@@ -37,9 +39,9 @@ export default function HomeScreen() {
 
       <ScrollView>
         <View className="px-10 mb-4">
-          <View className="flex flex-row justify-between items-center">
-            <Text className="text-base font-bold mb-2">Top Choises</Text>
-            <Text className="font-medium text-maroon text-xs">See More</Text>
+          <View className="flex flex-row items-center justify-between">
+            <Text className="mb-2 text-base font-bold">Top Choises</Text>
+            <Text className="text-xs font-medium text-maroon">See More</Text>
           </View>
 
           <ScrollView
@@ -47,8 +49,8 @@ export default function HomeScreen() {
             showsHorizontalScrollIndicator={false}>
             <TouchableOpacity
               onPress={() => navigation.navigate("doodle-thread")}>
-              <View className="w-40 h-40 bg-white mr-2 rounded-2xl">
-                <Text className="font-bold px-2 mt-28 ">Doodled Threads</Text>
+              <View className="w-40 h-40 mr-2 bg-white rounded-2xl">
+                <Text className="px-2 font-bold mt-28 ">Doodled Threads</Text>
                 <View className="bg-[#fadadd] mb-12 absolute top-2 left-2 right-2 bottom-2 rounded-md"></View>
               </View>
             </TouchableOpacity>
@@ -56,8 +58,8 @@ export default function HomeScreen() {
             {["Sweetest Stitch", 3, 4, 5, 6].map((tile) => (
               <View
                 key={tile}
-                className="w-40 h-40 bg-white mr-2 rounded-2xl">
-                <Text className="font-bold px-2 mt-28 ">{tile}</Text>
+                className="w-40 h-40 mr-2 bg-white rounded-2xl">
+                <Text className="px-2 font-bold mt-28 ">{tile}</Text>
                 <View className="bg-[#fadadd] mb-12 absolute top-2 left-2 right-2 bottom-2 rounded-md"></View>
               </View>
             ))}
@@ -65,9 +67,9 @@ export default function HomeScreen() {
         </View>
 
         <View className="px-10 mb-4">
-          <View className="flex flex-row justify-between items-center">
-            <Text className="text-base font-bold mb-2">Tailor Nearby</Text>
-            <Text className="font-medium text-maroon text-xs">See More</Text>
+          <View className="flex flex-row items-center justify-between">
+            <Text className="mb-2 text-base font-bold">Tailor Nearby</Text>
+            <Text className="text-xs font-medium text-maroon">See More</Text>
           </View>
           <ScrollView
             horizontal={true}
@@ -76,10 +78,10 @@ export default function HomeScreen() {
               (nearby, index) => (
                 <View
                   key={nearby}
-                  className="w-40 h-40 bg-white mr-2 rounded-2xl">
-                  <View className="px-2 mt-28 flex-row justify-between items-center">
+                  className="w-40 h-40 mr-2 bg-white rounded-2xl">
+                  <View className="flex-row items-center justify-between px-2 mt-28">
                     <Text className="font-bold">{nearby}</Text>
-                    <Text className="font-light text-old-rose text-xs">
+                    <Text className="text-xs font-light text-old-rose">
                       {["200m", "300m", "400m", 4, 5, 6][index]}
                     </Text>
                   </View>
@@ -91,9 +93,9 @@ export default function HomeScreen() {
         </View>
 
         <View className="px-10 mb-4">
-          <View className="flex flex-row justify-between items-center">
-            <Text className="text-base font-bold mb-2">Inspiration</Text>
-            <Text className="font-medium text-maroon text-xs">See More</Text>
+          <View className="flex flex-row items-center justify-between">
+            <Text className="mb-2 text-base font-bold">Inspiration</Text>
+            <Text className="text-xs font-medium text-maroon">See More</Text>
           </View>
           <ScrollView
             horizontal={true}
@@ -102,8 +104,8 @@ export default function HomeScreen() {
               (nearby) => (
                 <View
                   key={nearby}
-                  className="w-40 h-40 bg-white mr-2 rounded-2xl">
-                  <Text className="font-bold px-2 mt-28 ">{nearby}</Text>
+                  className="w-40 h-40 mr-2 bg-white rounded-2xl">
+                  <Text className="px-2 font-bold mt-28 ">{nearby}</Text>
                   <View className="bg-[#fadadd] mb-12 absolute top-2 left-2 right-2 bottom-2 rounded-md"></View>
                 </View>
               ),
@@ -112,9 +114,9 @@ export default function HomeScreen() {
         </View>
 
         <View className="px-10 mb-4">
-          <View className="flex flex-row justify-between items-center">
-            <Text className="text-base font-bold mb-2">Favorite</Text>
-            <Text className="font-medium text-maroon text-xs">See More</Text>
+          <View className="flex flex-row items-center justify-between">
+            <Text className="mb-2 text-base font-bold">Favorite</Text>
+            <Text className="text-xs font-medium text-maroon">See More</Text>
           </View>
           <ScrollView
             horizontal={true}
@@ -123,8 +125,8 @@ export default function HomeScreen() {
               (nearby) => (
                 <View
                   key={nearby}
-                  className="w-40 h-40 bg-white mr-2 rounded-2xl">
-                  <Text className="font-bold px-2 mt-28 ">{nearby}</Text>
+                  className="w-40 h-40 mr-2 bg-white rounded-2xl">
+                  <Text className="px-2 font-bold mt-28 ">{nearby}</Text>
                   <View className="bg-[#fadadd] mb-12 absolute top-2 left-2 right-2 bottom-2 rounded-md"></View>
                 </View>
               ),
