@@ -13,7 +13,7 @@ export default function HomeScreen() {
 
   return (
     <LatarPage>
-      <SafeAreaView className="px-8 mb-7">
+      <SafeAreaView className="px-8 mb-3">
         <View className="flex-row justify-between w-full mt-4 items-center">
           <View className="flex flex-col-2 justify-start mt-1">
             <Text className="text-maroon text-xs">Current Location</Text>

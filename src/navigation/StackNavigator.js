@@ -8,7 +8,12 @@ import TrackOrder from "../screens/order/TrackOrder";
 import Sewing from "../screens/order/Sewing";
 import Thread from "../screens/home/Thread";
 import Chat from "../screens/Chat";
-import Measuring from "../screens/order/Meansuring";
+import Measuring from "../screens/cart/MeansuringPajamas";
+import MeasuringDaily from "../screens/cart/MeansuringDaily";
+import MeansuringParty from "../screens/cart/MeansuringParty";
+import ViewCart from "../screens/cart/ViewCart";
+import AddItem from "../screens/cart/AddItem";
+import EmpetyCart from "../screens/cart/EmpetyCart";
 
 const RootStack = createNativeStackNavigator();
 
@@ -36,6 +41,26 @@ function StackNavigator() {
         />
       </RootStack.Group>
       <RootStack.Group screenOptions={{ headerShown: false }}>
+        <RootStack.Screen
+          name="empty-cart"
+          component={EmpetyCart}
+        />
+        <RootStack.Screen
+          name="view-cart"
+          component={ViewCart}
+        />
+        <RootStack.Screen
+          name="add-item"
+          component={AddItem}
+        />
+        <RootStack.Screen
+          name="measuring-party"
+          component={MeansuringParty}
+        />
+        <RootStack.Screen
+          name="measuring-daily"
+          component={MeasuringDaily}
+        />
         <RootStack.Screen
           name="measuring"
           component={Measuring}
