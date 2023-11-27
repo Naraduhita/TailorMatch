@@ -14,6 +14,7 @@ import MeansuringParty from "../screens/cart/MeansuringParty";
 import ViewCart from "../screens/cart/ViewCart";
 import AddItem from "../screens/cart/AddItem";
 import EmpetyCart from "../screens/cart/EmpetyCart";
+import CreateOrder from "../screens/cart/CreateOrder";
 
 const RootStack = createNativeStackNavigator();
 
@@ -41,6 +42,10 @@ function StackNavigator() {
         />
       </RootStack.Group>
       <RootStack.Group screenOptions={{ headerShown: false }}>
+        <RootStack.Screen
+          name="create-order-tailor"
+          component={CreateOrder}
+        />
         <RootStack.Screen
           name="empty-cart"
           component={EmpetyCart}

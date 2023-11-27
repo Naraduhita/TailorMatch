@@ -62,7 +62,7 @@ export default function History() {
             renderItem={({ item }) => (
               <ItemHistory
                 item={item}
-                onPress={() => navigation.navigate("empty-cart")}
+                onPress={() => navigation.navigate("create-order-tailor")}
               />
             )}
           />

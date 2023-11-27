@@ -7,6 +7,7 @@ import LatarPage from "../components/LatarPage";
 import NotificationSymbol from "../../assets/notification.svg";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import SearchBar from "../components/Bar/SearchBar";
+import Feather from "@expo/vector-icons/Feather";
 
 export default function HomeScreen() {
   const navigation = useNavigation();
@@ -132,6 +133,19 @@ export default function HomeScreen() {
           </ScrollView>
         </View>
       </ScrollView>
+      <View className="bottom-0 absolute mb-6 ml-[300px]">
+        <TouchableOpacity
+          onPress={() => navigation.navigate("create-order-tailor")}>
+          <View className="bg-maroon rounded-full w-14 h-14 items-center justify-center">
+            <Feather
+              className=""
+              name="plus"
+              size={30}
+              color="white"
+            />
+          </View>
+        </TouchableOpacity>
+      </View>
     </LatarPage>
   );
 }
