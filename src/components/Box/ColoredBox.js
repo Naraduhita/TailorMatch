@@ -10,6 +10,8 @@ export default function ColoredBox({ status }) {
         return "bg-green";
       case "Cancelled":
         return "bg-red";
+      case "Awaiting":
+        return "bg-gray";
       default:
         return "";
     }

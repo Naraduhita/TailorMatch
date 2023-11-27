@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Image, Text, TouchableOpacity, FlatList } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import OrderTemplate from "../../components/Order/OrderTemplate";
 import IconWithTitleSewing from "../../components/Box/IconWithTitleSewing";
@@ -11,23 +11,42 @@ import IconSewing from "../../components/Box/IconSewing";
 import BicycleSymbol from "../../../assets/bicycleDark.svg";
 import SewingSymbol from "../../../assets/sewing machine.svg";
 import FittingSymbol from "../../../assets/fitting.svg";
+import sewing from "../../api/auth/sewing.js";
 
 export default function DetailsOrder() {
   const navigation = useNavigation();
+  const route = useRoute();
+  const { order_id } = route.params;
+  const [detail, setDetail] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await sewing(order_id); // Panggil fungsi history yang menggunakan Axios
 
-  const [detail, setdetail] = useState([
-    {
-      name: "Sweetest Stitch",
-      date: "12 November 2023",
-      key: "1",
-      address: "Sutorejo Barat No.36, Dukuh Suterejo, Mulyosari, Surabaya",
-      estimated: "Finish in 1 week",
-      status: "Ongoing",
-    },
-  ]);
+        if (result.data.status === "success") {
+          const formattedData = {
+            name: result.data.data.delivery_address,
+            date: result.data.data.order_date.split("T")[0],
+            key: "1",
+            status:
+              result.data.data.status.charAt(0).toUpperCase() +
+              result.data.data.status.slice(1).toLowerCase(),
+          };
+          setDetail(formattedData);
+        } else {
+          console.error("Failed to fetch data:", result.message);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  console.log(detail);
 
   return (
-    <OrderTemplate>
+    <OrderTemplate name={detail.name}>
       <IconSewing />
       <TrackBarSewing>
         <IconWithTitleSewing title={"Measuring"}>
@@ -49,11 +68,11 @@ export default function DetailsOrder() {
       </TrackBarSewing>
       <View className="flex flex-row justify-between w-full mb-4 px-3">
         <Text className="font-medium">#9632163716</Text>
-        <ColoredBox status={"Ongoing"} />
+        <ColoredBox status={detail.status} />
       </View>
       <OrderDetailBox
-        datetime={"12 November 2023 / 08:00"}
-        address={"Sutorejo Barat No. 36, Dukuh Sutorejo, Mulyosari, Surabaya"}
+        datetime={detail.date}
+        address={detail.name}
         delivery={"Arrives in 1 hour"}
       />
       <View className="mb-20" />
