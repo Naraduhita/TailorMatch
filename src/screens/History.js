@@ -25,6 +25,7 @@ export default function History() {
               item.status.charAt(0).toUpperCase() +
               item.status.slice(1).toLowerCase(),
             order_id: item.id,
+            state: item.state,
           }));
 
           setStore(formattedData);
@@ -38,6 +39,9 @@ export default function History() {
 
     fetchData();
   }, []);
+
+  console.log("store");
+  console.log(store);
 
   return (
     <Background>
@@ -66,8 +70,13 @@ export default function History() {
               <ItemHistory
                 item={item}
                 onPress={() => {
-                  console.log("Order ID:", item.order_id); // Memeriksa nilai order_id
-                  navigation.navigate("sewing", { order_id: item.order_id });
+                  // console.log("Order ID:", item.order_id); // Memeriksa nilai order_id
+                  // navigation.navigate("sewing", { order_id: item.order_id });
+                  if (item.state === "AWAITING") {
+                    navigation.navigate("sewing", { order_id: item.order_id });
+                  } else if (item.state === "DELIVER") {
+                    navigation.navigate("deliver", { order_id: item.order_id });
+                  }
                 }}
               />
             )}

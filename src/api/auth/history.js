@@ -4,17 +4,17 @@ const history = async () => {
   try {
     const config = {
       headers: {
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk1YjAyMTgxLTRlYjYtNDcwYi04ZjVjLWQ2MTQyZTI3MDU0NiIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzAxMDI1NTEyLCJleHAiOjE3MDEwMjczMTJ9.eOf1Upl3Cjrc52OZa-UQJiodBdeCQCVBeKur9sUMixk`,
+        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk1YjAyMTgxLTRlYjYtNDcwYi04ZjVjLWQ2MTQyZTI3MDU0NiIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzAxMDU3MDk1LCJleHAiOjE3MDEwNTg4OTV9.waa3LpcPTC01pWRgrT1qdxpbXcRYX7Wv6i5cezheJrc`,
       },
     };
 
     const url = "http://192.168.43.216:3000/order/all";
     const response = await axios.get(url, config);
 
-    console.log("response");
-    console.log(response);
-    console.log(response.data);
-    console.log(response.data.data[0].state);
+    // console.log("response");
+    // console.log(response);
+    // console.log(response.data);
+    // console.log(response.data.data[0].state);
 
     if (response.status === 200) {
       return {

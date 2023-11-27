@@ -46,7 +46,7 @@ export default function DetailsOrder() {
   console.log(detail);
 
   return (
-    <OrderTemplate>
+    <OrderTemplate name={detail.name}>
       <IconSewing />
       <TrackBarSewing>
         <IconWithTitleSewing title={"Measuring"}>

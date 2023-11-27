@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Feather from "@expo/vector-icons/Feather";
 
-export default function OrderTemplate({ children }) {
+export default function OrderTemplate({ children, name }) {
   const navigation = useNavigation();
 
   return (
@@ -24,9 +24,7 @@ export default function OrderTemplate({ children }) {
             <Text className="w-full text-lg font-normal text-center">
               Details Order
             </Text>
-            <Text className="w-full font-light text-center">
-              Sweetest Stitch
-            </Text>
+            <Text className="w-full font-light text-center">{name}</Text>
           </View>
         </View>
         {children}
