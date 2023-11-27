@@ -4,13 +4,13 @@ import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Feather from "@expo/vector-icons/Feather";
 
-export default function ThreadsHome({ children }) {
+export default function ThreadsHome({ children, tailor }) {
   const navigation = useNavigation();
 
   return (
-    <SafeAreaView className="bg-white flex-1">
-      <SafeAreaView className="flex-1 mt-16 ">
-        <View className="flex flex-col items-start justify-center flex-1 mx-5 pb-16">
+    <SafeAreaView className="flex-1 bg-white">
+      <View className="flex-1 mt-16">
+        <View className="flex flex-col items-start justify-center flex-1 pb-16 mx-5">
           <View className="flex flex-row items-center justify-start">
             <TouchableOpacity
               onPress={() => navigation.goBack()}
@@ -21,16 +21,13 @@ export default function ThreadsHome({ children }) {
                 color="black"
               />
             </TouchableOpacity>
-            <View className="flex flex-col items-center justify-center w-full gap-y-1">
-              <Text className="w-full text-lg font-normal text-center">
-                Doodled Threads
-              </Text>
-              <Text className="w-full font-light text-center">Daily Wear</Text>
-            </View>
+            <Text className="w-full text-lg font-normal text-center">
+              {tailor.name}
+            </Text>
           </View>
           {children}
         </View>
-      </SafeAreaView>
+      </View>
     </SafeAreaView>
   );
 }

@@ -1,14 +1,17 @@
 import * as React from "react";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, ScrollView, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import Background from "../components/Background";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function Profile({ navigation }) {
+export default function Profile() {
+  const navigation = useNavigation();
+
   return (
     <Background>
-      <SafeAreaView className="container flex-1">
+      <ScrollView className="container flex-1 mb-5" showsVerticalScrollIndicator={false}>
         <View className="flex-col items-center">
           <Image
             className="border-4 rounded-full w-36 h-36 border-pink"
@@ -19,7 +22,7 @@ export default function Profile({ navigation }) {
         </View>
 
         <View className="flex-col items-center mt-4">
-          <View className="justify-start py-2 bg-white  rounded-2xl w-72">
+          <View className="justify-start py-2 bg-white rounded-2xl w-72">
             <View className="flex-row items-center mx-6">
               <Ionicons
                 name="person-circle-outline"
@@ -30,7 +33,7 @@ export default function Profile({ navigation }) {
             </View>
           </View>
 
-          <View className="justify-start py-2 mt-4 bg-white  rounded-2xl w-72">
+          <View className="justify-start py-2 mt-4 bg-white rounded-2xl w-72">
             <View className="flex-row items-center mx-6">
               <Ionicons
                 name="globe-outline"
@@ -41,7 +44,7 @@ export default function Profile({ navigation }) {
             </View>
           </View>
 
-          <View className="justify-start py-2 mt-4 bg-white  rounded-2xl w-72">
+          <View className="justify-start py-2 mt-4 bg-white rounded-2xl w-72">
             <View className="flex-row items-center mx-6">
               <Ionicons
                 name="construct-outline"
@@ -52,7 +55,7 @@ export default function Profile({ navigation }) {
             </View>
           </View>
 
-          <View className="justify-start py-2 mt-4 bg-white  rounded-2xl w-72">
+          <View className="justify-start py-2 mt-4 bg-white rounded-2xl w-72">
             <View className="flex-row items-center mx-6">
               <Ionicons
                 name="information-circle-outline"
@@ -62,10 +65,19 @@ export default function Profile({ navigation }) {
               <Text className="mx-2 text-xl font-semibold">Help & Center</Text>
             </View>
           </View>
-        </View>
-      </SafeAreaView>
 
-      <StatusBar style="auto" />
+          <TouchableOpacity className="justify-start py-2 mt-4 bg-white rounded-2xl w-72" onPress={() => navigation.navigate('get-started')}>
+            <View className="flex-row items-center mx-6">
+              <Ionicons
+                name="information-circle-outline"
+                size={50}
+                color="#BA7E80"
+              />
+              <Text className="mx-2 text-xl font-semibold">Get Started</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </Background>
   );
 }

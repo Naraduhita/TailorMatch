@@ -6,10 +6,7 @@ import TextInputWithLabel from "../Text/TextInputWithLabel";
 import ColoredButton from "../Button/ColoredButton";
 import LogoSVG from "../../../assets/logo.svg";
 import EllipseSVG from "../../../assets/ellipse.svg";
-import axios from "axios";
 import { useState } from "react";
-import register from "../../api/auth/register.js";
-import login from "../../api/auth/login.js";
 import { useAuthContext } from "../../contexts/AuthContext.js";
 
 export default function Template({ isRegister }) {
@@ -56,6 +53,7 @@ export default function Template({ isRegister }) {
 
         if (response.status == 201) {
           navigation.navigate("main");
+          console.log(response.data)
         } else {
           setError(response.message);
         }

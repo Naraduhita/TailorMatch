@@ -10,12 +10,35 @@ import Thread from "../screens/home/Thread";
 import Chat from "../screens/Chat";
 import Measuring from "../screens/order/Meansuring";
 import DetailChat from "../screens/chat/DetailChat";
+import { useAuthContext } from "../contexts/AuthContext";
+import React, { useState, lazy, useEffect } from 'react';
 
 const RootStack = createNativeStackNavigator();
 
 function StackNavigator() {
+  const auth = useAuthContext();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [firstScreen, setFirstScreen] = useState('');
+
+  useEffect(() => {
+    const checkUserToken = async () => {
+      const user_token = await auth.CheckToken();
+      console.log('user_token', user_token);
+      if (user_token != null) {
+        setIsLoggedIn(true);
+        setFirstScreen('main');
+      } else {
+        setIsLoggedIn(false);
+        setFirstScreen('get-sarted');
+      }
+    };
+
+    checkUserToken();
+  }, []);
+
   return (
-    <RootStack.Navigator initialRouteName="get-started">
+    <RootStack.Navigator initialRouteName={`${firstScreen}`}>
+      {/* <RootStack.Navigator initialRouteName='get-started'> */}
       <RootStack.Group screenOptions={{ headerShown: false }}>
         <RootStack.Screen
           name="main"
@@ -56,7 +79,7 @@ function StackNavigator() {
       </RootStack.Group>
       <RootStack.Group screenOptions={{ headerShown: false }}>
         <RootStack.Screen
-          name="doodle-thread"
+          name="detail-tailor"
           component={Thread}
         />
       </RootStack.Group>

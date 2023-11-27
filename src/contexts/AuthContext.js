@@ -3,8 +3,7 @@ import { jwtDecode } from "jwt-decode";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import login from "../api/auth/login";
 import register from "../api/auth/register";
-import parseJwt from "../utils/decode";
-// import "core-js/stable/atob";
+import { useNavigation } from "@react-navigation/native";
 import { decode } from "base-64";
 global.atob = decode;
 
@@ -15,8 +14,8 @@ const initialAuthState = {
   user: null,
   errorMessages: "",
   SignIn: login,
-  SignOut: () => {},
-  Register: async () => {},
+  SignOut: () => { },
+  Register: async () => { },
   CheckToken: async () => null,
   getToken: async () => null,
 };
@@ -100,6 +99,7 @@ export const useAuthContext = () => {
 
 const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AuthReducer, initialAuthState);
+  const navigation = useNavigation();
 
   const SignIn = async ({ email, password }) => {
     try {
@@ -149,6 +149,7 @@ const AuthProvider = ({ children }) => {
     console.log("masuk sini gaessss");
     dispatch({ type: AuthAction.SIGN_OUT });
     // TODO: redirect to login page
+    navigation.navigate("login");
   };
 
   const Register = async ({ username, email, password, role }) => {

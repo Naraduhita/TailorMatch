@@ -19,9 +19,9 @@ const SearchBar = ({ onSearch }) => {
   };
 
   return (
-    <View className="flex-row items-center bg-[#ffff] rounded p-1 mx-4 mt-4">
+    <View className="flex-row items-center bg-[#ffff] rounded p-1 mt-4">
       <TouchableOpacity
-        className="px-2 "
+        className="px-2"
         onPress={handleSearch}>
         <Ionicons
           name="search"
