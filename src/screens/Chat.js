@@ -34,7 +34,7 @@ export default function Chat({ navigation }) {
         })
       }
       className="relative flex items-center mx-20 mb-2 ">
-      <View className="flex-row items-center border-b-2 border-b-gray">
+      <View className="flex-row items-center border-b-2 border-b-white">
         <Image
           source={item.userImg}
           resizeMode="contain"

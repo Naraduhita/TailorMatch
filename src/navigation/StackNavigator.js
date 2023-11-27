@@ -12,6 +12,8 @@ import Bills from "../screens/chat/Bills";
 import Transaction from "../screens/transaction/Transaction";
 import TransFailed from "../screens/transaction/TransFailed";
 import TransSuccess from "../screens/transaction/TransSuccess";
+import InOrder from "../screens/home-tailor/InOrder";
+import OrderNum from "../screens/home-tailor/OrderNum";
 
 const RootStack = createNativeStackNavigator();
 
@@ -84,6 +86,16 @@ function StackNavigator() {
         <RootStack.Screen
           name="transaction"
           component={Transaction}
+        />
+      </RootStack.Group>
+      <RootStack.Group screenOptions={{ headerShown: false }}>
+        <RootStack.Screen
+          name="in-order"
+          component={InOrder}
+        />
+        <RootStack.Screen
+          name="order-num"
+          component={OrderNum}
         />
       </RootStack.Group>
     </RootStack.Navigator>
