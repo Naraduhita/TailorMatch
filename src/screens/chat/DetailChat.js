@@ -16,11 +16,11 @@ export default function DetailChat({ navigation }) {
         user: {
           _id: 2,
           name: "React Native",
+          color: "white",
         },
       },
       {
         _id: 2,
-        text: "Hello there",
         createdAt: new Date(),
         user: {
           _id: 3,
@@ -64,7 +64,7 @@ export default function DetailChat({ navigation }) {
         {...props}
         wrapperStyle={{
           right: {
-            backgroundColor: "white",
+            backgroundColor: props.currentMessage.user.color || "green",
           },
         }}
         textStyle={{
@@ -125,8 +125,8 @@ export default function DetailChat({ navigation }) {
           user={{
             _id: 1,
           }}
-          renderBubble={renderBubble}
           renderMessage={renderMessage}
+          renderBubble={renderBubble}
           alwaysShowSend
           renderSend={renderSend}
           scrollToBottom

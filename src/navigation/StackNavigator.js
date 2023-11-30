@@ -7,13 +7,14 @@ import Deliver from "../screens/order/Deliver";
 import TrackOrder from "../screens/order/TrackOrder";
 import Sewing from "../screens/order/Sewing";
 import Chat from "../screens/Chat";
-import DetailChat from "../screens/chat/DetailChat";
+import DetailMessage from "../screens/chat/DetailMessage";
 import Bills from "../screens/chat/Bills";
 import Transaction from "../screens/transaction/Transaction";
 import TransFailed from "../screens/transaction/TransFailed";
 import TransSuccess from "../screens/transaction/TransSuccess";
 import InOrder from "../screens/home-tailor/InOrder";
 import OrderNum from "../screens/home-tailor/OrderNum";
+import MessagesList from "../components/chat/MessagesList";
 
 const RootStack = createNativeStackNavigator();
 
@@ -56,8 +57,8 @@ function StackNavigator() {
       </RootStack.Group>
       <RootStack.Group screenOptions={{ headerShown: false }}>
         <RootStack.Screen
-          name="detail-chat"
-          component={DetailChat}
+          name="detail-message"
+          component={DetailMessage}
         />
       </RootStack.Group>
       <RootStack.Group screenOptions={{ headerShown: false }}>
@@ -96,6 +97,12 @@ function StackNavigator() {
         <RootStack.Screen
           name="order-num"
           component={OrderNum}
+        />
+      </RootStack.Group>
+      <RootStack.Group screenOptions={{ headerShown: false }}>
+        <RootStack.Screen
+          name="message-list"
+          component={MessagesList}
         />
       </RootStack.Group>
     </RootStack.Navigator>

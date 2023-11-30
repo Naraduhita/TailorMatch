@@ -29,7 +29,7 @@ export default function Chat({ navigation }) {
     <TouchableOpacity
       key={index}
       onPress={() =>
-        navigation.navigate("detail-chat", {
+        navigation.navigate("detail-message", {
           userName: item.userName,
         })
       }
