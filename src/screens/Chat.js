@@ -30,10 +30,10 @@ export default function Chat({ navigation }) {
       key={index}
       onPress={() =>
         navigation.navigate("detail-chat", {
-          userName: item.userName,
+          username: item.userName,
         })
       }
-      className="relative flex items-center mx-20 mb-2 ">
+      className="flex items-center mx-12 mb-2">
       <View className="flex-row items-center border-b-2 border-b-gray">
         <Image
           source={item.userImg}
@@ -50,18 +50,17 @@ export default function Chat({ navigation }) {
 
   return (
     <Background>
-      <SafeAreaView className="container flex-1">
+      <View className="container flex-1">
         <View
           id="search"
-          className="flex-wrap justify-around h-10 px-20 mx-12 mb-2 bg-white rounded-full">
+          className="flex-wrap justify-around h-10 px-4 mb-2 bg-white rounded-full mx-7">
           <Ionicons
             name="ios-search-outline"
             size={23}
             color="grey"
           />
-
           <TextInput
-            className="w-full h-full mx-4 "
+            className="w-full h-full mx-4"
             value={search}
             onChangeText={handleSearch}
             placeholder="Search In Chats..."
@@ -76,9 +75,8 @@ export default function Chat({ navigation }) {
           data={filteredUsers}
           renderItem={renderItem}
           keyExtractor={(item) => item.id.toString()}
-          className=""
         />
-      </SafeAreaView>
+      </View>
     </Background>
   );
 }

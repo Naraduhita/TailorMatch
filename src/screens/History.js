@@ -17,7 +17,6 @@ export default function History() {
 
         if (result.data.status === "success") {
           const formattedData = result.data.data.map((item, index) => ({
-            // Mengakses result.data.data
             name: item.delivery_address,
             key: String(index + 1),
             date: item.order_date.split("T")[0],
@@ -39,9 +38,6 @@ export default function History() {
 
     fetchData();
   }, []);
-
-  console.log("store");
-  console.log(store);
 
   return (
     <Background>

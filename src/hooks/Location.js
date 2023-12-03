@@ -1,8 +1,6 @@
 import * as Location from 'expo-location';
 import { useState, useEffect } from 'react';
 
-const LOCATION_TASK_NAME = 'background-location-task';
-
 const useLocation = () => {
     const [locationStatus, setLocationStatus] = useState('undetermined');
     const [currentLocation, setCurrentLocation] = useState(null);

@@ -24,7 +24,9 @@ export default function Thread() {
             title={"Chat With This Tailor"}
             styleButton={"bg-old-rose w-full"}
             styleText={"text-white"}
-            onPress={() => navigation.navigate("Chat")}
+            onPress={() => navigation.navigate("detail-chat", {
+              username: tailor.name
+            })}
           />
         </View>
       </View>

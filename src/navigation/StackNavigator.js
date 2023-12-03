@@ -83,7 +83,7 @@ function StackNavigator() {
           component={Thread}
         />
       </RootStack.Group>
-      <RootStack.Group screenOptions={{ headerShown: true }}>
+      <RootStack.Group screenOptions={{ headerShown: false }}>
         <RootStack.Screen
           name="chat-tailor"
           component={Chat}

@@ -35,7 +35,7 @@ export default function ItemDoodle({ tailor }) {
       <Text className="px-4 font-bold text-center">Our Collection</Text>
       <View className="px-4 mt-1 mb-4">
         {tailor.TailorImage.map((image) => (
-          <View className="h-56 w-fit">
+          <View className="h-56 w-fit" key={image.id}>
             <Image source={{ uri: image.image_url }}
               style={{
                 width: "100%",

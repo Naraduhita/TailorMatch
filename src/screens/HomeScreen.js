@@ -14,34 +14,42 @@ export default function HomeScreen() {
   const navigation = useNavigation();
   const auth = useAuthContext();
   const [tailors, setTailors] = React.useState([]);
+  const { __getLocation, __locationPermissions, locationName, loading } = useLocation();
 
-  const truncateName = (name) => {
-    if (name.length > 20) {
-      return name.slice(0, 10) + '...';
+  const truncateName = (name, cutNumber) => {
+    if (name.length > cutNumber) {
+      return name.slice(0, cutNumber) + '...';
     }
     return name;
   };
 
-  React.useEffect(() => {
-    const getData = async () => {
-      const isLoggedIn = await auth.CheckToken();
+  const getData = async () => {
+    const isLoggedIn = await auth.CheckToken();
 
-      if (isLoggedIn) {
-        const user_token = await auth.getToken();
-        const tailors = await getAllTailors(user_token);
-        setTailors(tailors.data.data);
-        const { __getLocation, __locationPermissions, locationName, loading } = useLocation();
-      }
+    if (isLoggedIn) {
+      const user_token = await auth.getToken();
+      const tailors = await getAllTailors(user_token);
+      setTailors(tailors.data.data);
     }
+  }
 
+  React.useEffect(() => {
     getData();
   }, []);
+
+  const reload = async () => {
+    console.log('reload')
+    getData();
+  }
+
+  console.log('tailors')
+  console.log(tailors[0])
 
   return (
     <LatarPage>
       <View className="mx-5 my-5">
-        <View className="flex-row items-center justify-between w-full">
-          <TouchableOpacity className="flex justify-start mt-1 flex-col-2" onPress={() => {
+        <View className="flex-row items-center justify-between">
+          <TouchableOpacity className="flex justify-start w-2/3 mt-1 flex-col-2" onPress={() => {
             __locationPermissions();
             __getLocation();
           }}>
@@ -52,11 +60,17 @@ export default function HomeScreen() {
                 size={15}
                 color="#ba7e80"
               />
-              <Text className="font-semibold">Sutorejo Barat No. 36</Text>
+              <Text className="w-full font-semibold">{locationName}</Text>
             </View>
           </TouchableOpacity>
           <NotificationSymbol />
-          {/* <NotificationSymbol /> */}
+          <TouchableOpacity onPress={() => reload()}>
+            <Ionicons
+              name="reload"
+              size={23}
+              color="#545454"
+            />
+          </TouchableOpacity>
         </View>
 
         <SearchBar />
@@ -71,7 +85,7 @@ export default function HomeScreen() {
             <ScrollView
               horizontal={true}
               showsHorizontalScrollIndicator={false}>
-              {tailors.map((tailor) => (
+              {tailors && tailors.map((tailor) => (
                 <TouchableOpacity
                   onPress={() => navigation.navigate("detail-tailor", { tailor })}
                   key={tailor.id}
@@ -90,7 +104,7 @@ export default function HomeScreen() {
                   ) : (
                     <View className="bg-[#fadadd] mx-2 my-2 rounded-md h-28 w-36"></View>
                   )}
-                  <Text className="px-2 mb-2 text-sm font-bold">{truncateName(tailor.name)}</Text>
+                  <Text className="px-2 mb-2 text-sm font-bold">{truncateName(tailor.name, 18)}</Text>
                 </TouchableOpacity>
               ))}
             </ScrollView>
