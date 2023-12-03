@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Image, FlatList, TouchableOpacity } from "react-native";
+import { View, Text, Image, FlatList } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import Background from "../components/Background";
 import ItemHistory from "../components/Card/ItemHistory";
@@ -62,7 +62,7 @@ export default function History() {
             renderItem={({ item }) => (
               <ItemHistory
                 item={item}
-                onPress={() => navigation.navigate("deliver")}
+                onPress={() => navigation.navigate("create-order-tailor")}
               />
             )}
           />

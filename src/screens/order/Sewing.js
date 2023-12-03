@@ -2,7 +2,15 @@ import React, { useState } from "react";
 import { View, Image, Text, TouchableOpacity, FlatList } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
-import LatarPage from "../../components/LatarPage";
+import OrderTemplate from "../../components/Order/OrderTemplate";
+import IconWithTitleSewing from "../../components/Box/IconWithTitleSewing";
+import TrackBarSewing from "../../components/Bar/TrackBarSewing";
+import ColoredBox from "../../components/Box/ColoredBox";
+import OrderDetailBox from "../../components/Box/OrderDetailBox";
+import IconSewing from "../../components/Box/IconSewing";
+import BicycleSymbol from "../../../assets/bicycleDark.svg";
+import SewingSymbol from "../../../assets/sewing machine.svg";
+import FittingSymbol from "../../../assets/fitting.svg";
 
 export default function DetailsOrder() {
   const navigation = useNavigation();
@@ -19,62 +27,37 @@ export default function DetailsOrder() {
   ]);
 
   return (
-    <LatarPage>
-      <View className="mt-16">
-        <Text className="text-2xl font-medium text-center ">Details order</Text>
-        <Text className="text-sm font-normal text-center">Sweetest Stitch</Text>
-        <TouchableOpacity
-          className="mt-5 ml-8"
-          onPress={() => navigation.navigate("History")}>
+    <OrderTemplate>
+      <IconSewing />
+      <TrackBarSewing>
+        <IconWithTitleSewing title={"Measuring"}>
           <Ionicons
-            name="arrow-back"
-            size={24}
-            color="black"
+            name="checkmark-circle-outline"
+            size={40}
+            color="#ba7e80"
           />
-        </TouchableOpacity>
-        <Image
-          source={require("../../../assets/detailorder.png")}
-          className="self-center mt-8 w-50 h-50"
+        </IconWithTitleSewing>
+        <IconWithTitleSewing title={"Sewing"}>
+          <SewingSymbol />
+        </IconWithTitleSewing>
+        <IconWithTitleSewing title={"Fitting"}>
+          <FittingSymbol />
+        </IconWithTitleSewing>
+        <IconWithTitleSewing title={"Deliver"}>
+          <BicycleSymbol />
+        </IconWithTitleSewing>
+      </TrackBarSewing>
+      <View className="mb-24 mr-2">
+        <View className="flex flex-row justify-between w-full mb-4">
+          <Text className="font-medium">#9632163716</Text>
+          <ColoredBox status={"Ongoing"} />
+        </View>
+        <OrderDetailBox
+          datetime={"12 November 2023 / 08:00"}
+          address={"Sutorejo Barat No. 36, Dukuh Sutorejo, Mulyosari, Surabaya"}
+          delivery={"Arrives in 1 hour"}
         />
-        <View className="items-center mt-6">
-          <Text>Your clothes are still being tailored,</Text>
-          <Text>but we expect them to be finished soon.</Text>
-        </View>
-        <View className="mx-5">
-          <FlatList
-            data={detail}
-            keyExtractor={(item) => item.key}
-            renderItem={({ item }) => (
-              <View className="flex flex-col justify-between w-full px-4 py-2 mt-4">
-                <View className="flex flex-row gap-1.5">
-                  <View className="flex-col">
-                    <Text className="font-light">Tailored in</Text>
-                  </View>
-                  <View className="flex-col pl-16">
-                    <Text className="text-left">{item.date}</Text>
-                  </View>
-                </View>
-                <View className="flex-row gap-1.5">
-                  <View className="flex-col">
-                    <Text className="font-light">Delivery Address</Text>
-                  </View>
-                  <View className="flex-col pl-6">
-                    <Text className="text-left">{item.address}</Text>
-                  </View>
-                </View>
-                <View className="flex-row gap-1.5">
-                  <View className="flex-col">
-                    <Text className="font-light">Estimated Time</Text>
-                  </View>
-                  <View className="flex-col pl-8">
-                    <Text className="text-left">{item.estimated}</Text>
-                  </View>
-                </View>
-              </View>
-            )}
-          />
-        </View>
       </View>
-    </LatarPage>
+    </OrderTemplate>
   );
 }
