@@ -9,15 +9,16 @@ import CollorFullSVG from "../../../assets/colorfull.svg";
 import MapView, { Marker } from "react-native-maps";
 
 export default function ItemDoodle({ tailor }) {
-  const formattedDays =
-    tailor.open_days.map(day => {
-      const formattedDay = day.charAt(0) + day.slice(1).toLowerCase();
-      return formattedDay;
-    });
-  const joinedDays = formattedDays.join(', ');
+  const formattedDays = tailor.open_days.map((day) => {
+    const formattedDay = day.charAt(0) + day.slice(1).toLowerCase();
+    return formattedDay;
+  });
+  const joinedDays = formattedDays.join(", ");
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false} className="mb-5">
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      className="mb-5">
       {/* <IconDoodle /> */}
       <View className="flex flex-col items-center justify-center my-3 gap-y-2">
         {tailor.description && (
@@ -35,14 +36,18 @@ export default function ItemDoodle({ tailor }) {
       <Text className="px-4 font-bold text-center">Our Collection</Text>
       <View className="px-4 mt-1 mb-4">
         {tailor.TailorImage.map((image) => (
-          <View className="h-56 w-fit" key={image.id}>
-            <Image source={{ uri: image.image_url }}
+          <View
+            className="h-56 w-fit"
+            key={image.id}>
+            <Image
+              source={{ uri: image.image_url }}
               style={{
                 width: "100%",
                 height: "90%",
                 resizeMode: "cover",
                 borderRadius: 20,
-              }} />
+              }}
+            />
           </View>
         ))}
       </View>

@@ -81,9 +81,7 @@ export default function DetailChat({ navigation }) {
                 color="black"
               />
             </View>
-            <Text className="text-xl font-semibold">
-              {username}
-            </Text>
+            <Text className="text-xl font-semibold">{username}</Text>
           </View>
         </View>
 

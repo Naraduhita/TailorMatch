@@ -8,28 +8,35 @@ import TrackOrder from "../screens/order/TrackOrder";
 import Sewing from "../screens/order/Sewing";
 import Thread from "../screens/home/Thread";
 import Chat from "../screens/Chat";
-import Measuring from "../screens/order/Meansuring";
+// import Measuring from "../screens/order/Meansuring";
 import DetailChat from "../screens/chat/DetailChat";
 import { useAuthContext } from "../contexts/AuthContext";
-import React, { useState, lazy, useEffect } from 'react';
+import React, { useState, lazy, useEffect } from "react";
+import Measuring from "../screens/cart/MeansuringPajamas";
+import MeasuringDaily from "../screens/cart/MeansuringDaily";
+import MeansuringParty from "../screens/cart/MeansuringParty";
+import ViewCart from "../screens/cart/ViewCart";
+import AddItem from "../screens/cart/AddItem";
+import EmpetyCart from "../screens/cart/EmpetyCart";
+import CreateOrder from "../screens/cart/CreateOrder";
 
 const RootStack = createNativeStackNavigator();
 
 function StackNavigator() {
   const auth = useAuthContext();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [firstScreen, setFirstScreen] = useState('');
+  const [firstScreen, setFirstScreen] = useState("");
 
   useEffect(() => {
     const checkUserToken = async () => {
       const user_token = await auth.CheckToken();
-      console.log('user_token', user_token);
+      console.log("user_token", user_token);
       if (user_token != null) {
         setIsLoggedIn(true);
-        setFirstScreen('main');
+        setFirstScreen("main");
       } else {
         setIsLoggedIn(false);
-        setFirstScreen('get-sarted');
+        setFirstScreen("get-sarted");
       }
     };
 
@@ -60,6 +67,30 @@ function StackNavigator() {
         />
       </RootStack.Group>
       <RootStack.Group screenOptions={{ headerShown: false }}>
+        <RootStack.Screen
+          name="create-order-tailor"
+          component={CreateOrder}
+        />
+        <RootStack.Screen
+          name="empty-cart"
+          component={EmpetyCart}
+        />
+        <RootStack.Screen
+          name="view-cart"
+          component={ViewCart}
+        />
+        <RootStack.Screen
+          name="add-item"
+          component={AddItem}
+        />
+        <RootStack.Screen
+          name="measuring-party"
+          component={MeansuringParty}
+        />
+        <RootStack.Screen
+          name="measuring-daily"
+          component={MeasuringDaily}
+        />
         <RootStack.Screen
           name="measuring"
           component={Measuring}

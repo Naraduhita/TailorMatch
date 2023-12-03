@@ -11,7 +11,7 @@ export default function Thread() {
   const route = useRoute();
   let tailor = route.params.tailor;
 
-  console.log(tailor)
+  console.log(tailor);
 
   return (
     <ThreadsHome tailor={tailor}>
@@ -24,9 +24,11 @@ export default function Thread() {
             title={"Chat With This Tailor"}
             styleButton={"bg-old-rose w-full"}
             styleText={"text-white"}
-            onPress={() => navigation.navigate("detail-chat", {
-              username: tailor.name
-            })}
+            onPress={() =>
+              navigation.navigate("detail-chat", {
+                username: tailor.name,
+              })
+            }
           />
         </View>
       </View>

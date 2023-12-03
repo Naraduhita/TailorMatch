@@ -53,7 +53,7 @@ export default function Template({ isRegister }) {
 
         if (response.status == 201) {
           navigation.navigate("main");
-          console.log(response.data)
+          console.log(response.data);
         } else {
           setError(response.message);
         }

@@ -14,8 +14,8 @@ const initialAuthState = {
   user: null,
   errorMessages: "",
   SignIn: login,
-  SignOut: () => { },
-  Register: async () => { },
+  SignOut: () => {},
+  Register: async () => {},
   CheckToken: async () => null,
   getToken: async () => null,
 };

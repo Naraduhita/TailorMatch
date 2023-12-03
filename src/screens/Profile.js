@@ -11,7 +11,9 @@ export default function Profile() {
 
   return (
     <Background>
-      <ScrollView className="container flex-1 mb-5" showsVerticalScrollIndicator={false}>
+      <ScrollView
+        className="container flex-1 mb-5"
+        showsVerticalScrollIndicator={false}>
         <View className="flex-col items-center">
           <Image
             className="border-4 rounded-full w-36 h-36 border-pink"
@@ -66,7 +68,9 @@ export default function Profile() {
             </View>
           </View>
 
-          <TouchableOpacity className="justify-start py-2 mt-4 bg-white rounded-2xl w-72" onPress={() => navigation.navigate('get-started')}>
+          <TouchableOpacity
+            className="justify-start py-2 mt-4 bg-white rounded-2xl w-72"
+            onPress={() => navigation.navigate("get-started")}>
             <View className="flex-row items-center mx-6">
               <Ionicons
                 name="information-circle-outline"
