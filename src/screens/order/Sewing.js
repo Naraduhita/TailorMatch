@@ -18,10 +18,11 @@ export default function DetailsOrder() {
   const route = useRoute();
   const { order_id } = route.params;
   const [detail, setDetail] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await sewing(order_id); // Panggil fungsi history yang menggunakan Axios
+        const result = await sewing(order_id);
 
         if (result.data.status === "success") {
           const formattedData = {
@@ -66,7 +67,7 @@ export default function DetailsOrder() {
           <BicycleSymbol />
         </IconWithTitleSewing>
       </TrackBarSewing>
-      <View className="flex flex-row justify-between w-full mb-4 px-3">
+      <View className="flex flex-row justify-between w-full px-3 mb-4">
         <Text className="font-medium">#9632163716</Text>
         <ColoredBox status={detail.status} />
       </View>
