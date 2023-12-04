@@ -44,6 +44,7 @@
     "react-native-svg": "13.9.0",
     "react-native-svg-transformer": "^1.1.0",
     "react-native-vector-icons": "^10.0.2",
+    "reanimated": "^0.0.1-alpha",
     "tailwind-rn": "^4.2.0"
   },
   "devDependencies": {

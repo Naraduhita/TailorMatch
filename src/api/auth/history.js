@@ -11,11 +11,6 @@ const history = async () => {
     const url = "http://192.168.43.216:3000/order/all";
     const response = await axios.get(url, config);
 
-    // console.log("response");
-    // console.log(response);
-    // console.log(response.data);
-    // console.log(response.data.data[0].state);
-
     if (response.status === 200) {
       return {
         status: response.status,
