@@ -43,8 +43,8 @@ export default function HomeScreen() {
     getData();
   };
 
-  console.log("tailors");
-  console.log(tailors[0]);
+  // console.log("tailors");
+  // console.log(tailors[0]);
 
   return (
     <LatarPage>

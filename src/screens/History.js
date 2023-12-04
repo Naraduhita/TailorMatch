@@ -4,19 +4,31 @@ import { StatusBar } from "expo-status-bar";
 import Background from "../components/Background";
 import ItemHistory from "../components/Card/ItemHistory";
 import { useNavigation } from "@react-navigation/native";
-import history from "../api/auth/history.js";
+import history from "../api/order/history.js";
+import { useAuthContext } from "../contexts/AuthContext";
 
 export default function History() {
   const navigation = useNavigation();
   const [store, setStore] = useState([]);
+  const auth = useAuthContext();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await history(); // Panggil fungsi history yang menggunakan Axios
+    const getData = async () => {
+      const isLoggedIn = await auth.CheckToken();
 
+      if (isLoggedIn) {
+        const user_token = await auth.getToken();
+        fetchData(user_token);
+      }
+    };
+
+    const fetchData = async (user_token) => {
+      try {
+        const result = await history(user_token); // Panggil fungsi history yang menggunakan Axios
+        console.log(result);
         if (result.data.status === "success") {
           const formattedData = result.data.data.map((item, index) => ({
+            // Mengakses result.data.data
             name: item.delivery_address,
             key: String(index + 1),
             date: item.order_date.split("T")[0],
@@ -36,8 +48,12 @@ export default function History() {
       }
     };
 
-    fetchData();
+    getData();
+    // fetchData();
   }, []);
+
+  console.log("store");
+  console.log(store);
 
   return (
     <Background>
@@ -72,6 +88,12 @@ export default function History() {
                     navigation.navigate("sewing", { order_id: item.order_id });
                   } else if (item.state === "DELIVER") {
                     navigation.navigate("deliver", { order_id: item.order_id });
+                  } else if (item.state === "SEWING") {
+                    navigation.navigate("sewing", { order_id: item.order_id });
+                  } else if (item.state === "FITTING") {
+                    navigation.navigate("sewing", { order_id: item.order_id });
+                  } else if (item.state === "MEASURING") {
+                    navigation.navigate("sewing", { order_id: item.order_id });
                   }
                 }}
                 // onPress={() => navigation.navigate("create-order-tailor")}

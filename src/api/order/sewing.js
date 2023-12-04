@@ -1,20 +1,26 @@
 import axios from "axios";
+import { BASE_URL } from "../base-url";
 
-const history = async () => {
+const sewing = async (order_id, token) => {
   try {
-    const config = {
+    console.log("token", token);
+    console.log("order id", order_id);
+    const url = `${BASE_URL}/order/${order_id}/detail`;
+    // const url = `${BASE_URL}/${order_id}/detail`;
+    console.log("url", url);
+    const response = await axios.get(url, {
       headers: {
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk1YjAyMTgxLTRlYjYtNDcwYi04ZjVjLWQ2MTQyZTI3MDU0NiIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzAxMDU3MDk1LCJleHAiOjE3MDEwNTg4OTV9.waa3LpcPTC01pWRgrT1qdxpbXcRYX7Wv6i5cezheJrc`,
+        Authorization: `Bearer ${token}`,
       },
-    };
+    });
 
-    const url = "http://192.168.43.216:3000/order/all";
-    const response = await axios.get(url, config);
+    // const url = `http://192.168.43.216:3000/order/${order_id}/detail`;
+    // const response = await axios.get(url, config);
 
-    // console.log("response");
+    console.log("response sewing");
     // console.log(response);
-    // console.log(response.data);
-    // console.log(response.data.data[0].state);
+    console.log(response.data);
+    // console.log(response.data.status);
 
     if (response.status === 200) {
       return {
@@ -56,4 +62,4 @@ const history = async () => {
   }
 };
 
-export default history;
+export default sewing;
