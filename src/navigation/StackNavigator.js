@@ -7,7 +7,7 @@ import Deliver from "../screens/order/Deliver";
 import TrackOrder from "../screens/order/TrackOrder";
 import Sewing from "../screens/order/Sewing";
 import Thread from "../screens/home/Thread";
-import Chat from "../screens/Chat";
+// import Chat from "../screens/Chat";
 // import Measuring from "../screens/order/Meansuring";
 import DetailChat from "../screens/chat/DetailChat";
 import { useAuthContext } from "../contexts/AuthContext";
@@ -19,6 +19,15 @@ import ViewCart from "../screens/cart/ViewCart";
 import AddItem from "../screens/cart/AddItem";
 import EmpetyCart from "../screens/cart/EmpetyCart";
 import CreateOrder from "../screens/cart/CreateOrder";
+import Chat from "../screens/Chat";
+import DetailMessage from "../screens/chat/DetailMessage";
+import Bills from "../screens/chat/Bills";
+import Transaction from "../screens/transaction/Transaction";
+import TransFailed from "../screens/transaction/TransFailed";
+import TransSuccess from "../screens/transaction/TransSuccess";
+import InOrder from "../screens/home-tailor/InOrder";
+import OrderNum from "../screens/home-tailor/OrderNum";
+// import MessagesList from "../components/chat/MessagesList";
 
 const RootStack = createNativeStackNavigator();
 
@@ -110,8 +119,8 @@ function StackNavigator() {
       </RootStack.Group>
       <RootStack.Group screenOptions={{ headerShown: false }}>
         <RootStack.Screen
-          name="detail-tailor"
-          component={Thread}
+          name="detail-message"
+          component={DetailMessage}
         />
       </RootStack.Group>
       <RootStack.Group screenOptions={{ headerShown: false }}>
@@ -122,6 +131,52 @@ function StackNavigator() {
         <RootStack.Screen
           name="detail-chat"
           component={DetailChat}
+        />
+        <RootStack.Screen
+          name="bills"
+          component={Bills}
+        />
+      </RootStack.Group>
+      <RootStack.Group screenOptions={{ headerShown: false }}>
+        <RootStack.Screen
+          name="chat"
+          component={Chat}
+        />
+      </RootStack.Group>
+      <RootStack.Group screenOptions={{ headerShown: false }}>
+        <RootStack.Screen
+          name="failed"
+          component={TransFailed}
+        />
+        <RootStack.Screen
+          name="success"
+          component={TransSuccess}
+        />
+      </RootStack.Group>
+      <RootStack.Group screenOptions={{ headerShown: false }}>
+        <RootStack.Screen
+          name="transaction"
+          component={Transaction}
+        />
+      </RootStack.Group>
+      <RootStack.Group screenOptions={{ headerShown: false }}>
+        <RootStack.Screen
+          name="in-order"
+          component={InOrder}
+        />
+        <RootStack.Screen
+          name="order-num"
+          component={OrderNum}
+        />
+      </RootStack.Group>
+      <RootStack.Group screenOptions={{ headerShown: false }}>
+        {/* <RootStack.Screen
+          name="message-list"
+          component={MessagesList}
+        /> */}
+        <RootStack.Screen
+          name="detail-tailor"
+          component={Thread}
         />
       </RootStack.Group>
     </RootStack.Navigator>

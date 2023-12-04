@@ -1,20 +1,30 @@
 import axios from "axios";
 import { BASE_URL } from "../base-url";
 
-const history = async (token) => {
+const createOrder = async ({
+  email,
+  delivery_address,
+  due_date,
+  status,
+  user_token,
+}) => {
   try {
-    console.log("token", token);
-    const url = `${BASE_URL}/order/all`;
-    const response = await axios.get(url, {
+    const data = {
+      email,
+      delivery_address,
+      due_date,
+      state: "AWAITING",
+      status: status.toUpperCase(),
+    };
+
+    const url = `${BASE_URL}/order/create`;
+    const response = await axios.post(url, data, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${user_token}`,
       },
     });
 
-    // const url = "http://192.168.43.216:3000/order/all";
-    // const response = await axios.get(url, config);
-
-    if (response.status === 200) {
+    if (response.status === 201) {
       return {
         status: response.status,
         data: response.data,
@@ -54,4 +64,4 @@ const history = async (token) => {
   }
 };
 
-export default history;
+export default createOrder;

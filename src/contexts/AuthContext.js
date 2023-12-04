@@ -18,6 +18,7 @@ const initialAuthState = {
   Register: async () => {},
   CheckToken: async () => null,
   getToken: async () => null,
+  getUser: async () => null,
 };
 
 const AuthAction = {
@@ -202,9 +203,22 @@ const AuthProvider = ({ children }) => {
     return access_token;
   };
 
+  const getUser = async () => {
+    const user = await AsyncStorage.getItem("user");
+    return JSON.parse(user);
+  };
+
   return (
     <AuthContext.Provider
-      value={{ ...state, SignIn, SignOut, Register, CheckToken, getToken }}>
+      value={{
+        ...state,
+        SignIn,
+        SignOut,
+        Register,
+        CheckToken,
+        getToken,
+        getUser,
+      }}>
       {children}
     </AuthContext.Provider>
   );
