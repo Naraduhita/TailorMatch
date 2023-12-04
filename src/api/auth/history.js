@@ -1,14 +1,15 @@
 import axios from "axios";
+import { BASE_URL } from "../base-url";
 
-const history = async () => {
+const history = async (user_token) => {
   try {
     const config = {
       headers: {
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk1YjAyMTgxLTRlYjYtNDcwYi04ZjVjLWQ2MTQyZTI3MDU0NiIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzAxMDU3MDk1LCJleHAiOjE3MDEwNTg4OTV9.waa3LpcPTC01pWRgrT1qdxpbXcRYX7Wv6i5cezheJrc`,
+        Authorization: `Bearer ${user_token}`,
       },
     };
 
-    const url = "http://192.168.43.216:3000/order/all";
+    const url = `${BASE_URL}/order/all`;
     const response = await axios.get(url, config);
 
     if (response.status === 200) {

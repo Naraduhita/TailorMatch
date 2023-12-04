@@ -3,13 +3,16 @@ import React, { useEffect, useState, useCallback } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Background from "../../components/Background-trans";
 import { Ionicons, FontAwesome, Icon } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
-export default function InOrder({ navigation }) {
+export default function InOrder() {
+  const navigation = useNavigation();
+
   return (
-    <SafeAreaView className="flex-1 container">
-      <View className="w-full top-0 absolute h-20">
-        <View className="flex-row items-center justify-between px-8  mt-10 ">
-          <View className="mx-auto flex-col items-center">
+    <SafeAreaView className="container flex-1">
+      <View className="absolute top-0 w-full h-20">
+        <View className="flex-row items-center justify-between px-8 mt-10 ">
+          <View className="flex-col items-center mx-auto">
             <Text className="text-lg font-semibold ">In Order</Text>
             <Text>Sweetest Stitch</Text>
           </View>
@@ -18,50 +21,50 @@ export default function InOrder({ navigation }) {
 
       {/* isi card */}
       <ScrollView>
-        <View className="flex-col items-center mt-24">
-          <View className="bg-white p-4 shadow-sm rounded-xl w-80 items-center">
-            <View className="flex-row justify-between items-center w-80 ">
-              <Text className=" text-sm font-bold mx-8">
+        <TouchableOpacity className="flex-col items-center mt-24" onPress={() => navigation.navigate("order-num")}>
+          <View className="items-center p-4 bg-white shadow-sm rounded-xl w-80">
+            <View className="flex-row items-center justify-between w-80 ">
+              <Text className="mx-8 text-sm font-bold ">
                 Adiba Zalfa Camilla
               </Text>
-              <View className="rounded-full bg-yellow px-4 py-1 mr-6">
-                <Text className=" text-sm text-white font-bold">Ongoing</Text>
+              <View className="px-4 py-1 mr-6 rounded-full bg-yellow">
+                <Text className="text-sm font-bold text-white ">Ongoing</Text>
               </View>
             </View>
 
             <Text className="mt-2 text-sm text-grayText">
               Sutorejo Barat No. 36, Dukuh Sutorejo, Mulyosari, Surabaya
             </Text>
-            <View className="mt-3 flex items-center border-b-2 border-b-gray w-80" />
-            <Text className="mt-2 text-sm text-grayText w-80 ml-16">
+            <View className="flex items-center mt-3 border-b-2 border-b-gray w-80" />
+            <Text className="mt-2 ml-16 text-sm text-grayText w-80">
               Send before November 30, 2023
             </Text>
           </View>
-        </View>
+        </TouchableOpacity>
 
-        <View className="flex-col items-center mt-2">
-          <View className="bg-white p-4 shadow-sm rounded-xl w-80 items-center">
-            <View className="flex-row justify-between items-center w-80 ">
-              <Text className=" text-sm font-bold mx-8">
+        <TouchableOpacity className="flex-col items-center mt-2">
+          <View className="items-center p-4 bg-white shadow-sm rounded-xl w-80">
+            <View className="flex-row items-center justify-between w-80 ">
+              <Text className="mx-8 text-sm font-bold ">
                 Adiba Zalfa Camilla
               </Text>
-              <View className="rounded-full bg-red px-4 py-1 mr-6">
-                <Text className=" text-sm text-white font-bold">Cancelled</Text>
+              <View className="px-4 py-1 mr-6 rounded-full bg-red">
+                <Text className="text-sm font-bold text-white ">Cancelled</Text>
               </View>
             </View>
 
             <Text className="mt-2 text-sm text-grayText">
               Sutorejo Barat No. 36, Dukuh Sutorejo, Mulyosari, Surabaya
             </Text>
-            <View className="mt-3 flex items-center border-b-2 border-b-gray w-80" />
-            <Text className="mt-2 text-sm text-grayText w-80 ml-16">
+            <View className="flex items-center mt-3 border-b-2 border-b-gray w-80" />
+            <Text className="mt-2 ml-16 text-sm text-grayText w-80">
               Send before November 30, 2023
             </Text>
           </View>
-        </View>
+        </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => navigation.navigate("order-num")}>
-          <View className="p-4 bg-maroon w-80 rounded-xl items-center mx-auto mt-48">
+        <TouchableOpacity onPress={() => navigation.navigate("create-order-tailor")}>
+          <View className="items-center p-4 mx-auto mt-48 bg-maroon w-80 rounded-xl">
             <Text className="font-bold text-white ">Create New Order</Text>
           </View>
         </TouchableOpacity>

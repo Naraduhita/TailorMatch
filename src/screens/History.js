@@ -5,15 +5,22 @@ import Background from "../components/Background";
 import ItemHistory from "../components/Card/ItemHistory";
 import { useNavigation } from "@react-navigation/native";
 import history from "../api/auth/history.js";
+import { useAuthContext } from "../contexts/AuthContext";
 
 export default function History() {
   const navigation = useNavigation();
   const [store, setStore] = useState([]);
+  const auth = useAuthContext();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await history(); // Panggil fungsi history yang menggunakan Axios
+  const fetchData = async () => {
+    try {
+      const isLoggedIn = await auth.CheckToken();
+
+      if (isLoggedIn) {
+        const user_token = await auth.getToken();
+        const result = await history(user_token);
+        console.log(result.data.data);
+        console.log(result.data.status);
 
         if (result.data.status === "success") {
           const formattedData = result.data.data.map((item, index) => ({
@@ -28,16 +35,21 @@ export default function History() {
           }));
 
           setStore(formattedData);
-        } else {
-          console.error("Failed to fetch data:", result.message);
         }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
 
+      } else {
+        console.error("Failed to fetch data:", result.message);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
     fetchData();
   }, []);
+
+  console.log(store[0])
 
   return (
     <Background>

@@ -5,9 +5,25 @@ import { StatusBar } from "expo-status-bar";
 import Background from "../components/Background";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useAuthContext } from "../contexts/AuthContext";
 
 export default function Profile() {
   const navigation = useNavigation();
+  const auth = useAuthContext();
+  const [user, setUser] = React.useState({});
+
+  const checkUser = async () => {
+    const isLoggedIn = await auth.CheckToken();
+
+    if (isLoggedIn) {
+      const user = await auth.getUser();
+      setUser(user);
+    }
+  }
+
+  React.useEffect(() => {
+    checkUser();
+  }, []);
 
   return (
     <Background>
@@ -19,8 +35,8 @@ export default function Profile() {
             className="border-4 rounded-full w-36 h-36 border-pink"
             source={require("../components/img/meng.jpg")}
           />
-          <Text className="mt-3 text-2xl font-bold">Adiba Zalfa Camila</Text>
-          <Text className="text-sm font-normal">ID: 5027211048</Text>
+          <Text className="mt-3 text-2xl font-bold">{user.email}</Text>
+          <Text className="text-sm font-normal">ID: {user.id}</Text>
         </View>
 
         <View className="flex-col items-center mt-4">
@@ -67,6 +83,19 @@ export default function Profile() {
               <Text className="mx-2 text-xl font-semibold">Help & Center</Text>
             </View>
           </View>
+
+          <TouchableOpacity
+            className="justify-start py-2 mt-4 bg-white rounded-2xl w-72"
+            onPress={() => auth.SignOut()}>
+            <View className="flex-row items-center mx-6">
+              <Ionicons
+                name="information-circle-outline"
+                size={50}
+                color="#BA7E80"
+              />
+              <Text className="mx-2 text-xl font-semibold">Logout</Text>
+            </View>
+          </TouchableOpacity>
 
           <TouchableOpacity
             className="justify-start py-2 mt-4 bg-white rounded-2xl w-72"
