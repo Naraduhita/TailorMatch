@@ -17,6 +17,7 @@ module.exports = {
       gray: "#D9D9D9",
       emperor: "#545454",
       concrete: "#f2f2f2",
+      grayText: "#545454",
     },
   },
   plugins: [],

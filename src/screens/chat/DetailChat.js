@@ -4,6 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Background from "../../components/Background";
 import { Ionicons, FontAwesome, Icon } from "@expo/vector-icons";
 import { GiftedChat, Send, Bubble, Image } from "react-native-gifted-chat";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 export default function DetailChat({ navigation }) {
   const [messages, setMessages] = useState([]);
@@ -27,10 +28,13 @@ export default function DetailChat({ navigation }) {
     );
   }, []);
 
+  const route = useRoute();
+  let username = route.params.username;
+
   const renderSend = (props) => {
     return (
       <Send {...props}>
-        <View className="h-10  flex-row items-center justify-end rounded-full bg-white">
+        <View className="flex-row items-center justify-end h-10 bg-white rounded-full">
           <FontAwesome
             name="send"
             size={20}
@@ -65,34 +69,19 @@ export default function DetailChat({ navigation }) {
     );
   };
 
-  // const renderMessageImage = (props) => {
-  //   return (
-  //   <Image {...props}>
-  //     <View className="h-10 w-10 flex items-center justify-center rounded-full bg-white mr-5 mb-">
-  //         <FontAwesome
-  //           name="font"
-  //           size={12}
-  //         />
-  //       </View>
-  //   </Image>
-  //   );
-  // };
-
   return (
     <Background>
       <SafeAreaView className="container flex-1">
-        <View className="w-full top-0 absolute bg-white h-24 ">
-          <View className="flex-row items-center justify-between px-4  mt-10 ">
-            <View className="flex-row items-centery">
+        <View className="absolute top-0 w-full bg-white">
+          <View className="flex-row items-center justify-start px-4 my-3 gap-x-3">
+            <View className="flex-row items-center">
               <Ionicons
                 name="arrow-back-outline"
-                size={35}
+                size={30}
                 color="black"
               />
             </View>
-            <Text className="text-xl font-semibold mr-28 ">
-              Username Tailor
-            </Text>
+            <Text className="text-xl font-semibold">{username}</Text>
           </View>
         </View>
 
@@ -102,6 +91,7 @@ export default function DetailChat({ navigation }) {
           user={{
             _id: 1,
           }}
+          className="h-14"
           renderBubble={renderBubble}
           alwaysShowSend
           renderSend={renderSend}
@@ -109,7 +99,7 @@ export default function DetailChat({ navigation }) {
         />
 
         {/* <View className="flex-col w-full h-1/2">
-          <View className="flex-col bg-pink w-full justify-center h-10 mt-72">
+          <View className="flex-col justify-center w-full h-10 bg-pink mt-72">
               <Text className="text-lg text-white rounded-2xl">Halo, silahkan pesan</Text>
           </View>
         </View> */}

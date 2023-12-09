@@ -1,20 +1,15 @@
 import axios from "axios";
+import { BASE_URL } from "../base-url";
 
-const register = async ({ username, email, password, role }) => {
+const login = async ({ email, password }) => {
   try {
     const data = {
       email,
       password,
     };
 
-    console.log("data");
-    console.log(data);
-
-    const url = "http://192.168.43.216:3000/auth/login";
+    const url = `${BASE_URL}/auth/login`;
     const response = await axios.post(url, data);
-
-    console.log("response");
-    console.log(response);
 
     if (response.status === 201) {
       return {
@@ -56,4 +51,4 @@ const register = async ({ username, email, password, role }) => {
   }
 };
 
-export default register;
+export default login;

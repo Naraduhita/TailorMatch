@@ -1,4 +1,5 @@
 import axios from "axios";
+import { BASE_URL } from "../base-url";
 
 const register = async ({ username, email, password, role }) => {
   try {
@@ -9,15 +10,8 @@ const register = async ({ username, email, password, role }) => {
       role,
     };
 
-    // console.log("data");
-    console.log("data");
-    console.log(data);
-
-    const url = "http://192.168.43.216:3000/auth/create";
+    const url = `${BASE_URL}/auth/create`;
     const response = await axios.post(url, data);
-
-    console.log("response");
-    console.log(response);
 
     if (response.status === 201) {
       return {

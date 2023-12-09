@@ -33,13 +33,13 @@ export default function GetStarted() {
             title={"Start as Customer"}
             styleButton={"bg-white my-2"}
             styleText={"text-old-rose"}
-            onPress={() => navigation.navigate("register")}
+            onPress={() => navigation.navigate("register", { role: "USER" })}
           />
           <ColoredButtom
             title={"Start as Tailor"}
             styleButton={"bg-white my-2"}
             styleText={"text-old-rose"}
-            onPress={() => navigation.navigate("register")}
+            onPress={() => navigation.navigate("register", { role: "TAILOR" })}
           />
         </View>
       </View>

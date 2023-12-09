@@ -1,40 +1,56 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Image, FlatList, TouchableOpacity } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import Background from "../components/Background";
 import ItemHistory from "../components/Card/ItemHistory";
 import { useNavigation } from "@react-navigation/native";
+import history from "../api/order/history.js";
+import { useAuthContext } from "../contexts/AuthContext";
 
 export default function History() {
   const navigation = useNavigation();
+  const [store, setStore] = useState([]);
+  const auth = useAuthContext();
 
-  const [store, setStore] = useState([
-    {
-      name: "Sweetest Stitch",
-      key: "1",
-      date: "12 November 2023",
-      status: "Ongoing",
-    },
-    {
-      name: "Doodled Threads",
-      key: "2",
-      date: "23 November 2023",
-      status: "Done",
-    },
-    { name: "Ruffled Rose", key: "3", date: "12 June 2023", status: "Ongoing" },
-    {
-      name: "Sugar Plum Closet",
-      key: "4",
-      date: "9 June 2023",
-      status: "Done",
-    },
-    {
-      name: "Cuddly Couture",
-      key: "5",
-      date: "1 June 2023",
-      status: "Cancelled",
-    },
-  ]);
+  useEffect(() => {
+    const getData = async () => {
+      const isLoggedIn = await auth.CheckToken();
+
+      if (isLoggedIn) {
+        const user_token = await auth.getToken();
+        fetchData(user_token);
+      }
+    };
+
+    const fetchData = async (user_token) => {
+      try {
+        const result = await history(user_token); // Panggil fungsi history yang menggunakan Axios
+        console.log(result);
+        if (result.data.status === "success") {
+          const formattedData = result.data.data.map((item, index) => ({
+            // Mengakses result.data.data
+            name: item.delivery_address,
+            key: String(index + 1),
+            date: item.order_date.split("T")[0],
+            status:
+              item.status.charAt(0).toUpperCase() +
+              item.status.slice(1).toLowerCase(),
+            order_id: item.id,
+            state: item.state,
+          }));
+
+          setStore(formattedData);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    getData();
+    // fetchData();
+  }, []);
+
+  console.log("store");
+  console.log(store);
 
   return (
     <Background>
@@ -62,7 +78,21 @@ export default function History() {
             renderItem={({ item }) => (
               <ItemHistory
                 item={item}
-                onPress={() => navigation.navigate("sewing")}
+                onPress={() => {
+                  // console.log("Order ID:", item.order_id); // Memeriksa nilai order_id
+                  // navigation.navigate("sewing", { order_id: item.order_id });
+                  if (item.state === "AWAITING") {
+                    navigation.navigate("sewing", { order_id: item.order_id });
+                  } else if (item.state === "DELIVER") {
+                    navigation.navigate("deliver", { order_id: item.order_id });
+                  } else if (item.state === "SEWING") {
+                    navigation.navigate("sewing", { order_id: item.order_id });
+                  } else if (item.state === "FITTING") {
+                    navigation.navigate("sewing", { order_id: item.order_id });
+                  } else if (item.state === "MEASURING") {
+                    navigation.navigate("sewing", { order_id: item.order_id });
+                  }
+                }}
               />
             )}
           />
