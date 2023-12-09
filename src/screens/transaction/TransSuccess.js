@@ -25,12 +25,15 @@ export default function TransSuccess({ navigation }) {
               be shipped to you shortly.
             </Text>
           </View>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("detail-message")}>
+            <View className="bg-white p-4 shadow-sm rounded-xl mt-4 ">
+              <Text className="w-80 text-sm font-semibold text-pink text-center">
+                Start Measuring
+              </Text>
+            </View>
+          </TouchableOpacity>
 
-          <View className="bg-white p-4 shadow-sm rounded-xl mt-4 ">
-            <Text className="w-80 text-sm font-semibold text-pink text-center">
-              Start Measuring
-            </Text>
-          </View>
           <View className="border border-white p-4 shadow-sm rounded-xl mt-2 ">
             <Text className="w-80 text-sm font-semibold text-white text-center">
               Back Home

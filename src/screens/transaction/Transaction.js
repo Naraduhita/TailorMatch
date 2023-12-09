@@ -9,7 +9,7 @@ export default function Transaction({ navigation }) {
     <SafeAreaView className="container flex-1">
       <View className="w-full top-0 absolute h-20">
         <View className="flex-row items-center justify-between px-8  mt-10 ">
-          <TouchableOpacity onPress={() => navigation.navigate("detail-chat")}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
             <View className="flex-row items-center">
               <Ionicons
                 name="arrow-back-outline"

@@ -28,6 +28,9 @@ import TransSuccess from "../screens/transaction/TransSuccess";
 import InOrder from "../screens/home-tailor/InOrder";
 import OrderNum from "../screens/home-tailor/OrderNum";
 // import MessagesList from "../components/chat/MessagesList";
+import HomeTailor from "../screens/home-tailor/HomeTailor";
+import AddCollection from "../screens/home-tailor/AddCollection";
+import EditCollection from "../screens/home-tailor/EditCollection";
 
 const RootStack = createNativeStackNavigator();
 
@@ -177,6 +180,20 @@ function StackNavigator() {
         <RootStack.Screen
           name="detail-tailor"
           component={Thread}
+        />
+      </RootStack.Group>
+      <RootStack.Group screenOptions={{ headerShown: false }}>
+        <RootStack.Screen
+          name="home-tailor"
+          component={HomeTailor}
+        />
+        <RootStack.Screen
+          name="add-collection"
+          component={AddCollection}
+        />
+        <RootStack.Screen
+          name="edit-collection"
+          component={EditCollection}
         />
       </RootStack.Group>
     </RootStack.Navigator>
