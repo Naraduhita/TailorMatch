@@ -40,25 +40,30 @@ export default function HomeScreen() {
 
     if (isLoggedIn) {
       const user = await auth.getUser();
-      if (user.role == 'USER') {
+      console.log("userrrrrrrrrrrrrrr", user.role);
+      if (user.role == "USER") {
         setIsUser(true);
       } else {
         setIsUser(false);
+        getData();
       }
     }
-  }
+  };
 
   React.useEffect(() => {
-    getData();
+    reload();
   }, []);
 
   const reload = async () => {
     console.log("reload");
-    getData();
     checkUser();
+    // getData();
   };
 
-  console.log(isUser);
+  console.log("user kahh", isUser);
+
+  // console.log("tailors");
+  // console.log(tailors[0]);
 
   return (
     <LatarPage>
@@ -99,7 +104,9 @@ export default function HomeScreen() {
             <View className="flex flex-col gap-y-4">
               <View className="flex flex-row items-center justify-between">
                 <Text className="text-base font-bold">Top Choises</Text>
-                <Text className="text-xs font-medium text-maroon">See More</Text>
+                <Text className="text-xs font-medium text-maroon">
+                  See More
+                </Text>
               </View>
 
               <ScrollView
@@ -138,7 +145,9 @@ export default function HomeScreen() {
             <View className="flex flex-col gap-y-4">
               <View className="flex flex-row items-center justify-between">
                 <Text className="text-base font-bold">Tailor Nearby</Text>
-                <Text className="text-xs font-medium text-maroon">See More</Text>
+                <Text className="text-xs font-medium text-maroon">
+                  See More
+                </Text>
               </View>
               <ScrollView
                 horizontal={true}
@@ -169,7 +178,9 @@ export default function HomeScreen() {
             <View className="flex flex-col gap-y-4">
               <View className="flex flex-row items-center justify-between">
                 <Text className="text-base font-bold">Inspiration</Text>
-                <Text className="text-xs font-medium text-maroon">See More</Text>
+                <Text className="text-xs font-medium text-maroon">
+                  See More
+                </Text>
               </View>
               <ScrollView
                 horizontal={true}
@@ -190,7 +201,9 @@ export default function HomeScreen() {
             <View className="flex flex-col gap-y-4">
               <View className="flex flex-row items-center justify-between">
                 <Text className="text-base font-bold">Favorite</Text>
-                <Text className="text-xs font-medium text-maroon">See More</Text>
+                <Text className="text-xs font-medium text-maroon">
+                  See More
+                </Text>
               </View>
               <ScrollView
                 horizontal={true}
@@ -212,7 +225,9 @@ export default function HomeScreen() {
       ) : (
         <View>
           <Text>INI TAILOR</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('create-order-tailor')} className='bg-red_button'>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("create-order-tailor")}
+            className="bg-red_button">
             <Text>Create order</Text>
           </TouchableOpacity>
         </View>

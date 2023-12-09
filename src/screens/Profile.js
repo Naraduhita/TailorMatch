@@ -19,7 +19,7 @@ export default function Profile() {
       const user = await auth.getUser();
       setUser(user);
     }
-  }
+  };
 
   React.useEffect(() => {
     checkUser();

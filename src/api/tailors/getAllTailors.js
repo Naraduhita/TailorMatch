@@ -5,7 +5,7 @@ const getAllTailors = async (token) => {
   try {
     console.log("token", token);
     const url = `${BASE_URL}/tailor/all?orderBy=rating`;
-    console.log("url", url);
+
     const response = await axios.get(url, {
       headers: {
         Authorization: `Bearer ${token}`,

@@ -24,7 +24,14 @@ export default function EmpetyCart() {
           title={"Add New Items"}
           styleButton={"bg-old-rose w-full my-4 py-5 mt-56 rounded-2xl"}
           styleText={"text-white"}
-          onPress={() => navigation.navigate("add-item", { order_id, status, state, user_id })}
+          onPress={() =>
+            navigation.navigate("add-item", {
+              order_id,
+              status,
+              state,
+              user_id,
+            })
+          }
         />
       </View>
     </MeansuringTemplate>

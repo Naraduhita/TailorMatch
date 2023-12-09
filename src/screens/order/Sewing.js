@@ -11,19 +11,30 @@ import IconSewing from "../../components/Box/IconSewing";
 import BicycleSymbol from "../../../assets/bicycleDark.svg";
 import SewingSymbol from "../../../assets/sewing machine.svg";
 import FittingSymbol from "../../../assets/fitting.svg";
-import sewing from "../../api/auth/sewing.js";
+import sewing from "../../api/order/sewing.js";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 export default function DetailsOrder() {
   const navigation = useNavigation();
-  const route = useRoute();
-  const { order_id } = route.params;
   const [detail, setDetail] = useState([]);
+  const route = useRoute();
+  const auth = useAuthContext();
+  const { order_id } = route.params;
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await sewing(order_id);
+    const getData = async () => {
+      const isLoggedIn = await auth.CheckToken();
 
+      if (isLoggedIn) {
+        const user_token = await auth.getToken();
+        fetchData(user_token);
+      }
+    };
+
+    const fetchData = async (user_token) => {
+      try {
+        const result = await sewing(order_id, user_token); // Panggil fungsi history yang menggunakan Axios
+        console.log(result);
         if (result.data.status === "success") {
           const formattedData = {
             name: result.data.data.delivery_address,
@@ -42,8 +53,10 @@ export default function DetailsOrder() {
       }
     };
 
-    fetchData();
+    getData();
+    // fetchData();
   }, []);
+  console.log("detail");
   console.log(detail);
 
   return (

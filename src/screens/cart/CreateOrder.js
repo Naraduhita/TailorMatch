@@ -35,10 +35,30 @@ export default function CreateOrder() {
       status: "Done",
       id: 3,
     },
+    {
+      status: "Awaiting",
+      id: 4,
+    },
+    {
+      status: "Measuring",
+      id: 5,
+    },
+    {
+      status: "Sewing",
+      id: 6,
+    },
+    {
+      status: "Fitting",
+      id: 7,
+    },
+    {
+      status: "Deliver",
+      id: 8,
+    },
   ];
 
   const orderRequest = async () => {
-    console.log('Order request')
+    console.log("Order request");
     const isLoggedIn = await auth.CheckToken();
 
     if (isLoggedIn) {
@@ -48,9 +68,9 @@ export default function CreateOrder() {
         due_date: date,
         email: email,
         status: status,
-        user_token
+        user_token,
       });
-      console.log('masuk create order');
+      console.log("masuk create order");
       console.log(response.status);
 
       if (response.data.status === "success") {
@@ -67,9 +87,9 @@ export default function CreateOrder() {
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
   const [isDropdown, setDropdown] = useState(false);
   const [status, setStatus] = useState("Ongoing");
-  const [email, setEmail] = useState('');
-  const [address, setAddress] = useState('');
-  const [date, setDate] = useState('');
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+  const [date, setDate] = useState("");
 
   const showDatePicker = () => {
     setDatePickerVisible(true);
@@ -100,7 +120,6 @@ export default function CreateOrder() {
 
   return (
     <MeansuringTemplate title={"Create Order"}>
-
       <View className="mx-8">
         <View className="items-start justify-start w-full px-5 py-4 mt-3 bg-white rounded-2xl">
           <View className="flex flex-row">
@@ -137,12 +156,11 @@ export default function CreateOrder() {
                   placeholder="DD/MM/YYYY"
                   onChangeText={(date) => setDate(date)}
                   value={date}
-                // value={formatDate(values.date)}
-                // editable={false}
-                // style={{ color: values.date ? "black" : "gray" }}
+                  // value={formatDate(values.date)}
+                  // editable={false}
+                  // style={{ color: values.date ? "black" : "gray" }}
                 />
               </TouchableOpacity>
-
             </View>
           </View>
         </View>
@@ -156,12 +174,13 @@ export default function CreateOrder() {
 
         <View className="flex flex-row items-center justify-between w-full mt-3 ">
           <Text className="font-semibold">Status :</Text>
-          <TouchableOpacity className="flex flex-row items-center justify-between h-8 bg-white rounded-lg w-28" onPress={() => {
-            setDropdown((prevVal) => !prevVal);
-          }}>
+          <TouchableOpacity
+            className="flex flex-row items-center justify-between h-8 bg-white rounded-lg w-28"
+            onPress={() => {
+              setDropdown((prevVal) => !prevVal);
+            }}>
             <Text className="ml-2 font-semibold">{status}</Text>
-            <View
-              className="mx-2">
+            <View className="mx-2">
               <Feather
                 name="chevron-down"
                 size={15}

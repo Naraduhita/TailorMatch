@@ -14,8 +14,8 @@ const initialAuthState = {
   user: null,
   errorMessages: "",
   SignIn: login,
-  SignOut: () => { },
-  Register: async () => { },
+  SignOut: () => {},
+  Register: async () => {},
   CheckToken: async () => null,
   getToken: async () => null,
   getUser: async () => null,
@@ -210,7 +210,15 @@ const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ ...state, SignIn, SignOut, Register, CheckToken, getToken, getUser }}>
+      value={{
+        ...state,
+        SignIn,
+        SignOut,
+        Register,
+        CheckToken,
+        getToken,
+        getUser,
+      }}>
       {children}
     </AuthContext.Provider>
   );

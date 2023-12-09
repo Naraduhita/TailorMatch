@@ -1,16 +1,18 @@
 import axios from "axios";
 import { BASE_URL } from "../base-url";
 
-const history = async (user_token) => {
+const history = async (token) => {
   try {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${user_token}`,
-      },
-    };
-
+    console.log("token", token);
     const url = `${BASE_URL}/order/all`;
-    const response = await axios.get(url, config);
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    // const url = "http://192.168.43.216:3000/order/all";
+    // const response = await axios.get(url, config);
 
     if (response.status === 200) {
       return {
