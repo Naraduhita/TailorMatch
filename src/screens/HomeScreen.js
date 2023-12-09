@@ -10,11 +10,13 @@ import { useAuthContext } from "../contexts/AuthContext";
 import getAllTailors from "../api/tailors/getAllTailors";
 import useLocation from "../hooks/Location";
 import HomeTailor from "./home-tailor/HomeTailor";
+import history from "../api/order/history";
 
 export default function HomeScreen() {
   const navigation = useNavigation();
   const auth = useAuthContext();
   const [tailors, setTailors] = React.useState([]);
+  const [store, setStore] = React.useState([]);
   const [isUser, setIsUser] = React.useState(false);
   const { __getLocation, __locationPermissions, locationName, loading } =
     useLocation();
@@ -31,10 +33,33 @@ export default function HomeScreen() {
 
     if (isLoggedIn) {
       const user_token = await auth.getToken();
+      fetchData(user_token);
       const tailors = await getAllTailors(user_token);
       setTailors(tailors.data.data);
-    } else {
-      navigation.navigate("Login");
+    }
+  };
+
+  const fetchData = async (user_token) => {
+    try {
+      const result = await history(user_token); // Panggil fungsi history yang menggunakan Axios
+      // console.log("homescreen", result);
+      if (result.data.status === "success") {
+        const formattedData = result.data.data.map((item, index) => ({
+          // Mengakses result.data.data
+          name: item.delivery_address,
+          key: String(index + 1),
+          date: item.order_date.split("T")[0],
+          state:
+            item.state.charAt(0).toUpperCase() +
+            item.state.slice(1).toLowerCase(),
+          order_id: item.id,
+          // state: item.state,
+        }));
+
+        setStore(formattedData);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
     }
   };
 
@@ -43,32 +68,28 @@ export default function HomeScreen() {
 
     if (isLoggedIn) {
       const user = await auth.getUser();
-      console.log("userrrrrrrrrrrrrrr", user.role);
       if (user.role == "USER") {
         setIsUser(true);
       } else {
         setIsUser(false);
-        getData();
       }
-    } else {
-      navigation.navigate("Login");
     }
   };
 
   React.useEffect(() => {
-    reload();
+    getData();
   }, []);
 
   const reload = async () => {
     console.log("reload");
+    getData();
     checkUser();
-    // getData();
   };
 
-  console.log("user kahh", isUser);
-
+  // console.log("store homescreen", store)
   // console.log("tailors");
   // console.log(tailors[0]);
+
   return (
     <>
       {isUser ? (

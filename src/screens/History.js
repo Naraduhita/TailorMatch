@@ -32,9 +32,9 @@ export default function History() {
             name: item.delivery_address,
             key: String(index + 1),
             date: item.order_date.split("T")[0],
-            status:
-              item.status.charAt(0).toUpperCase() +
-              item.status.slice(1).toLowerCase(),
+            // status:
+            //   item.status.charAt(0).toUpperCase() +
+            //   item.status.slice(1).toLowerCase(),
             order_id: item.id,
             state: item.state,
           }));
