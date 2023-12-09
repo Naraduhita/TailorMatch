@@ -36,27 +36,38 @@ export default function ViewCart() {
     getData();
   }, []);
 
+  console.log(cartItems);
+
   return (
     <MeansuringTemplate title={"Cart Items"}>
       <ScrollView>
         <SafeAreaView>
-          <View className="mx-8">
+          <View className="flex flex-col justify-between mx-3">
             <ItemCart
               navigation={navigation}
               items={cartItems}
             />
-            <ColoredButton
-              title={"Add"}
-              styleButton={"bg-old-rose w-full my-4 py-5 mt-12 rounded-2xl"}
-              styleText={"text-white"}
-              onPress={() => navigation.navigate("add-item", { order_id, status, state, user_id })}
-            />
-            <ColoredButton
-              title={"Back"}
-              styleButton={"bg-old-rose w-full my-4 py-5 mt-2 rounded-2xl"}
-              styleText={"text-white"}
-              onPress={() => navigation.navigate("main")}
-            />
+            <View className="justify-self-end">
+              <ColoredButton
+                title={"Add"}
+                styleButton={"bg-old-rose w-full my-4 py-5 mt-12 rounded-2xl"}
+                styleText={"text-white"}
+                onPress={() =>
+                  navigation.navigate("add-item", {
+                    order_id,
+                    status,
+                    state,
+                    user_id,
+                  })
+                }
+              />
+              <ColoredButton
+                title={"Back"}
+                styleButton={"bg-old-rose w-full my-4 py-5 mt-2 rounded-2xl"}
+                styleText={"text-white"}
+                onPress={() => navigation.navigate("main")}
+              />
+            </View>
           </View>
         </SafeAreaView>
       </ScrollView>

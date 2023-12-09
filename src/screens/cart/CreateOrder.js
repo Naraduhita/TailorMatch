@@ -24,12 +24,8 @@ export default function CreateOrder() {
   });
   const data = [
     {
-      status: "Onging",
-      id: 1,
-    },
-    {
-      status: "Done",
-      id: 3,
+      status: "Payment",
+      id: 2,
     },
     {
       status: "Awaiting",
@@ -51,10 +47,13 @@ export default function CreateOrder() {
       status: "Deliver",
       id: 8,
     },
+    {
+      status: "Done",
+      id: 3,
+    },
   ];
 
   const orderRequest = async () => {
-    console.log("Order request");
     const isLoggedIn = await auth.CheckToken();
 
     if (isLoggedIn) {
@@ -63,11 +62,9 @@ export default function CreateOrder() {
         delivery_address: address,
         due_date: date,
         email: email,
-        status: status,
+        status: status.toUpperCase(),
         user_token,
       });
-      console.log("masuk create order");
-      console.log(response.status);
 
       if (response.data.status === "success") {
         navigation.navigate("empty-cart", {
@@ -82,7 +79,7 @@ export default function CreateOrder() {
 
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
   const [isDropdown, setDropdown] = useState(false);
-  const [status, setStatus] = useState("Ongoing");
+  const [status, setStatus] = useState("Payment");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [date, setDate] = useState("");

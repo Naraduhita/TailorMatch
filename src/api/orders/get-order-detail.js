@@ -1,10 +1,9 @@
 import axios from "axios";
 import { BASE_URL } from "../base-url";
 
-const history = async (token) => {
+const getOrderDetail = async (token, order_id) => {
   try {
-    console.log("token", token);
-    const url = `${BASE_URL}/order/all`;
+    const url = `${BASE_URL}/order/${order_id}/detail`;
     const response = await axios.get(url, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -51,4 +50,4 @@ const history = async (token) => {
   }
 };
 
-export default history;
+export default getOrderDetail;

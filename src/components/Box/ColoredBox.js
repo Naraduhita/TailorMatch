@@ -3,15 +3,23 @@ import React from "react";
 
 export default function ColoredBox({ status }) {
   const colorStatus = (status) => {
-    switch (status) {
-      case "Ongoing":
+    switch (status.toLowerCase()) {
+      case "ongoing":
         return "bg-yellow";
-      case "Done":
+      case "done":
         return "bg-green";
-      case "Cancelled":
+      case "cancelled":
         return "bg-red";
-      case "Awaiting":
-        return "bg-gray";
+      case "payment":
+        return "bg-emperor";
+      case "awaiting":
+        return "bg-emperor";
+      case "deliver":
+        return "bg-red_button";
+      case "sewing":
+        return "bg-yellow";
+      case "fitting":
+        return "bg-pink";
       default:
         return "";
     }

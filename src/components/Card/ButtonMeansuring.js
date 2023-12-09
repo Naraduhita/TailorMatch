@@ -3,7 +3,7 @@ import React from "react";
 
 const ButtomstInput = ({ label, placeholder, setValue }) => {
   return (
-    <View className="flex flex-row justify-between items-center w-full px-5 py-4 mt-3 bg-white rounded-2xl">
+    <View className="flex flex-row items-center justify-between w-full px-5 py-4 mt-3 bg-white rounded-2xl">
       <Text className="font-semibold">{label}</Text>
       <View className="flex flex-row">
         <TextInput
@@ -12,7 +12,7 @@ const ButtomstInput = ({ label, placeholder, setValue }) => {
           className="text-center"
           keyboardType="numeric"
         />
-        <Text className="pt-1 px-1">cm</Text>
+        <Text className="px-1 pt-1">cm</Text>
       </View>
     </View>
   );
@@ -25,8 +25,8 @@ export default function ButtonMeansuring({
   setLength2,
 }) {
   return (
-    <View className="justify-center mx-8 mt-4">
-      <Text className="font-bold px-4 text-base">Bottoms</Text>
+    <View className="justify-center mt-4">
+      <Text className="px-4 text-base font-bold">Bottom</Text>
       <ButtomstInput
         label="Waist"
         placeholder="..."

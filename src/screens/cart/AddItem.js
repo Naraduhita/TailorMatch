@@ -33,11 +33,23 @@ export default function AddItem() {
 
     if (isLoggedIn) {
       const user_token = await auth.getToken();
-      const cloth_req = await createCloth({ cloth: clothName, order_id, user_token, price, quantity });
+      const cloth_req = await createCloth({
+        cloth: clothName,
+        order_id,
+        user_token,
+        price,
+        quantity,
+      });
 
       if (cloth_req.data.status === "success") {
         const cloth = cloth_req.data.data;
-        navigation.navigate("view-cart", { order_id, status, state, user_id, cloth });
+        navigation.navigate("view-cart", {
+          order_id,
+          status,
+          state,
+          user_id,
+          cloth,
+        });
 
         setClothName("");
         setQuantity(0);
@@ -68,79 +80,77 @@ export default function AddItem() {
     if (clothName !== "" && quantity !== 0 && price !== 0) {
       addCloth();
     }
-  }
+  };
 
   return (
     <MeansuringTemplate title={"Cart Items"}>
-      <SafeAreaView>
-        <View className="mx-8">
-          <View className="items-start justify-start w-full px-5 py-4 mt-3 bg-white rounded-2xl">
+      <View className="mx-2">
+        <View className="items-start justify-start w-full px-5 py-4 mt-3 bg-white rounded-2xl">
+          <View className="flex flex-row">
+            <Text>Name of Order</Text>
+            <Text className="text-[#FF0000] mx-1">*</Text>
+          </View>
+          <TextInput
+            placeholder="Input Name of Order"
+            className="py-1"
+            onChangeText={(clothName) => setClothName(clothName)}
+            value={clothName}
+          />
+          {!!errorCloth && (
+            <Text className="text-xs text-red">{errorCloth}</Text>
+          )}
+        </View>
+
+        <View className="flex flex-row w-full mt-4 ">
+          <View className="w-2/3 px-5 py-1 bg-white rounded-lg flex-row-3">
             <View className="flex flex-row">
-              <Text>Name of Order</Text>
+              <Text>Number of Order</Text>
               <Text className="text-[#FF0000] mx-1">*</Text>
             </View>
             <TextInput
-              placeholder="Input Name of Order"
-              className="py-1"
-              onChangeText={(clothName) => setClothName(clothName)}
-              value={clothName}
+              placeholder="0"
+              keyboardType="numeric"
+              className="text-left"
+              onChangeText={(quantity) => setQuantity(quantity)}
+              value={quantity}
             />
-            {!!errorCloth && (
-              <Text className='text-xs text-red'>{errorCloth}</Text>
+            {!!errorQuantity && (
+              <Text className="text-xs text-red">{errorQuantity}</Text>
             )}
           </View>
-
-          <View className="flex flex-row w-full mt-4 ">
-            <View className="px-5 py-1 bg-white rounded-lg flex-row-3">
-              <View className="flex flex-row">
-                <Text>Number of Order</Text>
-                <Text className="text-[#FF0000] mx-1">*</Text>
-              </View>
-              <TextInput
-                placeholder="0"
-                keyboardType="numeric"
-                className="text-left"
-                onChangeText={(quantity) => setQuantity(quantity)}
-                value={quantity}
-              />
-              {!!errorQuantity && (
-                <Text className='text-xs text-red'>{errorQuantity}</Text>
-              )}
-            </View>
-            <Text className="text-[10px] text-[#FF0000] px-2 pt-3">
-              *In numerical form
-            </Text>
-          </View>
-
-          <View className="flex flex-row items-start justify-between w-full px-5 py-4 mt-3 bg-white rounded-2xl">
-            <View className="flex flex-row">
-              <TagDolarSVG />
-              <Text className="px-1">Price</Text>
-              <Text className="text-[#FF0000] mx-1">*</Text>
-            </View>
-            <View className="flex flex-col">
-              <TextInput
-                placeholder="Rp"
-                keyboardType="numeric"
-                onChangeText={(price) => setPrice(price)}
-                value={price}
-              />
-              {!!errorPrice && (
-                <Text className='text-xs text-red'>{errorPrice}</Text>
-              )}
-            </View>
-          </View>
-
-          <ColoredButton
-            title={"Add"}
-            styleButton={"bg-old-rose w-full my-4 py-5 mt-28 rounded-2xl"}
-            styleText={"text-white"}
-            onPress={() => {
-              checkInput();
-            }}
-          />
+          <Text className="w-1/3 text-[#FF0000] px-2 pt-3 text-xs">
+            *In numerical form
+          </Text>
         </View>
-      </SafeAreaView>
+
+        <View className="flex flex-row items-start justify-between w-full px-5 py-4 mt-3 bg-white rounded-2xl">
+          <View className="flex flex-row items-center justify-center">
+            <TagDolarSVG />
+            <Text className="px-1">Price</Text>
+            <Text className="text-[#FF0000] mx-1">*</Text>
+          </View>
+          <View className="flex flex-col">
+            <TextInput
+              placeholder="Rp"
+              keyboardType="numeric"
+              onChangeText={(price) => setPrice(price)}
+              value={price}
+            />
+            {!!errorPrice && (
+              <Text className="text-xs text-red">{errorPrice}</Text>
+            )}
+          </View>
+        </View>
+
+        <ColoredButton
+          title={"Add"}
+          styleButton={"bg-old-rose w-full my-4 py-5 mt-28 rounded-2xl"}
+          styleText={"text-white"}
+          onPress={() => {
+            checkInput();
+          }}
+        />
+      </View>
     </MeansuringTemplate>
   );
 }

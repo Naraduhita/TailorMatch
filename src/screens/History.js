@@ -25,16 +25,15 @@ export default function History() {
     const fetchData = async (user_token) => {
       try {
         const result = await history(user_token); // Panggil fungsi history yang menggunakan Axios
-        console.log(result);
+
         if (result.data.status === "success") {
           const formattedData = result.data.data.map((item, index) => ({
             // Mengakses result.data.data
             name: item.delivery_address,
             key: String(index + 1),
             date: item.order_date.split("T")[0],
-            status:
-              item.status.charAt(0).toUpperCase() +
-              item.status.slice(1).toLowerCase(),
+            status: item.state.toUpperCase(),
+            // item.status.slice(1).toLowerCase(),
             order_id: item.id,
             state: item.state,
           }));
@@ -48,9 +47,6 @@ export default function History() {
     getData();
     // fetchData();
   }, []);
-
-  console.log("store");
-  console.log(store);
 
   return (
     <Background>
@@ -71,8 +67,9 @@ export default function History() {
           </Text>
         </>
       ) : (
-        <View className="mx-5">
+        <View className="mx-5 mb-5">
           <FlatList
+            showsVerticalScrollIndicator={false}
             keyExtractor={(item) => item.key}
             data={store}
             renderItem={({ item }) => (
@@ -91,6 +88,8 @@ export default function History() {
                     navigation.navigate("sewing", { order_id: item.order_id });
                   } else if (item.state === "MEASURING") {
                     navigation.navigate("sewing", { order_id: item.order_id });
+                  } else if (item.state === "PAYMENT") {
+                    navigation.navigate("bills", { order_id: item.order_id });
                   }
                 }}
               />
@@ -98,7 +97,6 @@ export default function History() {
           />
         </View>
       )}
-      <StatusBar style="auto" />
     </Background>
   );
 }

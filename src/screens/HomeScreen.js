@@ -34,7 +34,7 @@ export default function HomeScreen() {
       const tailors = await getAllTailors(user_token);
       setTailors(tailors.data.data);
     } else {
-      navigation.navigate("Login");
+      navigation.navigate("login");
     }
   };
 
@@ -51,7 +51,7 @@ export default function HomeScreen() {
         getData();
       }
     } else {
-      navigation.navigate("Login");
+      navigation.navigate("login");
     }
   };
 
@@ -60,15 +60,10 @@ export default function HomeScreen() {
   }, []);
 
   const reload = async () => {
-    console.log("reload");
     checkUser();
     // getData();
   };
 
-  console.log("user kahh", isUser);
-
-  // console.log("tailors");
-  // console.log(tailors[0]);
   return (
     <>
       {isUser ? (
@@ -229,14 +224,6 @@ export default function HomeScreen() {
           </View>
         </LatarPage>
       ) : (
-        // <View>
-        //   <Text>INI TAILOR</Text>
-        //   <TouchableOpacity
-        //     onPress={() => navigation.navigate("create-order-tailor")}
-        //     className="bg-red_button">
-        //     <Text>Create order</Text>
-        //   </TouchableOpacity>
-        // </View>
         <HomeTailor />
       )}
     </>

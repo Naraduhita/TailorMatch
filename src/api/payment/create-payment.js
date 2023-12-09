@@ -1,17 +1,16 @@
 import axios from "axios";
 import { BASE_URL } from "../base-url";
 
-const history = async (token) => {
+const createPayment = async (token, order_id) => {
   try {
-    console.log("token", token);
-    const url = `${BASE_URL}/order/all`;
-    const response = await axios.get(url, {
+    const url = `${BASE_URL}/payment/${order_id}`;
+    const response = await axios.post(url, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
 
-    if (response.status === 200) {
+    if (response.status === 201) {
       return {
         status: response.status,
         data: response.data,
@@ -51,4 +50,4 @@ const history = async (token) => {
   }
 };
 
-export default history;
+export default createPayment;

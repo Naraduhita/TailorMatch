@@ -1,17 +1,16 @@
 import axios from "axios";
 import { BASE_URL } from "../base-url";
 
-const history = async (token) => {
+const createDetailCloth = async (token, cloth_id, data) => {
   try {
-    console.log("token", token);
-    const url = `${BASE_URL}/order/all`;
-    const response = await axios.get(url, {
+    const url = `${BASE_URL}/cloth/${cloth_id}/create/detail`;
+    const response = await axios.post(url, data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
 
-    if (response.status === 200) {
+    if (response.status === 201) {
       return {
         status: response.status,
         data: response.data,
@@ -51,4 +50,4 @@ const history = async (token) => {
   }
 };
 
-export default history;
+export default createDetailCloth;

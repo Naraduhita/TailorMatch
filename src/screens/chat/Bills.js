@@ -3,61 +3,127 @@ import React, { useEffect, useState, useCallback } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Background from "../../components/Background";
 import { Ionicons, FontAwesome, Icon } from "@expo/vector-icons";
+import { useRoute } from "@react-navigation/native";
+import { useAuthContext } from "../../contexts/AuthContext";
+import clothByOrderId from "../../api/orders/clothByOrderId";
+import createPayment from "../../api/payment/create-payment";
 
 export default function Bills({ navigation }) {
+  const auth = useAuthContext();
+  const route = useRoute();
+  const { order_id } = route.params;
+  const [clothes, setClothes] = React.useState([]);
+  const [total, setTotal] = React.useState(0);
+
+  const getData = async () => {
+    const isLoggedIn = await auth.CheckToken();
+
+    if (isLoggedIn) {
+      const user_token = await auth.getToken();
+      const clothes = await clothByOrderId(user_token, order_id);
+      setClothes(clothes.data.data);
+      calculateTotal();
+    } else {
+      navigation.navigate("login");
+    }
+  };
+
+  const calculatePrice = (amount, price) => {
+    return amount * price;
+  };
+
+  const calculateTotal = () => {
+    let total = 0;
+    clothes.map((cloth) => {
+      total += calculatePrice(cloth.Clothes.quantity, cloth.Clothes.price);
+    });
+    setTotal(total);
+  };
+
+  const handlePayment = async () => {
+    const isLoggedIn = await auth.CheckToken();
+
+    if (isLoggedIn) {
+      const user_token = await auth.getToken();
+      const payment = await createPayment(user_token, order_id);
+      console.log(payment);
+      if (payment.data.status === "success") {
+        navigation.navigate("transaction", {
+          order_id,
+          total,
+        });
+      }
+    } else {
+      navigation.navigate("login");
+    }
+  };
+
+  React.useEffect(() => {
+    getData();
+  }, []);
+
+  React.useEffect(() => {
+    calculateTotal();
+  }, [clothes]);
+
   return (
     <SafeAreaView className="container flex-1">
-      <View className="w-full top-0 absolute h-20">
-        <View className="flex-row items-center justify-between px-8  mt-10 ">
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <View className="flex-row items-center">
-              <Ionicons
-                name="arrow-back-outline"
-                size={25}
-                color="black"
-              />
+      <View className="flex flex-col items-center justify-between w-full h-full px-3">
+        <View className="flex flex-col w-full my-7 gap-y-5">
+          <View className="flex-row items-center justify-center px-4">
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <View className="flex-row items-center">
+                <Ionicons
+                  name="arrow-back-outline"
+                  size={25}
+                  color="black"
+                />
+              </View>
+            </TouchableOpacity>
+            <View className="flex-col items-center w-full">
+              <Text className="text-lg font-semibold ">Bills</Text>
+              <Text>Sweetest Stitch</Text>
+            </View>
+          </View>
+
+          <View className="flex-col items-center">
+            {clothes &&
+              clothes.map((cloth) => (
+                <View
+                  className="flex-row justify-between p-6 bg-white shadow-sm rounded-xl w-80"
+                  key={cloth.id}>
+                  <Text className="text-sm font-semibold ">
+                    ({cloth.Clothes.quantity}) {cloth.Clothes.name}
+                  </Text>
+                  <Text className="text-sm font-semibold ">
+                    Rp. {cloth.Clothes.price}
+                  </Text>
+                </View>
+              ))}
+          </View>
+        </View>
+
+        <View className="flex-col items-center w-full mb-5">
+          <View className="flex-row justify-between w-full p-6 mb-3 bg-white shadow-sm rounded-xl">
+            <Text className="text-sm font-semibold ">Total</Text>
+            <Text className="text-sm font-semibold ">Rp. {total}</Text>
+          </View>
+          <TouchableOpacity
+            onPress={handlePayment}
+            className="w-full">
+            <View className="flex w-full p-6 shadow-sm bg-pink rounded-xl">
+              <Text className="text-sm font-bold text-center text-white">
+                Agree
+              </Text>
             </View>
           </TouchableOpacity>
-          <View className="mx-auto flex-col items-center">
-            <Text className="text-lg font-semibold ">Bills</Text>
-            <Text>Sweetest Stitch</Text>
-          </View>
-        </View>
-      </View>
-
-      <View className="flex-col items-center mt-24">
-        <View className="flex-row justify-between bg-white p-6 shadow-sm rounded-xl mb-3 w-80">
-          <Text className=" text-sm font-semibold">(1) Party Dress</Text>
-          <Text className=" text-sm font-semibold">Rp. 500.000</Text>
-        </View>
-        <View className="flex-row justify-between bg-white p-6 shadow-sm rounded-xl mb-3 w-80">
-          <Text className=" text-sm font-semibold">(1) Pajamas Set</Text>
-          <Text className=" text-sm font-semibold">Rp. 200.000</Text>
-        </View>
-        <View className="flex-row justify-between bg-white p-6 shadow-sm rounded-xl mb-3 w-80">
-          <Text className=" text-sm font-semibold">(1) Daily Wear Set</Text>
-          <Text className=" text-sm font-semibold">Rp. 200.000</Text>
-        </View>
-      </View>
-
-      <View className="flex-col items-center mt-36">
-        <View className="flex-row justify-between bg-white p-6 shadow-sm rounded-xl mb-3 w-80">
-          <Text className=" text-sm font-semibold">Total</Text>
-          <Text className=" text-sm font-semibold">Rp. 900.000</Text>
-        </View>
-        <TouchableOpacity onPress={() => navigation.navigate("transaction")}>
-          <View className="flex bg-pink p-6 shadow-sm rounded-xl w-80">
-            <Text className=" text-sm text-white font-bold text-center">
-              Agree
+          <View className="w-full mt-2">
+            <Text className="text-xs text-center font-sm">
+              By clicking the "Agree" button, you are entering into a binding
+              agreement with Tailor Match purchase the products or services you
+              have selected.
             </Text>
           </View>
-        </TouchableOpacity>
-        <View className="w-80 mt-2">
-          <Text className=" text-xs font-sm text-center">
-            By clicking the "Agree" button, you are entering into a binding
-            agreement with Tailor Match purchase the products or services you
-            have selected.
-          </Text>
         </View>
       </View>
     </SafeAreaView>
