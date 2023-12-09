@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import React, { useEffect, useState, useCallback } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import LatarPage from "../../components/LatarPage";
 import { Ionicons, Feather, Icon } from "@expo/vector-icons";
 
 export default function AddCollection({ navigation }) {
@@ -26,25 +25,33 @@ export default function AddCollection({ navigation }) {
   };
 
   return (
-    <LatarPage>
-      <View className="mx-5">
-        <View className="h-20 mb-2">
-          <View className="flex-row items-center mt-6">
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-              <View className="flex-row items-center">
-                <Ionicons
-                  name="arrow-back-outline"
-                  size={25}
-                  color="black"
-                />
-              </View>
-            </TouchableOpacity>
-            <View className="flex-col items-center mx-auto">
-              <Text className="text-lg font-semibold ">Add Collection</Text>
-              <Text className="font-normal text-md ">Sweetest Stitch</Text>
+    <SafeAreaView className="container flex-1">
+      <View className="flex flex-col h-full mx-5 gap-y-4">
+        <View className="flex-row items-center">
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <View className="flex-row items-center">
+              <Ionicons
+                name="arrow-back-outline"
+                size={25}
+                color="black"
+              />
             </View>
+          </TouchableOpacity>
+          <View className="flex-col items-center mx-auto">
+            <Text className="text-lg font-semibold ">Add Collection</Text>
+            <Text className="font-normal text-md ">Sweetest Stitch</Text>
           </View>
         </View>
+
+        <TouchableOpacity
+          onPress={() => navigation.navigate("main")}
+          className="absolute w-full bottom-3">
+          <View className="p-4 shadow-sm bg-pink rounded-xl">
+            <Text className="text-sm font-semibold text-center text-white">
+              Save
+            </Text>
+          </View>
+        </TouchableOpacity>
 
         <View className="flex flex-col items-start justify-center gap-y-3">
           <View className="flex-col items-center w-full">
@@ -107,18 +114,8 @@ export default function AddCollection({ navigation }) {
               </TouchableOpacity>
             </View>
           </View>
-
-          <TouchableOpacity
-            onPress={() => navigation.navigate("home-tailor")}
-            className="w-full">
-            <View className="p-4 mt-56 shadow-sm bg-pink rounded-xl">
-              <Text className="text-sm font-semibold text-center text-white ">
-                Save
-              </Text>
-            </View>
-          </TouchableOpacity>
         </View>
       </View>
-    </LatarPage>
+    </SafeAreaView>
   );
 }

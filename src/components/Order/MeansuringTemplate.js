@@ -9,7 +9,7 @@ export default function MeansuringTemplate({ children, title }) {
 
   return (
     <SafeAreaView className="flex-1">
-      <View className="  justify-around flex-1mx-5  mx-5 gap-y-4">
+      <View className="relative justify-start h-full mx-5 gap-y-4">
         <View className="flex flex-row items-center justify-start">
           <TouchableOpacity
             onPress={() => navigation.goBack()}
@@ -20,7 +20,7 @@ export default function MeansuringTemplate({ children, title }) {
               color="black"
             />
           </TouchableOpacity>
-          <View className="flex flex-col items-center justify-center w-full gap-y-1 pt-6">
+          <View className="flex flex-col items-center justify-center w-full pt-6 gap-y-1">
             <Text className="w-full text-lg font-normal text-center">
               {title}
             </Text>

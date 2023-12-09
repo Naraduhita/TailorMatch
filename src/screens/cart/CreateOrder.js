@@ -28,10 +28,6 @@ export default function CreateOrder() {
       id: 1,
     },
     {
-      status: "Cancelled",
-      id: 2,
-    },
-    {
       status: "Done",
       id: 3,
     },
@@ -120,7 +116,7 @@ export default function CreateOrder() {
 
   return (
     <MeansuringTemplate title={"Create Order"}>
-      <View className="mx-8">
+      <View className="mx-2">
         <View className="items-start justify-start w-full px-5 py-4 mt-3 bg-white rounded-2xl">
           <View className="flex flex-row">
             <Text>Email</Text>
@@ -189,7 +185,7 @@ export default function CreateOrder() {
             </View>
             {isDropdown && (
               <FlatList
-                className="absolute left-0 w-full p-2 bg-white rounded-md top-10"
+                className="absolute left-0 z-auto w-full p-2 bg-white rounded-md top-10"
                 data={data}
                 nestedScrollEnabled
                 keyExtractor={(data) => data.id}
@@ -207,16 +203,18 @@ export default function CreateOrder() {
             )}
           </TouchableOpacity>
         </View>
-
-        <ColoredButton
-          title={"Create Order"}
-          styleButton={"bg-old-rose w-full my-4 py-5 mt-48 rounded-2xl"}
-          styleText={"text-white"}
-          onPress={() => {
-            orderRequest();
-          }}
-        />
       </View>
+
+      <ColoredButton
+        title={"Create Order"}
+        styleButton={
+          "bg-old-rose w-full my-4 py-4 rounded-2xl absolute bottom-3"
+        }
+        styleText={"text-white"}
+        onPress={() => {
+          orderRequest();
+        }}
+      />
     </MeansuringTemplate>
   );
 }
