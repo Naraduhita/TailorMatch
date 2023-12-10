@@ -12,7 +12,7 @@ import Thread from "../screens/home/Thread";
 import DetailChat from "../screens/chat/DetailChat";
 import { useAuthContext } from "../contexts/AuthContext";
 import React, { useState, lazy, useEffect } from "react";
-import Measuring from "../screens/cart/MeansuringPajamas";
+import Measuring from "../screens/cart/Meansuring";
 import MeasuringDaily from "../screens/cart/MeansuringDaily";
 import MeansuringParty from "../screens/cart/MeansuringParty";
 import ViewCart from "../screens/cart/ViewCart";

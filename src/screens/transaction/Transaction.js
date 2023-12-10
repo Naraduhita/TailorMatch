@@ -1,4 +1,11 @@
-import { View, Text, TouchableOpacity, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  ActivityIndicator,
+  Alert,
+} from "react-native";
 import React, { useEffect, useState, useCallback } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Background from "../../components/Background";
@@ -8,14 +15,17 @@ import getPaymentMethods from "../../api/payment/get-methods";
 import { useAuthContext } from "../../contexts/AuthContext";
 import ColoredButton from "../../components/Button/ColoredButton";
 import getOrderDetail from "../../api/orders/get-order-detail";
+import Loading from "../../components/Loading";
+import updatePayment from "../../api/payment/update-payment";
 
 export default function Transaction({ navigation }) {
   const route = useRoute();
-  const { order_id, total } = route.params;
+  const { order_id, total, payment_id } = route.params;
   const auth = useAuthContext();
   const [methods, setMethods] = React.useState([]);
   const [methodId, setMethodId] = React.useState(0);
   const [order, setOrder] = React.useState({});
+  const [loading, setLoading] = React.useState(true);
 
   const getMethods = async () => {
     const isLoggedIn = await auth.CheckToken();
@@ -36,6 +46,33 @@ export default function Transaction({ navigation }) {
       const user_token = await auth.getToken();
       const order = await getOrderDetail(user_token, order_id);
       setOrder(order.data.data);
+      setLoading(false);
+    } else {
+      navigation.navigate("login");
+    }
+  };
+
+  const handlePayment = async () => {
+    const isLoggedIn = await auth.CheckToken();
+
+    if (methodId == 0) {
+      return Alert.alert("Please choose a method payment");
+    }
+
+    if (isLoggedIn) {
+      const user_token = await auth.getToken();
+      const pay = await updatePayment(
+        user_token,
+        payment_id,
+        methodId,
+        order_id,
+      );
+
+      if (pay.data.status == "success") {
+        navigation.navigate("success", { total, order_id });
+      } else {
+        navigation.navigate("failed");
+      }
     } else {
       navigation.navigate("login");
     }
@@ -50,7 +87,9 @@ export default function Transaction({ navigation }) {
     getOrderDetailData();
   }, []);
 
-  console.log(order);
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <SafeAreaView className="container flex-1">
@@ -106,7 +145,7 @@ export default function Transaction({ navigation }) {
                   className="w-full">
                   <View className="flex flex-row items-center justify-between w-full p-4 mt-3 border rounded-lg">
                     <Text className="text-sm font-bold">{item.name}</Text>
-                    {methodId == item.id && (
+                    {methodId == parseInt(item.id) && (
                       <Ionicons
                         name="checkmark"
                         size={20}
@@ -122,7 +161,7 @@ export default function Transaction({ navigation }) {
 
         <ColoredButton
           title="Pay"
-          onPress={() => navigation.navigate("failed")}
+          onPress={handlePayment}
           styleButton="w-full mt-5 bg-old-rose rounded-lg"
           styleText="text-white"
         />

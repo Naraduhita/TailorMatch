@@ -13,12 +13,14 @@ import Background from "../components/Background";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuthContext } from "../contexts/AuthContext";
+import Loading from "../components/Loading";
 
 export default function Profile() {
   const navigation = useNavigation();
   const auth = useAuthContext();
   const [user, setUser] = React.useState({});
   const [modalVisible, setModalVisible] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
 
   const handlePress = (route) => {
     setModalVisible(false);
@@ -31,12 +33,17 @@ export default function Profile() {
     if (isLoggedIn) {
       const user = await auth.getUser();
       setUser(user);
+      setLoading(false);
     }
   };
 
   React.useEffect(() => {
     checkUser();
   }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <Background>

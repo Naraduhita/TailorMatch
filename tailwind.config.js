@@ -18,6 +18,7 @@ module.exports = {
       emperor: "#545454",
       concrete: "#f2f2f2",
       grayText: "#545454",
+      orange: "#ffa500,",
     },
   },
   plugins: [],

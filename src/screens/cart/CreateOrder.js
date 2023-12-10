@@ -58,18 +58,18 @@ export default function CreateOrder() {
 
     if (isLoggedIn) {
       const user_token = await auth.getToken();
+      console.log(status.toUpperCase());
       const response = await createOrder({
         delivery_address: address,
         due_date: date,
         email: email,
-        status: status.toUpperCase(),
+        state: status.toUpperCase(),
         user_token,
       });
 
       if (response.data.status === "success") {
         navigation.navigate("empty-cart", {
           order_id: response.data.data.id,
-          status: response.data.data.status,
           state: response.data.data.state,
           user_id: response.data.data.user_id,
         });

@@ -1,20 +1,22 @@
 import axios from "axios";
 import { BASE_URL } from "../base-url";
 
-const createPayment = async (token, order_id) => {
+const updateStateOrder = async (user_token, order_id, state) => {
   try {
-    const url = `${BASE_URL}/payment/${order_id}`;
-    const response = await axios.post(
+    const url = `${BASE_URL}/order/${order_id}/status`;
+    const response = await axios.patch(
       url,
-      {},
+      {
+        state,
+      },
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${user_token}`,
         },
       },
     );
 
-    if (response.status === 201) {
+    if (response.status === 200) {
       return {
         status: response.status,
         data: response.data,
@@ -54,4 +56,4 @@ const createPayment = async (token, order_id) => {
   }
 };
 
-export default createPayment;
+export default updateStateOrder;

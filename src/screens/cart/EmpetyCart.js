@@ -10,7 +10,7 @@ import Empty2SVG from "../../../assets/empty-2.svg";
 export default function EmpetyCart() {
   const navigation = useNavigation();
   const route = useRoute();
-  const { order_id, status, state, user_id } = route.params;
+  const { order_id, state, user_id } = route.params;
   console.log(order_id);
 
   return (
@@ -27,7 +27,6 @@ export default function EmpetyCart() {
           onPress={() =>
             navigation.navigate("add-item", {
               order_id,
-              status,
               state,
               user_id,
             })

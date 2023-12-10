@@ -5,7 +5,7 @@ const createOrder = async ({
   email,
   delivery_address,
   due_date,
-  status,
+  state,
   user_token,
 }) => {
   try {
@@ -13,8 +13,7 @@ const createOrder = async ({
       email,
       delivery_address,
       due_date,
-      state: "AWAITING",
-      status: status.toUpperCase(),
+      state: state.toUpperCase(),
     };
 
     const url = `${BASE_URL}/order/create`;

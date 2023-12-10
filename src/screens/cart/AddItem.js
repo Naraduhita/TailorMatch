@@ -18,7 +18,7 @@ export default function AddItem() {
   const [errorPrice, setErrorPrice] = React.useState("");
   const auth = useAuthContext();
   const route = useRoute();
-  const { order_id, status, state, user_id } = route.params;
+  const { order_id, user_id, state } = route.params;
 
   React.useEffect(() => {
     return () => {
@@ -33,6 +33,13 @@ export default function AddItem() {
 
     if (isLoggedIn) {
       const user_token = await auth.getToken();
+      const user = await auth.getUser();
+      let isUser = false;
+
+      if (user.role == "USER") {
+        isUser = true;
+      }
+
       const cloth_req = await createCloth({
         cloth: clothName,
         order_id,
@@ -45,10 +52,9 @@ export default function AddItem() {
         const cloth = cloth_req.data.data;
         navigation.navigate("view-cart", {
           order_id,
-          status,
           state,
+          isUser,
           user_id,
-          cloth,
         });
 
         setClothName("");

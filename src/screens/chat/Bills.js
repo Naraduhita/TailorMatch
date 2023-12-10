@@ -7,6 +7,7 @@ import { useRoute } from "@react-navigation/native";
 import { useAuthContext } from "../../contexts/AuthContext";
 import clothByOrderId from "../../api/orders/clothByOrderId";
 import createPayment from "../../api/payment/create-payment";
+import Loading from "../../components/Loading";
 
 export default function Bills({ navigation }) {
   const auth = useAuthContext();
@@ -14,6 +15,7 @@ export default function Bills({ navigation }) {
   const { order_id } = route.params;
   const [clothes, setClothes] = React.useState([]);
   const [total, setTotal] = React.useState(0);
+  const [loading, setLoading] = React.useState(true);
 
   const getData = async () => {
     const isLoggedIn = await auth.CheckToken();
@@ -38,6 +40,7 @@ export default function Bills({ navigation }) {
       total += calculatePrice(cloth.Clothes.quantity, cloth.Clothes.price);
     });
     setTotal(total);
+    setLoading(false);
   };
 
   const handlePayment = async () => {
@@ -45,12 +48,14 @@ export default function Bills({ navigation }) {
 
     if (isLoggedIn) {
       const user_token = await auth.getToken();
+      console.log(order_id);
+      console.log(user_token);
       const payment = await createPayment(user_token, order_id);
-      console.log(payment);
       if (payment.data.status === "success") {
         navigation.navigate("transaction", {
           order_id,
           total,
+          payment_id: payment.data.data.id,
         });
       }
     } else {
@@ -65,6 +70,10 @@ export default function Bills({ navigation }) {
   React.useEffect(() => {
     calculateTotal();
   }, [clothes]);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <SafeAreaView className="container flex-1">

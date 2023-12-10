@@ -17,9 +17,11 @@ export default function ColoredBox({ status }) {
       case "deliver":
         return "bg-red_button";
       case "sewing":
-        return "bg-yellow";
+        return "bg-[#ffa500]";
       case "fitting":
         return "bg-pink";
+      case "measuring":
+        return "bg-yellow";
       default:
         return "";
     }

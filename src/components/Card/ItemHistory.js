@@ -7,7 +7,7 @@ const ItemHistory = ({ item, onPress }) => {
     <TouchableOpacity
       className="mx-2"
       onPress={onPress}>
-      <View className="flex-row items-center justify-between w-full px-5 py-2 mt-4 bg-white rounded-2xl">
+      <View className="flex-row items-center justify-between w-full px-5 py-2 bg-white rounded-2xl">
         <View className="flex w-1/2 flex-row-2">
           <View className="flex-col gap-1.5">
             <Text className="justify-start font-semibold">{item.name}</Text>

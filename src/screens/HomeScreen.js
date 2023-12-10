@@ -10,14 +10,15 @@ import { useAuthContext } from "../contexts/AuthContext";
 import getAllTailors from "../api/tailors/getAllTailors";
 import useLocation from "../hooks/Location";
 import HomeTailor from "./home-tailor/HomeTailor";
+import Loading from "../components/Loading";
 
 export default function HomeScreen() {
   const navigation = useNavigation();
   const auth = useAuthContext();
   const [tailors, setTailors] = React.useState([]);
   const [isUser, setIsUser] = React.useState(false);
-  const { __getLocation, __locationPermissions, locationName, loading } =
-    useLocation();
+  const { __getLocation, __locationPermissions, locationName } = useLocation();
+  const [loading, setLoading] = React.useState(true);
 
   const truncateName = (name, cutNumber) => {
     if (name.length > cutNumber) {
@@ -50,6 +51,7 @@ export default function HomeScreen() {
         setIsUser(false);
         getData();
       }
+      setLoading(false);
     } else {
       navigation.navigate("login");
     }
@@ -60,9 +62,14 @@ export default function HomeScreen() {
   }, []);
 
   const reload = async () => {
+    setLoading(true);
     checkUser();
     // getData();
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <>
