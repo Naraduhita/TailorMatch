@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import Background from "../components/Background";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -37,9 +37,11 @@ export default function Profile() {
     }
   };
 
-  React.useEffect(() => {
-    checkUser();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      checkUser();
+    }, []),
+  );
 
   if (loading) {
     return <Loading />;

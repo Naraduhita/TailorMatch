@@ -1,6 +1,6 @@
 import * as React from "react";
 import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import LatarPage from "../components/LatarPage";
 import NotificationSymbol from "../../assets/notification.svg";
@@ -11,13 +11,23 @@ import getAllTailors from "../api/tailors/getAllTailors";
 import useLocation from "../hooks/Location";
 import HomeTailor from "./home-tailor/HomeTailor";
 import Loading from "../components/Loading";
+import getNearestTailor from "../api/tailors/get-nearest-tailor";
+import getFavoriteTailor from "../api/tailors/get-favorite";
 
 export default function HomeScreen() {
   const navigation = useNavigation();
   const auth = useAuthContext();
   const [tailors, setTailors] = React.useState([]);
+  const [tailorNearest, setTailorsNearest] = React.useState([]);
+  const [tailorFavorite, setTailorsFavorite] = React.useState([]);
   const [isUser, setIsUser] = React.useState(false);
-  const { __getLocation, __locationPermissions, locationName } = useLocation();
+  const {
+    __getLocation,
+    __locationPermissions,
+    locationName,
+    latitude,
+    longitude,
+  } = useLocation();
   const [loading, setLoading] = React.useState(true);
 
   const truncateName = (name, cutNumber) => {
@@ -33,7 +43,12 @@ export default function HomeScreen() {
     if (isLoggedIn) {
       const user_token = await auth.getToken();
       const tailors = await getAllTailors(user_token);
+      const nearest = await getNearestTailor(user_token, latitude, longitude);
+      const favorites = await getFavoriteTailor(user_token);
       setTailors(tailors.data.data);
+      setTailorsNearest(nearest.data.data);
+      setTailorsFavorite(favorites.data.data);
+      setLoading(false);
     } else {
       navigation.navigate("login");
     }
@@ -44,28 +59,23 @@ export default function HomeScreen() {
 
     if (isLoggedIn) {
       const user = await auth.getUser();
-      console.log("userrrrrrrrrrrrrrr", user.role);
       if (user.role == "USER") {
         setIsUser(true);
       } else {
         setIsUser(false);
-        getData();
       }
-      setLoading(false);
     } else {
       navigation.navigate("login");
     }
   };
 
-  React.useEffect(() => {
-    reload();
-  }, []);
-
-  const reload = async () => {
-    setLoading(true);
-    checkUser();
-    // getData();
-  };
+  useFocusEffect(
+    React.useCallback(() => {
+      setLoading(true);
+      checkUser();
+      getData();
+    }, []),
+  );
 
   if (loading) {
     return <Loading />;
@@ -75,7 +85,9 @@ export default function HomeScreen() {
     <>
       {isUser ? (
         <LatarPage>
-          <View className="mx-5 my-5">
+          <ScrollView
+            className="mx-5 my-5"
+            showsVerticalScrollIndicator={false}>
             <View className="flex-row items-center justify-between">
               <TouchableOpacity
                 className="flex justify-start w-2/3 mt-1 flex-col-2"
@@ -105,9 +117,7 @@ export default function HomeScreen() {
 
             <SearchBar />
 
-            <ScrollView
-              className="flex flex-col my-4 gap-y-2"
-              showsVerticalScrollIndicator={false}>
+            <View className="flex flex-col my-4 gap-y-2">
               <View className="flex flex-col gap-y-4">
                 <View className="flex flex-row items-center justify-between">
                   <Text className="text-base font-bold">Top Choises</Text>
@@ -159,32 +169,39 @@ export default function HomeScreen() {
                 <ScrollView
                   horizontal={true}
                   showsHorizontalScrollIndicator={false}>
-                  {[
-                    "Petite Posies",
-                    "Playful Pattern",
-                    "Lovely Shirt",
-                    4,
-                    5,
-                    6,
-                  ].map((nearby, index) => (
-                    <View
-                      key={nearby}
-                      className="w-40 h-40 mr-2 bg-white rounded-2xl">
-                      <View className="flex-row items-center justify-between px-2 mt-28">
-                        <Text className="font-bold">{nearby}</Text>
-                        <Text className="text-xs font-light text-old-rose">
-                          {["200m", "300m", "400m", 4, 5, 6][index]}
+                  {tailorNearest &&
+                    tailorNearest.map((tailor) => (
+                      <TouchableOpacity
+                        onPress={() =>
+                          navigation.navigate("detail-tailor", { tailor })
+                        }
+                        key={tailor.id}
+                        className="flex flex-col items-start justify-between w-40 h-40 mr-2 bg-white rounded-2xl">
+                        {tailor.TailorImage[0] ? (
+                          <Image
+                            source={{ uri: tailor.TailorImage[0].image_url }}
+                            style={{
+                              width: "90%",
+                              height: "70%",
+                              resizeMode: "cover",
+                              borderRadius: 20,
+                            }}
+                            className="self-center mx-2 my-2 rounded-md"
+                          />
+                        ) : (
+                          <View className="bg-[#fadadd] mx-2 my-2 rounded-md h-28 w-36"></View>
+                        )}
+                        <Text className="px-2 mb-2 text-sm font-bold">
+                          {truncateName(tailor.name, 18)}
                         </Text>
-                      </View>
-                      <View className="bg-[#fadadd] mb-12 absolute top-2 left-2 right-2 bottom-2 rounded-md"></View>
-                    </View>
-                  ))}
+                      </TouchableOpacity>
+                    ))}
                 </ScrollView>
               </View>
 
               <View className="flex flex-col gap-y-4">
                 <View className="flex flex-row items-center justify-between">
-                  <Text className="text-base font-bold">Inspiration</Text>
+                  <Text className="text-base font-bold">History Tailor</Text>
                   <Text className="text-xs font-medium text-maroon">
                     See More
                   </Text>
@@ -192,43 +209,41 @@ export default function HomeScreen() {
                 <ScrollView
                   horizontal={true}
                   showsHorizontalScrollIndicator={false}>
-                  {["Jakarta Fashion Week", "ESMOD Graduation", 3, 4, 5, 6].map(
-                    (nearby) => (
-                      <View
-                        key={nearby}
-                        className="w-40 h-40 mr-2 bg-white rounded-2xl">
-                        <Text className="px-2 font-bold mt-28 ">{nearby}</Text>
-                        <View className="bg-[#fadadd] mb-12 absolute top-2 left-2 right-2 bottom-2 rounded-md"></View>
-                      </View>
-                    ),
-                  )}
+                  {tailorFavorite &&
+                    tailorFavorite.map((tailor) => (
+                      <TouchableOpacity
+                        onPress={() =>
+                          navigation.navigate("detail-tailor", {
+                            tailor: tailor.Tailors,
+                          })
+                        }
+                        key={tailor.Tailors.id}
+                        className="flex flex-col items-start justify-between w-40 h-40 mr-2 bg-white rounded-2xl">
+                        {tailor.Tailors.TailorImage[0] ? (
+                          <Image
+                            source={{
+                              uri: tailor.Tailors.TailorImage[0].image_url,
+                            }}
+                            style={{
+                              width: "90%",
+                              height: "70%",
+                              resizeMode: "cover",
+                              borderRadius: 20,
+                            }}
+                            className="self-center mx-2 my-2 rounded-md"
+                          />
+                        ) : (
+                          <View className="bg-[#fadadd] mx-2 my-2 rounded-md h-28 w-36"></View>
+                        )}
+                        <Text className="px-2 mb-2 text-sm font-bold">
+                          {truncateName(tailor.Tailors.name, 18)}
+                        </Text>
+                      </TouchableOpacity>
+                    ))}
                 </ScrollView>
               </View>
-
-              <View className="flex flex-col gap-y-4">
-                <View className="flex flex-row items-center justify-between">
-                  <Text className="text-base font-bold">Favorite</Text>
-                  <Text className="text-xs font-medium text-maroon">
-                    See More
-                  </Text>
-                </View>
-                <ScrollView
-                  horizontal={true}
-                  showsHorizontalScrollIndicator={false}>
-                  {["Easy Breezy Apparel", "Snuggly Chic", 3, 4, 5, 6].map(
-                    (nearby) => (
-                      <View
-                        key={nearby}
-                        className="w-40 h-40 mr-2 bg-white rounded-2xl">
-                        <Text className="px-2 font-bold mt-28 ">{nearby}</Text>
-                        <View className="bg-[#fadadd] mb-12 absolute top-2 left-2 right-2 bottom-2 rounded-md"></View>
-                      </View>
-                    ),
-                  )}
-                </ScrollView>
-              </View>
-            </ScrollView>
-          </View>
+            </View>
+          </ScrollView>
         </LatarPage>
       ) : (
         <HomeTailor />

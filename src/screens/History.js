@@ -42,9 +42,9 @@ export default function History() {
   const getData = async () => {
     const isLoggedIn = await auth.CheckToken();
     const userData = await auth.getUser();
-    setUser(JSON.stringify(userData));
+    setUser(userData);
 
-    if (user.role == "USER") {
+    if (userData.role == "USER") {
       setIsUser(true);
     }
 
@@ -94,7 +94,10 @@ export default function History() {
                 item={item}
                 onPress={() => {
                   if (item.state === "DELIVER" && isUser == true) {
-                    navigation.navigate("deliver", { order_id: item.order_id });
+                    navigation.navigate("deliver", {
+                      order_id: item.order_id,
+                      state: item.state,
+                    });
                   } else if (item.state === "SEWING" && isUser == true) {
                     navigation.navigate("sewing", {
                       order_id: item.order_id,

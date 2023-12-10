@@ -15,7 +15,7 @@ import sewing from "../../api/order/sewing.js";
 import { useAuthContext } from "../../contexts/AuthContext";
 import formatDate from "../../utils/formatDate.js";
 import Loading from "../../components/Loading";
-import FittingActivate from "../../../assets/fitting-icon.svg";
+import FittingActivate from "../../../assets/fitting-activate.svg";
 
 export default function DetailsOrder() {
   const navigation = useNavigation();
@@ -51,7 +51,6 @@ export default function DetailsOrder() {
 
   useEffect(() => {
     getData();
-    // fetchData();
   }, []);
 
   if (loading) {
@@ -94,9 +93,9 @@ export default function DetailsOrder() {
         <ColoredBox status={state} />
       </View>
       <OrderDetailBox
-        datetime={formatDate(detail.due_date)}
+        datetime={formatDate(detail.order_date)}
         address={detail.delivery_address}
-        delivery={"Arrives in 1 hour"}
+        delivery={formatDate(detail.due_date)}
       />
       <View className="mb-20" />
     </OrderTemplate>

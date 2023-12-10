@@ -1,18 +1,59 @@
 import { View, Text } from "react-native";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import BicycleSVG from "../../../assets/bicycle.svg";
 import ColoredButton from "../../components/Button/ColoredButton";
 import MapView, { Marker } from "react-native-maps";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import IconWithTitle from "../../components/Box/IconWithTitle";
 import TrackBar from "../../components/Bar/TrackBar";
 import ColoredBox from "../../components/Box/ColoredBox";
 import OrderDetailBox from "../../components/Box/OrderDetailBox";
 import OrderTemplate from "../../components/Order/OrderTemplate";
+import Loading from "../../components/Loading";
+import { useAuthContext } from "../../contexts/AuthContext";
+import sewing from "../../api/order/sewing.js";
+import formatDate from "../../utils/formatDate.js";
 
 export default function Deliver() {
   const navigation = useNavigation();
+  const route = useRoute();
+  const { order_id, state } = route.params;
+  const [loading, setLoading] = useState(true);
+  const [detail, setDetail] = useState([]);
+  const auth = useAuthContext();
+
+  const getData = async () => {
+    const isLoggedIn = await auth.CheckToken();
+
+    if (isLoggedIn) {
+      const user_token = await auth.getToken();
+      fetchData(user_token);
+    }
+  };
+
+  const fetchData = async (user_token) => {
+    try {
+      const result = await sewing(order_id, user_token);
+      console.log(result);
+      if (result.data.status === "success") {
+        setDetail(result.data.data);
+        setLoading(false);
+      } else {
+        console.error("Failed to fetch data:", result.message);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <OrderTemplate>
@@ -43,13 +84,15 @@ export default function Deliver() {
         </IconWithTitle>
       </TrackBar>
       <View className="flex flex-row justify-between w-full">
-        <Text className="font-medium">#9632163716</Text>
-        <ColoredBox status={"Ongoing"} />
+        <Text className="font-medium">
+          #{order_id.split("-").slice(0, 4).join("-")}
+        </Text>
+        <ColoredBox status={state} />
       </View>
       <OrderDetailBox
-        datetime={"12 November 2023 / 08:00"}
-        address={"Sutorejo Barat No. 36, Dukuh Sutorejo, Mulyosari, Surabaya"}
-        delivery={"Arrives in 1 hour"}
+        datetime={formatDate(detail.order_date)}
+        address={detail.delivery_address}
+        delivery={formatDate(detail.due_date)}
       />
 
       <MapView
@@ -76,7 +119,7 @@ export default function Deliver() {
         title={"Track Order"}
         styleButton={"bg-old-rose w-full my-4"}
         styleText={"text-white"}
-        onPress={() => navigation.navigate("track-order")}
+        onPress={() => navigation.navigate("track-order", { order_id })}
       />
     </OrderTemplate>
   );

@@ -5,6 +5,7 @@ import {
   FlatList,
   ActivityIndicator,
   Alert,
+  Platform,
 } from "react-native";
 import React, { useEffect, useState, useCallback } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -17,6 +18,7 @@ import ColoredButton from "../../components/Button/ColoredButton";
 import getOrderDetail from "../../api/orders/get-order-detail";
 import Loading from "../../components/Loading";
 import updatePayment from "../../api/payment/update-payment";
+import * as LocalAuthentication from "expo-local-authentication";
 
 export default function Transaction({ navigation }) {
   const route = useRoute();
@@ -26,6 +28,45 @@ export default function Transaction({ navigation }) {
   const [methodId, setMethodId] = React.useState(0);
   const [order, setOrder] = React.useState({});
   const [loading, setLoading] = React.useState(true);
+  const [compatible, setCompatible] = React.useState(false);
+  const [isFingerprints, setIsFingerprints] = React.useState(false);
+
+  const checkDeviceForHardware = async () => {
+    let isCompatible = await LocalAuthentication.hasHardwareAsync();
+    setCompatible(isCompatible);
+  };
+
+  const checkForFingerprints = async () => {
+    let isFingerprints = await LocalAuthentication.isEnrolledAsync();
+    setIsFingerprints(isFingerprints);
+  };
+
+  const scanFingerprint = async () => {
+    let result = await LocalAuthentication.authenticateAsync();
+    if (result.success === true) {
+      handlePayment();
+    }
+  };
+
+  const showAndroidAlert = () => {
+    Alert.alert(
+      "Fingerprint Scan",
+      "Place your finger over the touch sensor and press scan.",
+      [
+        {
+          text: "Scan",
+          onPress: () => {
+            scanFingerprint();
+          },
+        },
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel"),
+          style: "cancel",
+        },
+      ],
+    );
+  };
 
   const getMethods = async () => {
     const isLoggedIn = await auth.CheckToken();
@@ -54,6 +95,12 @@ export default function Transaction({ navigation }) {
 
   const handlePayment = async () => {
     const isLoggedIn = await auth.CheckToken();
+    const user = await auth.getUser();
+    let isUser = false;
+
+    if (user.role == "USER") {
+      isUser = true;
+    }
 
     if (methodId == 0) {
       return Alert.alert("Please choose a method payment");
@@ -69,7 +116,13 @@ export default function Transaction({ navigation }) {
       );
 
       if (pay.data.status == "success") {
-        navigation.navigate("success", { total, order_id });
+        navigation.navigate("success", {
+          total,
+          order_id,
+          user_id: user.id,
+          isUser,
+          state: "MEASURING",
+        });
       } else {
         navigation.navigate("failed");
       }
@@ -85,6 +138,8 @@ export default function Transaction({ navigation }) {
   React.useEffect(() => {
     getMethods();
     getOrderDetailData();
+    checkDeviceForHardware();
+    checkForFingerprints();
   }, []);
 
   if (loading) {
@@ -161,7 +216,9 @@ export default function Transaction({ navigation }) {
 
         <ColoredButton
           title="Pay"
-          onPress={handlePayment}
+          onPress={
+            Platform.OS === "android" ? showAndroidAlert : scanFingerprint
+          }
           styleButton="w-full mt-5 bg-old-rose rounded-lg"
           styleText="text-white"
         />

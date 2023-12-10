@@ -3,7 +3,6 @@ import { BASE_URL } from "../base-url";
 
 const getAllTailors = async (token) => {
   try {
-    console.log("token", token);
     const url = `${BASE_URL}/tailor/all?orderBy=rating`;
 
     const response = await axios.get(url, {

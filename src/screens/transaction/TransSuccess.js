@@ -7,7 +7,7 @@ import { useRoute } from "@react-navigation/native";
 
 export default function TransSuccess({ navigation }) {
   const route = useRoute();
-  const { total, order_id } = route.params;
+  const { total, order_id, user_id, isUser, state } = route.params;
 
   return (
     <Background>
@@ -30,7 +30,14 @@ export default function TransSuccess({ navigation }) {
         </View>
         <TouchableOpacity
           className="w-full"
-          onPress={() => navigation.navigate("detail-message")}>
+          onPress={() =>
+            navigation.navigate("view-cart", {
+              order_id,
+              user_id,
+              state,
+              isUser,
+            })
+          }>
           <View className="p-4 mt-4 bg-white shadow-sm rounded-xl ">
             <Text className="text-sm font-semibold text-center text-pink">
               Start Measuring

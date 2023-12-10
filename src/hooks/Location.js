@@ -6,6 +6,8 @@ const useLocation = () => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [locationName, setLocationName] = useState("Location");
   const [loading, setLoading] = useState(false);
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
 
   const __locationPermissions = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
@@ -30,13 +32,13 @@ const useLocation = () => {
 
       const location = await Location.getCurrentPositionAsync({});
       setCurrentLocation(location);
+      setLatitude(location.coords.latitude);
+      setLongitude(location.coords.longitude);
 
       const [address] = await Location.reverseGeocodeAsync({
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
       });
-
-      console.log(address);
 
       const formattedAddress = `${address.district}, ${address.city}, ${address.subregion}, ${address.region}, ${address.country}`;
       setLocationName(formattedAddress);
@@ -51,6 +53,8 @@ const useLocation = () => {
     __getLocation,
     locationName,
     loading,
+    latitude,
+    longitude,
   };
 };
 

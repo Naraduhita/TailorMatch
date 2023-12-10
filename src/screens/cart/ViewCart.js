@@ -132,17 +132,17 @@ export default function ViewCart() {
             navigation={navigation}
             items={cartItems}
           />
-          <ColoredButton
-            title={
-              nextState(state).toLowerCase().charAt(0).toUpperCase() +
-              nextState(state).toLowerCase().slice(1)
-            }
-            styleButton={"bg-old-rose w-full my-4 py-5 rounded-2xl"}
-            styleText={"text-white"}
-            onPress={() => setModalVisible(true)}
-          />
-          {isUser == false && (
-            <View className="justify-self-end">
+          <View className="justify-self-end">
+            <ColoredButton
+              title={
+                nextState(state).toLowerCase().charAt(0).toUpperCase() +
+                nextState(state).toLowerCase().slice(1)
+              }
+              styleButton={"bg-old-rose w-full my-4 py-5 rounded-2xl"}
+              styleText={"text-white"}
+              onPress={() => setModalVisible(true)}
+            />
+            {isUser == false && (
               <ColoredButton
                 title={"Add"}
                 styleButton={"bg-old-rose w-full my-4 py-5 rounded-2xl"}
@@ -155,14 +155,14 @@ export default function ViewCart() {
                   })
                 }
               />
-              <ColoredButton
-                title={"Back"}
-                styleButton={"bg-old-rose w-full my-4 py-5 mt-2 rounded-2xl"}
-                styleText={"text-white"}
-                onPress={() => navigation.navigate("main")}
-              />
-            </View>
-          )}
+            )}
+            <ColoredButton
+              title={"Back"}
+              styleButton={"bg-old-rose w-full my-4 py-5 mt-2 rounded-2xl"}
+              styleText={"text-white"}
+              onPress={() => navigation.navigate("main")}
+            />
+          </View>
         </View>
       </ScrollView>
     </MeansuringTemplate>

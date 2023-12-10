@@ -45,7 +45,8 @@
     "react-native-svg-transformer": "^1.1.0",
     "react-native-vector-icons": "^10.0.2",
     "reanimated": "^0.0.1-alpha",
-    "tailwind-rn": "^4.2.0"
+    "tailwind-rn": "^4.2.0",
+    "expo-local-authentication": "~13.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

@@ -11,12 +11,14 @@ export default function Thread() {
   const route = useRoute();
   let tailor = route.params.tailor;
 
-  console.log(tailor);
-
   return (
     <ThreadsHome tailor={tailor}>
       <SafeAreaView className="mt-5">
-        <ItemDoodle tailor={tailor} />
+        <ItemDoodle
+          tailor={tailor}
+          longitude={Number.parseFloat(tailor.longitude)}
+          latitude={Number.parseFloat(tailor.latitude)}
+        />
       </SafeAreaView>
       <View className="w-full bg-white">
         <View className="pt-3">

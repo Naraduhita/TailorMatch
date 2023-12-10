@@ -8,7 +8,7 @@ import IndepentenSVG from "../../../assets/independentWomen.svg";
 import CollorFullSVG from "../../../assets/colorfull.svg";
 import MapView, { Marker } from "react-native-maps";
 
-export default function ItemDoodle({ tailor }) {
+export default function ItemDoodle({ tailor, longitude, latitude }) {
   const formattedDays = tailor.open_days.map((day) => {
     const formattedDay = day.charAt(0) + day.slice(1).toLowerCase();
     return formattedDay;
@@ -55,8 +55,8 @@ export default function ItemDoodle({ tailor }) {
       <Text className="px-4 mb-2 font-bold text-center">Maps View</Text>
       <MapView
         initialRegion={{
-          latitude: parseFloat(tailor.latitude),
-          longitude: parseFloat(tailor.longitude),
+          latitude: latitude,
+          longitude: longitude,
           latitudeDelta: 0.1,
           longitudeDelta: 0.1,
         }}
@@ -64,8 +64,8 @@ export default function ItemDoodle({ tailor }) {
         style={[{ height: 300 }]}>
         <Marker
           coordinate={{
-            latitude: parseFloat(tailor.latitude),
-            longitude: parseFloat(tailor.longitude),
+            latitude: latitude,
+            longitude: longitude,
           }}
           title="Delivery Location"
           description="This is the delivery location"

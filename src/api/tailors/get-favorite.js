@@ -1,9 +1,10 @@
 import axios from "axios";
 import { BASE_URL } from "../base-url";
 
-const sewing = async (order_id, token) => {
+const getFavoriteTailor = async (token) => {
   try {
-    const url = `${BASE_URL}/order/${order_id}/detail`;
+    const url = `${BASE_URL}/tailor/favorite`;
+
     const response = await axios.get(url, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -49,5 +50,4 @@ const sewing = async (order_id, token) => {
     }
   }
 };
-
-export default sewing;
+export default getFavoriteTailor;
