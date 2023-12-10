@@ -26,6 +26,7 @@ export default function History() {
       try {
         const result = await history(user_token); // Panggil fungsi history yang menggunakan Axios
         console.log(result);
+        // console.log(result.data.data[0].state);
         if (result.data.status === "success") {
           const formattedData = result.data.data.map((item, index) => ({
             // Mengakses result.data.data
@@ -36,7 +37,9 @@ export default function History() {
             //   item.status.charAt(0).toUpperCase() +
             //   item.status.slice(1).toLowerCase(),
             order_id: item.id,
-            state: item.state,
+            state:
+              item.state.charAt(0).toUpperCase() +
+              item.state.slice(1).toLowerCase(),
           }));
 
           setStore(formattedData);
