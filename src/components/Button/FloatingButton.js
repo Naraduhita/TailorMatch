@@ -39,13 +39,11 @@ const FloatingButton = () => {
                   Add Order
                 </Text>
               </TouchableOpacity>
-              {/* <View className="mt-2 border-b-2 border-b-white"></View> */}
               <TouchableOpacity onPress={() => handlePress("add-collection")}>
                 <Text className="mb-1 text-base font-semibold text-white ">
-                  Add Collection
+                  Create Tailor
                 </Text>
               </TouchableOpacity>
-              {/* Add more options as needed */}
               <TouchableOpacity onPress={() => setModalVisible(false)}>
                 <Text className="text-base font-semibold text-black ">
                   Cancel

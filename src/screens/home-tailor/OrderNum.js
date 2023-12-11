@@ -7,9 +7,13 @@ import {
   FlatList,
 } from "react-native";
 import React, { useEffect, useState, useCallback } from "react";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Background from "../../components/Background-trans";
 import { Ionicons, Feather, Icon } from "@expo/vector-icons";
+import sewing from "../../api/order/sewing.js";
+import { useAuthContext } from "../../contexts/AuthContext";
+import Loading from "../../components/Loading";
 
 export default function OrderNum({ navigation }) {
   const data = [
@@ -30,6 +34,69 @@ export default function OrderNum({ navigation }) {
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
   const [isDropdown, setDropdown] = useState(false);
   const [status, setStatus] = useState("Ongoing");
+  const [loading, setLoading] = React.useState(true);
+
+  // const navigation = useNavigation();
+  const [detail, setDetail] = useState([]);
+  const route = useRoute();
+  const auth = useAuthContext();
+  const { order_id } = route.params;
+
+  function formatDate(dateString) {
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return new Date(dateString).toLocaleDateString("id-ID", options);
+  }
+
+  const getData = async () => {
+    const isLoggedIn = await auth.CheckToken();
+
+    if (isLoggedIn) {
+      const user_token = await auth.getToken();
+      const result = await sewing(order_id, user_token);
+
+      if (result.data.status === "success") {
+        const data = result.data.data;
+        const formattedData = {
+          name: data.delivery_address,
+          order_date: data.order_date,
+          key: "1",
+          state:
+            data.state.charAt(0).toUpperCase() +
+            data.state.slice(1).toLowerCase(),
+          customer: data.Users.username,
+          address: data.delivery_address,
+          due_date: data.due_date,
+          hastag: data.id.split("-")[0].toUpperCase(),
+          detail: data.OrderItems,
+        };
+        setDetail(formattedData);
+        setLoading(false);
+      } else {
+        console.error("Failed to fetch data:", result.message);
+      }
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  if (
+    detail &&
+    detail.detail &&
+    detail.detail.length > 0 &&
+    detail.detail[0].Clothes
+  ) {
+    console.log(detail.detail[0].Clothes.name);
+  } else {
+    console.log(
+      "Nilai detail atau Clothes tidak tersedia atau belum diinisialisasi",
+    );
+  }
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <SafeAreaView className="container flex-1">
@@ -48,7 +115,7 @@ export default function OrderNum({ navigation }) {
 
             <View className="flex-col items-center mx-auto">
               <Text className="text-lg font-semibold ">Order Number</Text>
-              <Text>231130EUXM715S</Text>
+              <Text>{detail.hastag}</Text>
             </View>
           </View>
         </View>
@@ -66,100 +133,60 @@ export default function OrderNum({ navigation }) {
           showsVerticalScrollIndicator={false}
           className="mb-5">
           <View className="flex-col items-center">
-            <View className="items-center p-4 bg-white shadow-sm rounded-xl w-80">
-              <View className="flex-row items-center justify-between w-80 ">
-                <Text className="mx-8 text-sm font-bold ">
-                  Adiba Zalfa Camilla
-                </Text>
-              </View>
+            <View className="items-start p-4 bg-white shadow-sm rounded-xl w-80">
+              {/* <View className="flex-row items-center justify-between"> */}
+              <Text className="text-sm font-bold">{detail.customer}</Text>
+              {/* </View> */}
 
               <Text className="mt-2 text-sm text-grayText">
-                Sutorejo Barat No. 36, Dukuh Sutorejo, Mulyosari, Surabaya
+                {detail.address}
               </Text>
               <View className="flex items-center mt-3 border-b-2 border-b-gray w-80" />
-              <Text className="mt-2 ml-16 text-sm text-grayText w-80">
-                Send before November 30, 2023
+              <Text className="mt-2 text-sm text-grayText w-80">
+                Send before {formatDate(detail.due_date)}
               </Text>
             </View>
           </View>
 
-          <View className="flex-col items-center mt-2">
-            <View className="flex-col p-6 bg-white shadow-sm rounded-xl w-80">
-              <View className="flex-row items-center justify-between">
-                <View className="flex-col ">
-                  <Text className="text-sm font-semibold ">
-                    (1) Party Dress
-                  </Text>
-                  <Text className="mt-1 text-xs font-normal ">Rp. 500.000</Text>
-                </View>
-                <View className="flex-row gap-x-2">
-                  <Text className="text-sm underline text-maroon underline-offset-8">
-                    Edit
-                  </Text>
-                  <Feather
-                    className=""
-                    name="edit-3"
-                    size={20}
-                    color="#BA7E80"
-                  />
-                </View>
-              </View>
-            </View>
-          </View>
-
-          <View className="flex-col items-center mt-2">
-            <View className="flex-col p-6 bg-white shadow-sm rounded-xl w-80">
-              <View className="flex-row items-center justify-between">
-                <View className="flex-col ">
-                  <Text className="text-sm font-semibold ">
-                    (1) Daily Wear Set
-                  </Text>
-                  <Text className="mt-1 text-xs font-normal ">Rp. 200.000</Text>
-                </View>
-                <View className="flex-row gap-x-2">
-                  <Text className="text-sm underline text-maroon underline-offset-8">
-                    Edit
-                  </Text>
-                  <Feather
-                    className=""
-                    name="edit-3"
-                    size={20}
-                    color="#BA7E80"
-                  />
+          {detail && detail.detail && detail.detail.length > 0 ? (
+            detail.detail.map((item, index) => (
+              <View
+                key={index}
+                className="flex-col items-center mt-2">
+                <View className="flex-col p-6 bg-white shadow-sm rounded-xl w-80">
+                  <View className="flex-row items-center justify-between">
+                    <View className="flex-col ">
+                      <Text className="text-sm font-semibold ">
+                        {item.Clothes.quantity} {item.Clothes.name}
+                      </Text>
+                      <Text className="mt-1 text-xs font-normal ">
+                        Rp{item.Clothes.price}
+                      </Text>
+                    </View>
+                    <View className="flex-row gap-x-2">
+                      <Text className="text-sm underline text-maroon underline-offset-8">
+                        Edit
+                      </Text>
+                      <Feather
+                        className=""
+                        name="edit-3"
+                        size={20}
+                        color="#BA7E80"
+                      />
+                    </View>
+                  </View>
                 </View>
               </View>
-            </View>
-          </View>
-
-          <View className="flex-col items-center mt-2">
-            <View className="flex-col p-6 bg-white shadow-sm rounded-xl w-80">
-              <View className="flex-row items-center justify-between">
-                <View className="flex-col ">
-                  <Text className="text-sm font-semibold ">
-                    (1) Pajamas Set
-                  </Text>
-                  <Text className="mt-1 text-xs font-normal ">Rp. 200.000</Text>
-                </View>
-                <View className="flex-row gap-x-2">
-                  <Text className="text-sm underline text-maroon underline-offset-8">
-                    Edit
-                  </Text>
-                  <Feather
-                    className=""
-                    name="edit-3"
-                    size={20}
-                    color="#BA7E80"
-                  />
-                </View>
-              </View>
-            </View>
-          </View>
+            ))
+          ) : (
+            <Text>Loading</Text>
+          )}
 
           {/* status */}
           <View className="flex flex-row items-center justify-between mx-auto mt-3 w-80">
             <Text className="font-semibold">Status :</Text>
             <View className="flex flex-row items-center justify-between h-8 bg-white rounded-lg w-28">
-              <Text className="ml-2 font-semibold">{status}</Text>
+              <Text className="ml-2 font-semibold">{detail.state}</Text>
               <TouchableOpacity
                 className="mx-2"
                 onPress={() => {

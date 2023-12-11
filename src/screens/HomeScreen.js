@@ -42,6 +42,8 @@ export default function HomeScreen() {
 
     if (isLoggedIn) {
       const user_token = await auth.getToken();
+      // fetchData(user_token);
+      checkUser();
       const tailors = await getAllTailors(user_token);
       const nearest = await getNearestTailor(user_token, latitude, longitude);
       const favorites = await getFavoriteTailor(user_token);

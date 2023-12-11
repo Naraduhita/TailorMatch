@@ -7,6 +7,7 @@ import Deliver from "../screens/order/Deliver";
 import TrackOrder from "../screens/order/TrackOrder";
 import Sewing from "../screens/order/Sewing";
 import Thread from "../screens/home/Thread";
+import CameraScreen from "../screens/camera/CameraScreen";
 // import Chat from "../screens/Chat";
 // import Measuring from "../screens/order/Meansuring";
 import DetailChat from "../screens/chat/DetailChat";
@@ -42,7 +43,7 @@ function StackNavigator() {
   useEffect(() => {
     const checkUserToken = async () => {
       const user_token = await auth.CheckToken();
-      console.log("user_token", user_token);
+
       if (user_token != null) {
         setIsLoggedIn(true);
         setFirstScreen("main");
@@ -194,6 +195,12 @@ function StackNavigator() {
         <RootStack.Screen
           name="edit-collection"
           component={EditCollection}
+        />
+      </RootStack.Group>
+      <RootStack.Group screenOptions={{ headerShown: false }}>
+        <RootStack.Screen
+          name="camera"
+          component={CameraScreen}
         />
       </RootStack.Group>
     </RootStack.Navigator>

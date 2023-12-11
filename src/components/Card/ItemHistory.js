@@ -16,7 +16,7 @@ const ItemHistory = ({ item, onPress }) => {
         </View>
         <View className="flex w-1/2">
           <View className="self-center w-2/3">
-            <ColoredBox status={item.status} />
+            <ColoredBox status={item.state} />
           </View>
         </View>
       </View>
