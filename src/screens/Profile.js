@@ -121,7 +121,7 @@ export default function Profile() {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity
+          {/* <TouchableOpacity
             className="justify-start py-2 mt-4 bg-white rounded-2xl w-72"
             onPress={() => navigation.navigate("get-started")}>
             <View className="flex-row items-center mx-6">
@@ -132,7 +132,7 @@ export default function Profile() {
               />
               <Text className="mx-2 text-xl font-semibold">Get Started</Text>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </ScrollView>
 

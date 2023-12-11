@@ -42,14 +42,12 @@ export default function HomeTailor() {
       const formattedData = result.data.data.map((item, index) => ({
         name: item.delivery_address,
         key: String(index + 1),
-        order_date: formatDate(item.order_date.split("T")[0]),
-        due_date: formatDate(item.due_date.split("T")[0]),
-        createdAt: formatDate(item.createdAt.split("T")[0]),
-        state:
-          item.state.charAt(0).toUpperCase() +
-          item.state.slice(1).toLowerCase(),
+        order_date: formatDate(item.order_date),
+        due_date: formatDate(item.due_date),
+        createdAt: formatDate(item.createdAt),
+        state: item.state,
         order_id: item.id,
-        hastag: item.id.split("-")[0].toUpperCase(),
+        hastag: item.id,
         customer: item.Users.username,
       }));
 
@@ -144,7 +142,8 @@ export default function HomeTailor() {
                         <View className="flex-row items-center justify-between">
                           <View className="flex-col items-start">
                             <Text className="font-bold text-md">
-                              {item.customer} #{item.hastag}
+                              {item.customer} #
+                              {item.hastag.split("-").slice(0, 3).join("-")}
                             </Text>
                             <Text className="mt-1 text-sm font-normal ">
                               {item.order_date} - {item.due_date}
@@ -180,7 +179,9 @@ export default function HomeTailor() {
             </View>
             {tailor.TailorImage.length != 0 ? (
               tailor.TailorImage.map((item, index) => (
-                <View className="flex-col items-center mb-2">
+                <View
+                  className="flex-col items-center mb-2"
+                  key={index}>
                   <View className="flex-col w-full p-4 bg-white shadow-sm rounded-xl">
                     <View className="w-full mb-2 bg-red max-h-32">
                       <Image

@@ -17,6 +17,7 @@ import { useCameraContext } from "../../contexts/CameraContext";
 import { useNavigation } from "@react-navigation/native";
 import ImageCard from "../../components/Card/ImageCard";
 import getTailorMe from "../../api/tailors/get-tailor-me";
+import createTailorImage from "../../api/tailors/update-image.tailor";
 
 export default function AddCollection() {
   const navigation = useNavigation();
@@ -27,6 +28,11 @@ export default function AddCollection() {
   const [opening_time, setOpenTime] = useState("");
   const [closing_time, setCloseTime] = useState("");
   const [imageUri, setImageUri] = useState(null);
+  const [tailorId, setTailorId] = useState("");
+  const [imageCaptures, setImageCaptures] = useState([]);
+  const [imageInDatabase, setImageImageInDatabase] = useState([]);
+  const [isDataExist, setIsDataExist] = useState(false);
+  const [newImage, setNewImage] = useState([]);
 
   const cam_navigation = useNavigation();
   const { cameraHook } = useCameraContext();
@@ -34,9 +40,6 @@ export default function AddCollection() {
   const [imageRes, setImageRes] = useState(null);
 
   useEffect(() => {
-    if (capturedImage) {
-      setImageRes(capturedImage);
-    }
     getMe();
 
     return () => {
@@ -45,8 +48,18 @@ export default function AddCollection() {
       setAddress("");
       setOpenTime("");
       setCloseTime("");
-      setImageRes(null);
+      setImageRes("");
+      setImageCaptures([]);
+      setNewImage("");
     };
+  }, []);
+
+  useEffect(() => {
+    if (capturedImage) {
+      setImageRes(capturedImage);
+      setImageCaptures((prevCaptures) => [...prevCaptures, capturedImage.uri]);
+      setNewImage((prevCaptures) => [...prevCaptures, capturedImage.uri]);
+    }
   }, [capturedImage]);
 
   const tailorCreate = async () => {
@@ -54,14 +67,44 @@ export default function AddCollection() {
 
     if (isLoggedIn) {
       const token = await auth.getToken();
-      const response = await createTailor({
-        name,
-        description,
-        address,
-        opening_time,
-        closing_time,
-        token,
-      });
+      if (isDataExist == false) {
+        const response = await createTailor({
+          name,
+          description,
+          address,
+          opening_time,
+          closing_time,
+          token,
+        });
+
+        if (response.data.data.status == "success") {
+          const image = await createTailor(
+            token,
+            imageCaptures,
+            response.data.data.id,
+          );
+
+          if (image.data.data.status == "success") {
+            navigation.navigate("main");
+          }
+        }
+
+        setTailorId(response.data.data.id);
+      } else {
+        const image = imageCaptures.filter(
+          (item) => !imageInDatabase.includes(item),
+        );
+        console.log(image);
+
+        // const response = await createTailorImage(token, image, tailorId);
+        console.log("response");
+        console.log(response);
+        if (response.data.data.status == "success") {
+          console.log("masuk>>>");
+          console.log(response.data.data);
+          navigation.navigate("main");
+        }
+      }
     }
   };
 
@@ -76,6 +119,20 @@ export default function AddCollection() {
       setAddress(response.data.data.address);
       setOpenTime(response.data.data.opening_time);
       setCloseTime(response.data.data.closing_time);
+      for (const img in response.data.data.TailorImage) {
+        setImageCaptures((prevCaptures) => [
+          ...prevCaptures,
+          response.data.data.TailorImage[img].image_url,
+        ]);
+        setImageImageInDatabase((prevCaptures) => [
+          ...prevCaptures,
+          response.data.data.TailorImage[img].image_url,
+        ]);
+        console.log("response.data.data.TailorImage[img].image_url");
+        console.log(response.data.data.TailorImage[img].image_url);
+      }
+      setTailorId(response.data.data.id);
+      setIsDataExist(true);
     }
   };
 
@@ -207,7 +264,6 @@ export default function AddCollection() {
 
                 <TouchableOpacity
                   onPress={() => cam_navigation.navigate("camera")}>
-                  {/* <TouchableOpacity onPress={handleImageUpload}> */}
                   <View style={{ marginTop: 10 }}>
                     {imageUri ? (
                       <Image
@@ -227,7 +283,24 @@ export default function AddCollection() {
                   </View>
                 </TouchableOpacity>
               </View>
-              {imageRes && <ImageCard image={imageRes} />}
+              <View className="flex flex-col w-full pt-3 gap-y-3">
+                {imageCaptures != 0 ? (
+                  imageCaptures.map((image, index) => (
+                    <View
+                      className="flex-col w-full p-4 bg-white shadow-sm rounded-xl"
+                      key={index}>
+                      <View className="w-full mb-2 bg-red max-h-32">
+                        <Image
+                          className="w-full h-full"
+                          source={{ uri: image }}
+                        />
+                      </View>
+                    </View>
+                  ))
+                ) : (
+                  <View></View>
+                )}
+              </View>
             </View>
           </View>
         </ScrollView>

@@ -46,16 +46,13 @@ export default function InOrder() {
           // Mengakses result.data.data
           name: item.delivery_address,
           key: String(index + 1),
-          order_date: formatDate(item.order_date.split("T")[0]),
-          // order_date: item.order_date.split("T")[0],
-          createdAt: formatDate(item.createdAt.split("T")[0]),
-          due_date: formatDate(item.due_date.split("T")[0]),
-          address: item.Users.address,
-          state:
-            item.state.charAt(0).toUpperCase() +
-            item.state.slice(1).toLowerCase(),
+          order_date: formatDate(item.order_date),
+          // order_date: item.order_date,
+          createdAt: formatDate(item.createdAt),
+          due_date: formatDate(item.due_date),
+          address: item.delivery_address,
+          state: item.state,
           order_id: item.id,
-          hastag: item.id.split("-")[0].toUpperCase(),
           customer: item.Users.username,
           // state: item.state,
         }));
@@ -114,36 +111,42 @@ export default function InOrder() {
 
         {/* isi card */}
         <ScrollView showsVerticalScrollIndicator={false}>
-          {store.map((item, index) => (
-            <TouchableOpacity
-              style={{ marginBottom: 20 }} // Menambahkan margin bawah antara setiap kotak
-              key={index}
-              className="flex-col items-center"
-              onPress={() =>
-                navigation.navigate("order-num", { order_id: item.order_id })
-              }>
-              <View className="items-center p-4 bg-white shadow-sm rounded-xl w-80">
-                <View className="flex-row items-center justify-between w-80">
-                  <Text className="mx-8 text-sm font-bold">
-                    {item.customer}
-                  </Text>
-                  <View className="px-4 py-1 mr-6 rounded-full bg-yellow">
-                    <Text className="text-sm font-bold text-white">
-                      {item.state}
+          {store.length != 0 ? (
+            store.map((item, index) => (
+              <TouchableOpacity
+                style={{ marginBottom: 20 }}
+                key={index}
+                className="flex-col items-center"
+                onPress={() =>
+                  navigation.navigate("order-num", { order_id: item.order_id })
+                }>
+                <View className="items-center p-4 bg-white shadow-sm rounded-xl w-80">
+                  <View className="flex-row items-center justify-between w-80">
+                    <Text className="mx-8 text-sm font-bold">
+                      {item.customer}
                     </Text>
+                    <View className="px-4 py-1 mr-6 rounded-full bg-yellow">
+                      <Text className="text-sm font-bold text-white">
+                        {item.state}
+                      </Text>
+                    </View>
                   </View>
-                </View>
 
-                <Text className="mt-2 text-sm text-grayText">
-                  {item.address}
-                </Text>
-                <View className="flex items-center mt-3 border-b-2 border-b-gray w-80" />
-                <Text className="mt-2 ml-16 text-sm text-grayText w-80">
-                  Send before {item.due_date}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          ))}
+                  <Text className="mt-2 text-sm text-grayText">
+                    {item.address}
+                  </Text>
+                  <View className="flex items-center mt-3 border-b-2 border-b-gray w-80" />
+                  <Text className="mt-2 ml-16 text-sm text-grayText w-80">
+                    Send before {item.due_date}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            ))
+          ) : (
+            <View className="w-full">
+              <Text className="text-center">No Orders</Text>
+            </View>
+          )}
         </ScrollView>
       </View>
     </SafeAreaView>
