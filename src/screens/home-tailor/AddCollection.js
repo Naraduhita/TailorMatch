@@ -12,8 +12,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons, Feather, Icon } from "@expo/vector-icons";
 import createTailor from "../../api/tailors/createTailor";
 import { useAuthContext } from "../../contexts/AuthContext";
+import { CameraCapturedPicture } from "expo-camera";
+import { useCameraContext } from "../../contexts/CameraContext";
+import { useNavigation } from "@react-navigation/native";
+import ImageCard from "../../components/Card/ImageCard";
 
-export default function AddCollection({ navigation }) {
+export default function AddCollection({}) {
+  // export default function AddCollection({ navigation }) {
+  const navigation = useNavigation();
   const auth = useAuthContext();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -22,15 +28,26 @@ export default function AddCollection({ navigation }) {
   const [closing_time, setCloseTime] = useState("");
   const [imageUri, setImageUri] = useState(null);
 
+  const cam_navigation = useNavigation();
+  const { cameraHook } = useCameraContext();
+  const { capturedImage, __resetPreview } = cameraHook;
+  const [imageRes, setImageRes] = useState(null);
+
   useEffect(() => {
+    if (capturedImage) {
+      setImageRes(capturedImage);
+    }
+
     return () => {
       setName("");
       setDescription("");
       setAddress("");
       setOpenTime("");
       setCloseTime("");
+      setImageRes(null);
     };
-  }, []);
+    // }, []);
+  }, [capturedImage]);
 
   const tailorCreate = async () => {
     const isLoggedIn = await auth.CheckToken();
@@ -45,15 +62,6 @@ export default function AddCollection({ navigation }) {
         closing_time,
         token,
       });
-
-      // if (response.data.status === "success") {
-      //   navigation.navigate("empty-cart", {
-      //     order_id: response.data.data.id,
-      //     status: response.data.data.status,
-      //     state: response.data.data.state,
-      //     user_id: response.data.data.user_id,
-      //   });
-      // }
     }
   };
 
@@ -67,6 +75,7 @@ export default function AddCollection({ navigation }) {
   };
 
   return (
+    // <CameraProvider>
     <SafeAreaView className="container flex-1">
       <View className="flex flex-col h-full mx-5 gap-y-4">
         <View className="flex-row items-center">
@@ -185,11 +194,13 @@ export default function AddCollection({ navigation }) {
                   <Text className="text-sm text-red">*</Text>
                 </View>
 
-                <TouchableOpacity onPress={handleImageUpload}>
+                <TouchableOpacity
+                  onPress={() => cam_navigation.navigate("camera")}>
+                  {/* <TouchableOpacity onPress={handleImageUpload}> */}
                   <View style={{ marginTop: 10 }}>
                     {imageUri ? (
                       <Image
-                        source={imageUri}
+                        source={imageRes}
                         style={{ width: 80, height: 80, borderRadius: 10 }}
                       />
                     ) : (
@@ -207,10 +218,12 @@ export default function AddCollection({ navigation }) {
                   </View>
                 </TouchableOpacity>
               </View>
+              {imageRes && <ImageCard image={imageRes} />}
             </View>
           </View>
         </ScrollView>
       </View>
     </SafeAreaView>
+    // </CameraProvider>
   );
 }

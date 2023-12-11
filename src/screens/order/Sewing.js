@@ -41,8 +41,8 @@ export default function DetailsOrder() {
             date: result.data.data.order_date.split("T")[0],
             key: "1",
             status:
-              result.data.data.status.charAt(0).toUpperCase() +
-              result.data.data.status.slice(1).toLowerCase(),
+              result.data.data.state.charAt(0).toUpperCase() +
+              result.data.data.state.slice(1).toLowerCase(),
           };
           setDetail(formattedData);
         } else {

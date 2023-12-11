@@ -84,15 +84,15 @@ export default function History() {
                 onPress={() => {
                   // console.log("Order ID:", item.order_id); // Memeriksa nilai order_id
                   // navigation.navigate("sewing", { order_id: item.order_id });
-                  if (item.state === "AWAITING") {
+                  if (item.state === "Awaiting") {
                     navigation.navigate("sewing", { order_id: item.order_id });
-                  } else if (item.state === "DELIVER") {
+                  } else if (item.state === "Deliver") {
                     navigation.navigate("deliver", { order_id: item.order_id });
-                  } else if (item.state === "SEWING") {
+                  } else if (item.state === "Sewing") {
                     navigation.navigate("sewing", { order_id: item.order_id });
-                  } else if (item.state === "FITTING") {
+                  } else if (item.state === "Fitting") {
                     navigation.navigate("sewing", { order_id: item.order_id });
-                  } else if (item.state === "MEASURING") {
+                  } else if (item.state === "Measuring") {
                     navigation.navigate("sewing", { order_id: item.order_id });
                   }
                 }}
