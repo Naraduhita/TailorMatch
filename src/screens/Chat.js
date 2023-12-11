@@ -25,56 +25,59 @@ export default function Chat({ navigation }) {
     setFilteredUsers(filteredData);
   };
 
-  const renderItem = ({ item, index }) => (
-    <TouchableOpacity
-      key={index}
-      onPress={() =>
-        navigation.navigate("detail-chat", {
-          username: item.userName,
-        })
-      }
-      className="flex items-center mx-12 mb-2">
-      <View className="flex-row items-center border-b-2 border-b-gray">
-        <Image
-          source={item.userImg}
-          resizeMode="contain"
-          className="w-16 h-16 border-2 border-white rounded-full"
-        />
-        <View className="flex mx-2 my-2">
-          <Text className="text-lg font-semibold">{item.userName}</Text>
-          <Text className="text-sm">{item.messageText}</Text>
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
-
   return (
     <Background>
-      <View className="container flex-1">
+      <View className="flex flex-col items-start justify-start w-full h-full px-4">
         <View
           id="search"
-          className="flex-wrap justify-around h-10 px-4 mb-2 bg-white rounded-full mx-7">
+          className="flex-row self-center justify-around w-full py-1.5 bg-white rounded-full">
           <Ionicons
             name="ios-search-outline"
             size={23}
             color="grey"
+            className="w-1/5"
           />
           <TextInput
-            className="w-full h-full mx-4"
+            className="w-4/5"
             value={search}
             onChangeText={handleSearch}
             placeholder="Search In Chats..."
           />
         </View>
 
-        <View className="flex-row mx-12 mb-2">
-          <Text className="mx-3 text-sm">All Messages</Text>
+        <View className="flex-row w-full my-2">
+          <Text className="text-sm">All Messages</Text>
         </View>
 
         <FlatList
+          className="w-full"
           data={filteredUsers}
-          renderItem={renderItem}
+          renderItem={({ item, index }) => (
+            <TouchableOpacity
+              key={index}
+              onPress={() =>
+                navigation.navigate("detail-chat", {
+                  username: item.userName,
+                })
+              }
+              className="flex items-center w-full">
+              <View className="flex-row items-center w-full">
+                <Image
+                  source={item.userImg}
+                  resizeMode="contain"
+                  className="border-2 border-white rounded-full w-14 h-14"
+                />
+                <View className="flex mx-2 my-2 mr-16">
+                  <Text className="text-lg font-semibold">{item.userName}</Text>
+                  <Text className="text-grayText">{item.messageText}</Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+          )}
           keyExtractor={(item) => item.id.toString()}
+          ItemSeparatorComponent={() => (
+            <View className="my-2 border-b-2 border-b-emperor" />
+          )}
         />
       </View>
     </Background>
